@@ -1,0 +1,99 @@
+{
+  "name": "telegram-miniapp-tools",
+  "version": "0.0.2",
+  "description": "Tools for working with Telegram Miniapps",
+  "author": "EVMlord <buidl@evmlord.dev>",
+  "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EVMlord/Telegram-MiniApp-Tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EVMlord/Telegram-MiniApp-Tools/issues"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "prebuild": "rimraf dist",
+    "clean": "rimraf dist",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/dts/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js",
+      "types": "./dist/dts/hooks/index.d.ts"
+    },
+    "./types": {
+      "types": "./dist/dts/types/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.js",
+      "types": "./dist/dts/utils/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "types": [
+        "dist/dts/types/index.d.ts"
+      ],
+      "types/*": [
+        "dist/dts/types/*"
+      ],
+      "hooks": [
+        "dist/dts/hooks/index.d.ts"
+      ],
+      "hooks/*": [
+        "dist/dts/hooks/*"
+      ],
+      "utils": [
+        "dist/dts/utils/index.d.ts"
+      ],
+      "utils/*": [
+        "dist/dts/utils/*"
+      ]
+    }
+  },
+  "keywords": [
+    "telegram",
+    "miniapp",
+    "telegram-mini-apps",
+    "miniapps",
+    "miniapp-tools",
+    "telegram-tools",
+    "telegram-bots",
+    "bot-tools",
+    "telegram-api",
+    "sdk",
+    "telegram-sdk",
+    "tapps",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@smartearnersteam/tapp-tools",
+  "version": "0.0.2",
+  "license": "Apache-2.0",
+  "exports": "./src/index.ts",
+  "publish": {
+    "exclude": ["!dist"]
+  }
+}
