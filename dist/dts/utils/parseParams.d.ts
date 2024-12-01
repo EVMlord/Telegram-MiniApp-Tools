@@ -16,7 +16,12 @@ export declare function reverseTransformThemeParams(parsedThemeParams: ParsedThe
  * @param initData - The raw `initData` string from `WebApp.initData`.
  * @returns An object of type `InitData`.
  */
-export declare function parseInitData(initData: string): InitData;
+/**
+ * Parses an incoming value as init data.
+ * @param value - value to check.
+ * @throws {} Parsing errors.
+ */
+export declare function parseInitData(value: unknown): InitData;
 /**
  * Parses a string value into LaunchParams.
  * @param value - The raw string to parse.

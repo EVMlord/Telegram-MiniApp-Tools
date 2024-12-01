@@ -1,6 +1,6 @@
 {
   "name": "telegram-miniapp-tools",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Tools for working with Telegram Miniapps",
   "author": "EVMlord <buidl@evmlord.dev>",
   "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
@@ -15,14 +15,21 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
+    "docs:html": "typedoc --options typedoc.json",
+    "docs:md": "typedoc --options typedoc-markdown.json",
+    "docs:json": "typedoc --json typedoc-output.json --options typedoc-markdown.json",
+    "docs:all": "yarn docs:html && yarn docs:md && yarn docs:json",
     "typecheck": "tsc --noEmit",
-    "prebuild": "rimraf dist",
     "clean": "rimraf dist",
-    "build": "tsc"
+    "prebuild": "yarn docs:all && yarn clean",
+    "build": "tsc",
+    "postbuild": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",
     "rimraf": "^6.0.1",
+    "typedoc": "^0.27.1",
+    "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^5.7.2"
   },
   "files": [
@@ -57,20 +64,11 @@
       "types": [
         "dist/dts/types/index.d.ts"
       ],
-      "types/*": [
-        "dist/dts/types/*"
-      ],
       "hooks": [
         "dist/dts/hooks/index.d.ts"
       ],
-      "hooks/*": [
-        "dist/dts/hooks/*"
-      ],
       "utils": [
         "dist/dts/utils/index.d.ts"
-      ],
-      "utils/*": [
-        "dist/dts/utils/*"
       ]
     }
   },

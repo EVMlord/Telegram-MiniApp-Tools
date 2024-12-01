@@ -29,6 +29,14 @@ export const initData = (optional) => {
         photoUrl: stringOptional,
         username: stringOptional,
     }), "User")(true);
+    // console.log({ transformedUser: user });
+    // Custom transform function for 'signature' with default value 'unsigned'
+    const signatureTransform = (value) => {
+        if (typeof value === "string") {
+            return value;
+        }
+        return "unsigned";
+    };
     return searchParams(toSnakeCaseSource({
         authDate: date(),
         canSendAfter: numberOptional,
@@ -45,7 +53,8 @@ export const initData = (optional) => {
         queryId: stringOptional,
         receiver: user,
         startParam: stringOptional,
-        signature: string,
+        // signature: string,
+        signature: signatureTransform,
         user,
     }), "initData")(optional);
 };

@@ -1,4 +1,5 @@
-import type { CamelCaseThemeParams, ThemeParams } from "../types/index.js";
+import { ThemeParams } from "../types/index.js";
+import type { CamelCaseThemeParams } from "../types/misc.js";
 /**
  * Transforms an object with snake_case keys to camelCase keys.
  * @param obj - The object to transform.

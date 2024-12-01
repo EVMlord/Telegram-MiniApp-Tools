@@ -1,4 +1,4 @@
-import { Telegram, WebApp } from "./types/index.js";
+import { Telegram } from "./types/index.js";
 /**
  * Represents the Telegram global object available on the `window`.
  *
@@ -14,6 +14,5 @@ declare const telegram: Telegram;
  *
  * @see https://core.telegram.org/bots/webapps
  */
-declare const webApp: WebApp;
-export type { Telegram, WebApp };
+declare const webApp: import("./types/telegram-web-app.js").WebApp;
 export { webApp, telegram as default };

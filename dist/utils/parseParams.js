@@ -1,3 +1,4 @@
+import { initData } from "../transformers/initData.js";
 import { camelToSnake, launchParams, snakeToCamel, } from "../transformers/serializeParams.js";
 /**
  * Transforms Telegram theme parameters (ThemeParams) into ParsedThemeParams with camelCase keys.
@@ -30,34 +31,43 @@ export function reverseTransformThemeParams(parsedThemeParams) {
  * @param initData - The raw `initData` string from `WebApp.initData`.
  * @returns An object of type `InitData`.
  */
-export function parseInitData(initData) {
-    const params = new URLSearchParams(initData);
-    // Parse the `user` field, which is a JSON string
-    const userJson = params.get("user");
-    if (!userJson) {
-        throw new Error("Missing user field in initData.");
-    }
-    const user = JSON.parse(decodeURIComponent(userJson));
-    // Construct the InitData object
-    const res = {
-        user: {
-            id: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name || undefined,
-            username: user.username || undefined,
-            languageCode: user.language_code || undefined,
-            isPremium: user.is_premium || undefined,
-            allowsWriteToPm: user.allows_write_to_pm || undefined,
-            photoUrl: user.photo_url || undefined,
-        },
-        chatInstance: params.get("chat_instance") || "",
-        chatType: params.get("chat_type") || "",
-        authDate: new Date(parseInt(params.get("auth_date") || "0", 10) * 1000), // Convert to Date
-        signature: params.get("signature") || "signature",
-        hash: params.get("hash") || "",
-    };
-    // console.log({ res });
-    return res;
+// export function parseInitData(initData: string | URLSearchParams): InitData {
+//   const params = new URLSearchParams(initData);
+//   // Parse the `user` field, which is a JSON string
+//   const userJson = params.get("user");
+//   if (!userJson) {
+//     throw new Error("Missing user field in initData.");
+//   }
+//   const user = JSON.parse(decodeURIComponent(userJson));
+//   // Construct the InitData object
+//   const res: InitData = {
+//     user: {
+//       id: user.id,
+//       firstName: user.first_name,
+//       lastName: user.last_name || undefined,
+//       username: user.username || undefined,
+//       languageCode: user.language_code || undefined,
+//       isPremium: user.is_premium || undefined,
+//       allowsWriteToPm: user.allows_write_to_pm || undefined,
+//       photoUrl: user.photo_url || undefined,
+//     },
+//     chatInstance: params.get("chat_instance") || "",
+//     chatType: params.get("chat_type") || "",
+//     authDate: new Date(parseInt(params.get("auth_date") || "0", 10) * 1000), // Convert to Date
+//     signature: params.get("signature") || "signature",
+//     hash: params.get("hash") || "",
+//   };
+//   // console.log({ res });
+//   return res;
+// }
+/**
+ * Parses an incoming value as init data.
+ * @param value - value to check.
+ * @throws {} Parsing errors.
+ */
+export function parseInitData(value) {
+    // console.log({ parseInitDataValue: value });
+    return initData()(value);
 }
 /**
  * Parses a string value into LaunchParams.

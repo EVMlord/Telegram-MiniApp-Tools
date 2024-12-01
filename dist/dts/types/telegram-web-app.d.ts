@@ -1,4 +1,4 @@
-type Color = string | false;
+export type Color = string | false;
 /**
  * Telegram application platform name.
  */
@@ -10,16 +10,6 @@ export type Platform = "android" | "android_x" | "ios" | "macos" | "tdesktop" | 
 export type Version = string;
 export type HomeScreenStatus = "unsupported" | "unknown" | "added" | "missed";
 export type FullscreenError = "UNSUPPORTED" | "ALREADY_FULLSCREEN" | string;
-/**
- * Convert snake_case string to camelCase at the type level.
- */
-type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}` ? `${T}${Capitalize<SnakeToCamelCase<U>>}` : S;
-/**
- * Mapped type to convert ThemeParams keys to camelCase.
- */
-export type CamelCaseThemeParams = {
-    [K in keyof ThemeParams as SnakeToCamelCase<K & string>]: ThemeParams[K];
-};
 export interface Telegram {
     WebApp: WebApp;
 }
@@ -241,17 +231,30 @@ export interface WebApp {
     switchInlineQuery(query: string, choose_chat_types?: Array<"users" | "bots" | "groups" | "channels">): void;
     /**
      * A method that opens a link in an external browser. The Web App will not
-     * be closed. If the optional options parameter is passed with the field
-     * @param try_instant_view the link will be opened in Instant View mode if
-     * possible.
+     * be closed. If the optional `options` parameter is passed, additional
+     * preferences for opening the link can be specified.
      *
      * Note that this method can be called only in response to user interaction
-     * with the Web App interface (e.g. a click inside the Web App or on the
-     * main button)
+     * with the Web App interface (e.g., a click inside the Web App or on the
+     * main button).
+     *
+     * @param url The URL to be opened.
+     * @param options Optional settings for opening the link.
+     * @param options.tryInstantView Whether to attempt opening the link in Instant View mode (if supported).
+     * @param options.tryBrowser Specifies the preferred browser to open the link in. Supported values include:
+     *   - 'google-chrome', 'chrome'
+     *   - 'mozilla-firefox', 'firefox'
+     *   - 'microsoft-edge', 'edge'
+     *   - 'opera', 'opera-mini'
+     *   - 'brave', 'brave-browser'
+     *   - 'duckduckgo', 'duckduckgo-browser'
+     *   - 'samsung', 'samsung-browser'
+     *   - 'vivaldi', 'vivaldi-browser'
+     *   - 'kiwi', 'kiwi-browser'
+     *   - 'uc', 'uc-browser'
+     *   - 'tor', 'tor-browser'
      */
-    openLink(url: string, options?: {
-        try_instant_view?: boolean;
-    }): void;
+    openLink(url: string, options?: OpenLinkOptions): void;
     /**
      * A method that opens a telegram link inside Telegram app. The Web App will
      * be closed.
@@ -555,7 +558,7 @@ export interface ThemeParams {
 /**
  * This object describes the native popup.
  */
-interface PopupParams {
+export interface PopupParams {
     /**
      * The text to be displayed in the popup title, 0-64 characters.
      */
@@ -704,7 +707,7 @@ export interface BottomButton {
      */
     setParams(params: MainButtonParams): BottomButton;
 }
-interface MainButtonParams {
+export interface MainButtonParams {
     /** button text */
     text?: string;
     /** button color */
@@ -817,7 +820,7 @@ export interface CloudStorage {
      * A method that receives values from the cloud storage using the specified
      * keys.
      *
-     * @param key The keys should contain 1-128 characters, only A-Z, a-z, 0-9,
+     * @param keys The keys should contain 1-128 characters, only A-Z, a-z, 0-9,
      * _ and - are allowed.
      * @param callback In case of an error, the callback? function will be
      * called and the first argument will contain the error. In case of success,
@@ -842,7 +845,7 @@ export interface CloudStorage {
      * A method that removes values from the cloud storage using the specified
      * keys.
      *
-     * @param key The keys should contain 1-128 characters, only A-Z, a-z, 0-9,
+     * @param keys The keys should contain 1-128 characters, only A-Z, a-z, 0-9,
      * _ and - are allowed.
      * @param callback If an optional callback parameter was passed, the
      * callback function will be called. In case of an error, the first argument
@@ -958,7 +961,7 @@ export type WriteAccessRequestedStatus = "allowed" | "cancelled" | string;
  * This object describes the native popup for requesting permission to use
  * biometrics.
  */
-interface BiometricRequestAccessParams {
+export interface BiometricRequestAccessParams {
     /**
      * The text to be displayed to a user in the popup describing why the bot
      * needs access to biometrics, 0-128 characters.
@@ -969,7 +972,7 @@ interface BiometricRequestAccessParams {
  * This object describes the native popup for authenticating the user using
  * biometrics.
  */
-interface BiometricAuthenticateParams {
+export interface BiometricAuthenticateParams {
     /**
      * The text to be displayed to a user in the popup describing why you are
      * asking them to authenticate and what action you will be taking based on
@@ -1033,9 +1036,13 @@ export interface WebAppInitData {
      * their validity.
      */
     hash: string;
+    /**
+     * A signature of all passed parameters (except hash), which the third party can use to [check their validity](https://core.telegram.org/bots/webapps#validating-data-for-third-party-use).
+     */
+    signature: string;
 }
 /** This object contains the data of the Web App user. */
-interface WebAppUser {
+export interface WebAppUser {
     /**
      * A unique identifier for the user or bot. This number may have more than
      * 32 significant bits and some programming languages may have
@@ -1069,7 +1076,7 @@ interface WebAppUser {
 /**
  * This object represents a chat.
  */
-interface WebAppChat {
+export interface WebAppChat {
     /**
      * Unique identifier for this chat. This number may have more than 32
      * significant bits and some programming languages may have
@@ -1099,7 +1106,7 @@ interface WebAppChat {
 /**
  * This object describes the native popup for scanning QR codes.
  */
-interface ScanQrPopupParams {
+export interface ScanQrPopupParams {
     /**
      * The text to be displayed under the 'Scan QR' heading, 0-64 characters.
      */
@@ -1109,7 +1116,7 @@ interface ScanQrPopupParams {
  * This object describes contact information shared when requestContact was
  * approved by the user.
  */
-interface RequestContactResponseSent {
+export interface RequestContactResponseSent {
     /** Status 'sent' indicates that contact information has been shared. */
     status: "sent";
     /** A status message or result as a string. */
@@ -1138,7 +1145,7 @@ interface RequestContactResponseSent {
 /**
  * This object only contains a status to indicate the cancellation.
  */
-interface RequestContactResponseCancelled {
+export interface RequestContactResponseCancelled {
     /** Status 'cancelled', indicates that user cancelled the contact share
      * request. */
     status: "cancelled";
@@ -1146,7 +1153,7 @@ interface RequestContactResponseCancelled {
 export type RequestContactResponse = RequestContactResponseSent | RequestContactResponseCancelled;
 /** This object describes additional sharing settings for the native story
  * editor. */
-interface StoryShareParams {
+export interface StoryShareParams {
     /** The caption to be added to the media, 0-200 characters for regular users
      * and 0-2048 characters for premium subscribers. */
     text?: string;
@@ -1155,20 +1162,50 @@ interface StoryShareParams {
     widget_link?: StoryWidgetLink;
 }
 /** This object describes a widget link to be included in the story. */
-interface StoryWidgetLink {
+export interface StoryWidgetLink {
     /** The URL to be included in the story. */
     url: string;
     /** The name to be displayed for the widget link, 0-48 characters. */
     name?: string;
 }
 /**
- * Extended WebApp interface with camelCase themeParams.
+ * Options for configuring how a link is opened in an external browser.
  */
-export interface WebAppCamelCase extends Omit<WebApp, "themeParams"> {
+export interface OpenLinkOptions {
     /**
-     * An object containing the current theme settings used in the Telegram app.
-     * Transformed to use camelCase keys.
+     * Attempts to use the Instant View mode, if supported by the browser and link.
      */
-    themeParams: CamelCaseThemeParams;
+    tryInstantView?: boolean;
+    /**
+     * Specifies the preferred browser to open the link in.
+     * Possible values include:
+     * - 'google-chrome', 'chrome'
+     * - 'mozilla-firefox', 'firefox'
+     * - 'microsoft-edge', 'edge'
+     * - 'opera', 'opera-mini'
+     * - 'brave', 'brave-browser'
+     * - 'duckduckgo', 'duckduckgo-browser'
+     * - 'samsung', 'samsung-browser'
+     * - 'vivaldi', 'vivaldi-browser'
+     * - 'kiwi', 'kiwi-browser'
+     * - 'uc', 'uc-browser'
+     * - 'tor', 'tor-browser'
+     */
+    tryBrowser?: OpenLinkBrowser;
 }
-export {};
+/**
+ * Supported browser values for the `tryBrowser` option in `OpenLinkOptions`.
+ */
+export type OpenLinkBrowser = "google-chrome" | "chrome" | "mozilla-firefox" | "firefox" | "microsoft-edge" | "edge" | "opera" | "opera-mini" | "brave" | "brave-browser" | "duckduckgo" | "duckduckgo-browser" | "samsung" | "samsung-browser" | "vivaldi" | "vivaldi-browser" | "kiwi" | "kiwi-browser" | "uc" | "uc-browser" | "tor" | "tor-browser";
+/**
+ * The custom `BackButton` manager interface.
+ */
+export interface BackButtonManager {
+    show: () => void;
+    hide: () => void;
+    toggle: () => void;
+    onClick: (callback: BackButtonClickedCallback) => void;
+    offClick: (callback: BackButtonClickedCallback) => void;
+    getVisibility: () => boolean;
+    removeAllListeners: () => void;
+}

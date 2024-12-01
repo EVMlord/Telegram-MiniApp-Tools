@@ -9,6 +9,7 @@ export function parseMockInitData(initDataRaw) {
     const initDataUnsafe = {
         user: JSON.parse(params.get("user") || "{}"),
         hash: params.get("hash") || "",
+        signature: params.get("signature") || "defaultSignature",
         auth_date: parseInt(params.get("auth_date") || "0", 10),
         start_param: params.get("start_param") || "",
         chat_type: params.get("chat_type") || undefined,
@@ -55,26 +56,28 @@ export function mockTelegramEnv(options) {
     // Parse initData if not provided in options
     let parsedInitData = options.initData;
     let updatedInitDataRaw = options.initDataRaw || "";
+    // Ensure the signature is added to initDataRaw if not already present
+    const initDataParams = new URLSearchParams(updatedInitDataRaw);
+    if (!initDataParams.has("signature")) {
+        const signature = parsedInitData?.signature || "unsigned"; // Use existing signature or default to "unsigned"
+        initDataParams.append("signature", signature);
+        updatedInitDataRaw = initDataParams.toString(); // Update initDataRaw with the signature
+    }
+    // Parse initData using updated initDataRaw
     if (!parsedInitData) {
-        if (options.initDataRaw) {
-            parsedInitData = parseInitData(options.initDataRaw);
+        if (updatedInitDataRaw) {
+            parsedInitData = parseInitData(updatedInitDataRaw);
         }
         else {
             // If neither initData nor initDataRaw is provided, initialize an empty object
             parsedInitData = {};
         }
     }
-    // Add signature if it's not already included
+    // Add signature to parsedInitData if not already present
     if (parsedInitData && !parsedInitData.signature) {
         parsedInitData.signature = "unsigned"; // Use a mock signature or generate one if necessary
     }
-    // Add the signature to initDataRaw if not already present
-    const initDataParams = new URLSearchParams(updatedInitDataRaw);
-    // Check if the signature exists in initDataRaw
-    if (!initDataParams.has("signature")) {
-        initDataParams.append("signature", parsedInitData.signature);
-        updatedInitDataRaw = initDataParams.toString(); // Update initDataRaw with the signature
-    }
+    // console.log({ parsedInitData });
     // Create the mock LaunchParams object
     const launchParams = {
         botInline: options.botInline || false,
