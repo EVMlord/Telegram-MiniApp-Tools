@@ -1,6 +1,6 @@
 # Telegram Miniapp Tools
 
-A utility package designed to simplify the development of Telegram Mini Apps (unofficial). This package includes tools, hooks, and types for seamless interaction with the Telegram WebApp environment.
+A utility package designed to simplify the development of Telegram Mini Apps (unofficial). This package includes tools and types for seamless interaction with the Telegram WebApp environment.
 
 ## Installation
 
@@ -32,7 +32,7 @@ import {
 ## Features
 
 - Utilities to manage Telegram Mini App environments and parameters.
-- Hooks for custom functionality like adding an icon to the home screen.
+- Functions for custom functionality like adding an icon to the home screen.
 - Strongly typed interfaces for Telegram WebApp parameters.
 - Modular and lightweight implementation for modern web development.
 
@@ -240,83 +240,59 @@ try {
 const storedTokenStr = await cloudStorage?.getItem("token");
 ```
 
-### Hooks
+#### Managing Fullscreen
 
-The following hooks are available for managing your Telegram Mini App:
+This function manages the fullscreen state and provides `requestFullscreen` and `exitFullscreen` methods.
 
-More details in [/docs/md/hooks.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/tree/main/docs/md/hooks.md)
+##### Public Methods:
 
-#### Adding an Icon to the Home Screen (React)
-
-You can integrate the `useAddIconToHomeScreen` hook into your settings modal or any other component where you want to offer the "Add to Home Screen" functionality. Here's an example:
-
-```typescript
-import { useAddIconToHomeScreen } from "telegram-miniapp-tools/hooks";
-
-function SettingsModal() {
-  const { status, addToHomeScreen } = useAddIconToHomeScreen();
-
-  return (
-    <div>
-      <h2>Settings</h2>
-      <div>
-        <h3>Add to Home Screen</h3>
-        {status === "unsupported" && (
-          <p>This feature is not supported on your device.</p>
-        )}
-        {status === "added" && (
-          <p>The Mini App is already on your home screen.</p>
-        )}
-        {status === "missed" && (
-          <>
-            <p>
-              You can add the Mini App to your home screen for quick access.
-            </p>
-            <button onClick={addToHomeScreen}>Add to Home Screen</button>
-          </>
-        )}
-        {status === "unknown" && (
-          <>
-            <p>
-              Status unknown. Please try adding the Mini App to your home
-              screen.
-            </p>
-            <button onClick={addToHomeScreen}>Add to Home Screen</button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default SettingsModal;
-```
-
-#### Detecting Fullscreen Mode (React)
-
-This hook can be integrated into your settings modal to manage fullscreen behavior.
+- **getIsFullscreen()**: Returns the current fullscreen state.
+- **getError()**: Returns the current error state.
+- **requestFullscreen()**: Attempts to enter fullscreen mode and resets any previous errors.
+- **exitFullscreen()**: Attempts to exit fullscreen mode and resets any previous errors.
+- **onFullscreenChange(callback)**: Registers a callback to be called when the fullscreen state changes.
+- **offFullscreenChange(callback)**: Unregisters a previously registered fullscreen change callback.
+- **onError(callback)**: Registers a callback to be called when an error occurs.
+- **offError(callback)**: Unregisters a previously registered error callback.
+- **destroy()**: Cleans up event listeners and handlers. Should be called when the manager is no longer needed.
 
 ```typescript
-import { useDetectFullscreen } from "telegram-miniapp-tools/hooks";
+import { createFullscreenManager } from "telegram-miniapp-tools/utils";
 
-function SettingsModal() {
-  const { isFullscreen, error, requestFullscreen, exitFullscreen } =
-    useDetectFullscreen();
+const fullscreenManager = createFullscreenManager();
 
-  return (
-    <div>
-      <h2>Settings</h2>
-      <p>Fullscreen mode is {isFullscreen ? "enabled" : "disabled"}.</p>
+if (fullscreenManager) {
+  // Get the current fullscreen state
+  const isFullscreen = fullscreenManager.getIsFullscreen();
+  console.log(`Is fullscreen: ${isFullscreen}`);
 
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+  // Listen for fullscreen changes
+  const handleFullscreenChange = (isFullscreen: boolean) => {
+    console.log(`Fullscreen state changed: ${isFullscreen}`);
+  };
+  fullscreenManager.onFullscreenChange(handleFullscreenChange);
 
-      <button onClick={requestFullscreen}>Enter Fullscreen</button>
-      <button onClick={exitFullscreen}>Exit Fullscreen</button>
-    </div>
-  );
+  // Listen for errors
+  const handleError = (error: FullscreenError | null) => {
+    if (error) {
+      console.error(`Fullscreen error: ${error}`);
+    }
+  };
+  fullscreenManager.onError(handleError);
+
+  // Request fullscreen
+  fullscreenManager.requestFullscreen();
+
+  // Later, when you want to exit fullscreen
+  // fullscreenManager.exitFullscreen();
+
+  // When you're done, clean up
+  // fullscreenManager.offFullscreenChange(handleFullscreenChange);
+  // fullscreenManager.offError(handleError);
+  // fullscreenManager.destroy();
+} else {
+  console.error("Fullscreen manager is not available.");
 }
-
-export default SettingsModal;
 ```
 
 ### Types
@@ -365,3 +341,7 @@ This package was inspired by the amazing work done in:
 - [grammyjs/web-app](https://github.com/grammyjs/web-app)
 
 A big thank you to the developers and contributors of these projects for their invaluable work!
+
+```
+
+```

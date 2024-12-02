@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.1.1**](README.md)
+[**Telegram MiniApp Tools v0.2.0**](README.md)
 
 ***
 
@@ -91,14 +91,7 @@ The BackButton manager object or null if BackButton is not available.
 ### createCloudStorageManager()
 
 ```ts
-function createCloudStorageManager(): null | {
-  getItem: (key, callback?) => Promise<string> | void;
-  getItems: (keys, callback?) => Promise<Record<string, string>> | void;
-  getKeys: (callback?) => Promise<string[]> | void;
-  removeItem: (key, callback?) => Promise<true> | void;
-  removeItems: (keys, callback?) => Promise<true> | void;
-  setItem: (key, value, callback?) => Promise<true> | void;
-}
+function createCloudStorageManager(): CloudStorageManager | null
 ```
 
 Creates a manager for Telegram WebApp's CloudStorage API.
@@ -107,29 +100,41 @@ Provides simplified, promise-based methods for interacting with cloud storage.
 
 #### Returns
 
-`null` \| \{
-  `getItem`: (`key`, `callback`?) => `Promise`\<`string`\> \| `void`;
-  `getItems`: (`keys`, `callback`?) => `Promise`\<`Record`\<`string`, `string`\>\> \| `void`;
-  `getKeys`: (`callback`?) => `Promise`\<`string`[]\> \| `void`;
-  `removeItem`: (`key`, `callback`?) => `Promise`\<`true`\> \| `void`;
-  `removeItems`: (`keys`, `callback`?) => `Promise`\<`true`\> \| `void`;
-  `setItem`: (`key`, `value`, `callback`?) => `Promise`\<`true`\> \| `void`;
- \}
+[`CloudStorageManager`](types.md#cloudstoragemanager) \| `null`
+
+***
+
+### createFullscreenManager()
+
+```ts
+function createFullscreenManager(): FullscreenManager | null
+```
+
+Creates a fullscreen manager that handles fullscreen state
+and provides methods to request and exit fullscreen mode.
+
+#### Returns
+
+[`FullscreenManager`](types.md#fullscreenmanager) \| `null`
+
+The fullscreen manager object or null if Telegram WebApp is not available.
 
 ***
 
 ### init()
 
 ```ts
-function init(): void
+function init(): Promise<void>
 ```
 
-Loads the Telegram Web App script [https://telegram.org/js/telegram-web-app.js?56] into the document synchronously.
+Loads the Telegram Web App script [https://telegram.org/js/telegram-web-app.js?56] into
+the document and returns a Promise that resolves when the script has loaded.
+
 Ensures the script is only loaded once and is placed before other scripts.
 
 #### Returns
 
-`void`
+`Promise`\<`void`\>
 
 #### See
 

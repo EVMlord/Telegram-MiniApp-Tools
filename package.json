@@ -1,6 +1,6 @@
 {
   "name": "telegram-miniapp-tools",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Tools for working with Telegram Miniapps",
   "author": "EVMlord <buidl@evmlord.dev>",
   "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
@@ -24,10 +24,10 @@
     "prebuild": "yarn docs:all && yarn clean",
     "build": "tsc",
     "sync": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
-    "postbuild": "yarn sync"
+    "postbuild": "yarn sync",
+    "deno": "jsr publish"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
     "rimraf": "^6.0.1",
     "typedoc": "^0.27.1",
     "typedoc-plugin-markdown": "^4.3.0",
@@ -46,11 +46,6 @@
       "require": "./dist/index.js",
       "types": "./dist/dts/index.d.ts"
     },
-    "./hooks": {
-      "import": "./dist/hooks/index.js",
-      "require": "./dist/hooks/index.js",
-      "types": "./dist/dts/hooks/index.d.ts"
-    },
     "./types": {
       "types": "./dist/dts/types/index.d.ts"
     },
@@ -64,9 +59,6 @@
     "*": {
       "types": [
         "dist/dts/types/index.d.ts"
-      ],
-      "hooks": [
-        "dist/dts/hooks/index.d.ts"
       ],
       "utils": [
         "dist/dts/utils/index.d.ts"
@@ -92,7 +84,5 @@
     "access": "public"
   },
   "dependencies": {},
-  "peerDependencies": {
-    "react": "^18.0.0"
-  }
+  "peerDependencies": {}
 }

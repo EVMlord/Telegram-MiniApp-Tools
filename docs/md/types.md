@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.1.1**](README.md)
+[**Telegram MiniApp Tools v0.2.0**](README.md)
 
 ***
 
@@ -91,15 +91,15 @@ The custom `BackButton` manager interface.
 
 #### Properties
 
-| Property | Type |
-| ------ | ------ |
-| `getVisibility` | () => `boolean` |
-| `hide` | () => `void` |
-| `offClick` | (`callback`: [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback)) => `void` |
-| `onClick` | (`callback`: [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback)) => `void` |
-| `removeAllListeners` | () => `void` |
-| `show` | () => `void` |
-| `toggle` | () => `void` |
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| `getVisibility` | () => `boolean` | Gets the current visibility state of the BackButton. |
+| `hide` | () => `void` | Hides the BackButton. |
+| `offClick` | (`callback`: [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback)) => `void` | Unregisters a callback from the BackButton click event. |
+| `onClick` | (`callback`: [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback)) => `void` | Registers a callback for the BackButton click event. |
+| `removeAllListeners` | () => `void` | Removes all registered click event listeners. |
+| `show` | () => `void` | Shows the BackButton. |
+| `toggle` | () => `void` | Toggles the visibility of the BackButton. |
 
 ***
 
@@ -478,6 +478,45 @@ key.
 ###### Returns
 
 [`CloudStorage`](types.md#cloudstorage)
+
+***
+
+### CloudStorageManager
+
+Interface for managing cloud storage operations, providing methods to store,
+retrieve, remove, and list items in the cloud storage. These methods support
+both callback-based and Promise-based patterns.
+
+#### Properties
+
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| `getItem` | (`key`: `string`, `callback`?: [`CloudStorageGetItemCallback`](types.md#cloudstoragegetitemcallback)) => `void` \| `Promise`\<`string`\> | Retrieves a value from the cloud storage by key. |
+| `getItems` | (`keys`: `string`[], `callback`?: [`CloudStorageGetItemsCallback`](types.md#cloudstoragegetitemscallback)) => `void` \| `Promise`\<`Record`\<`string`, `string`\>\> | Retrieves multiple values from the cloud storage by their keys. |
+| `getKeys` | (`callback`?: [`CloudStorageGetKeysCallback`](types.md#cloudstoragegetkeyscallback)) => `void` \| `Promise`\<`string`[]\> | Retrieves all keys stored in the cloud storage. |
+| `removeItem` | (`key`: `string`, `callback`?: [`CloudStorageRemoveItemCallback`](types.md#cloudstorageremoveitemcallback)) => `void` \| `Promise`\<`true`\> | Removes a value from the cloud storage by key. |
+| `removeItems` | (`keys`: `string`[], `callback`?: [`CloudStorageRemoveItemsCallback`](types.md#cloudstorageremoveitemscallback)) => `void` \| `Promise`\<`true`\> | Removes multiple values from the cloud storage by their keys. |
+| `setItem` | (`key`: `string`, `value`: `string`, `callback`?: [`CloudStorageSetItemCallback`](types.md#cloudstoragesetitemcallback)) => `void` \| `Promise`\<`true`\> | Stores a value in the cloud storage with the specified key. |
+
+***
+
+### FullscreenManager
+
+Manages the fullscreen state and provides methods to control it.
+
+#### Properties
+
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| `destroy` | () => `void` | Cleans up event listeners and internal state. Should be called when the manager is no longer needed to prevent memory leaks. |
+| `exitFullscreen` | () => `void` | Requests the app to exit fullscreen mode. If the request fails, the error can be retrieved using `getError`. |
+| `getError` | () => `null` \| `string` | Retrieves the current error state. |
+| `getIsFullscreen` | () => `boolean` | Retrieves the current fullscreen state. |
+| `offError` | (`callback`: (`error`) => `void`) => `void` | Unregisters a previously registered error callback function. |
+| `offFullscreenChange` | (`callback`: (`isFullscreen`) => `void`) => `void` | Unregisters a previously registered fullscreen change callback function. |
+| `onError` | (`callback`: (`error`) => `void`) => `void` | Registers a callback function to be called when a fullscreen error occurs. |
+| `onFullscreenChange` | (`callback`: (`isFullscreen`) => `void`) => `void` | Registers a callback function to be called when the fullscreen state changes. |
+| `requestFullscreen` | () => `void` | Requests the app to enter fullscreen mode. If the request fails, the error can be retrieved using `getError`. |
 
 ***
 

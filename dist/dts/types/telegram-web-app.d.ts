@@ -1197,15 +1197,3 @@ export interface OpenLinkOptions {
  * Supported browser values for the `tryBrowser` option in `OpenLinkOptions`.
  */
 export type OpenLinkBrowser = "google-chrome" | "chrome" | "mozilla-firefox" | "firefox" | "microsoft-edge" | "edge" | "opera" | "opera-mini" | "brave" | "brave-browser" | "duckduckgo" | "duckduckgo-browser" | "samsung" | "samsung-browser" | "vivaldi" | "vivaldi-browser" | "kiwi" | "kiwi-browser" | "uc" | "uc-browser" | "tor" | "tor-browser";
-/**
- * The custom `BackButton` manager interface.
- */
-export interface BackButtonManager {
-    show: () => void;
-    hide: () => void;
-    toggle: () => void;
-    onClick: (callback: BackButtonClickedCallback) => void;
-    offClick: (callback: BackButtonClickedCallback) => void;
-    getVisibility: () => boolean;
-    removeAllListeners: () => void;
-}
