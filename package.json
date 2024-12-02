@@ -23,7 +23,8 @@
     "clean": "rimraf dist",
     "prebuild": "yarn docs:all && yarn clean",
     "build": "tsc",
-    "postbuild": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace"
+    "sync": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
+    "postbuild": "yarn sync"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

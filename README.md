@@ -42,7 +42,7 @@ import {
 
 The following utilities are available for managing your Telegram Mini App:
 
-More details in [/docs/md/utils.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/docs/md/utils.md)
+More details in [/docs/md/utils.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/tree/main/docs/md/utils.md)
 
 #### Initialization
 
@@ -244,7 +244,7 @@ const storedTokenStr = await cloudStorage?.getItem("token");
 
 The following hooks are available for managing your Telegram Mini App:
 
-More details in [/docs/md/hooks.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/docs/md/hooks.md)
+More details in [/docs/md/hooks.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/tree/main/docs/md/hooks.md)
 
 #### Adding an Icon to the Home Screen (React)
 
@@ -323,7 +323,7 @@ export default SettingsModal;
 
 Strongly typed interfaces are available to enhance TypeScript support for Telegram Mini Apps.
 
-More details in [/docs/md/types.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/docs/md/types.md)
+More details in [/docs/md/types.md](https://github.com/EVMlord/Telegram-MiniApp-Tools/tree/main/docs/md/types.md)
 
 ```typescript
 import type { InitData, LaunchParams, ParsedThemeParams } from 'telegram-miniapp-tools/types';
@@ -343,7 +343,7 @@ console.log(webApp.initData);
 console.log(telegram);
 ```
 
-You will find more details in the [Telegram-MiniApp-Tools Documentation](https://github.com/EVMlord/Telegram-MiniApp-Tools/docs/md/README.md)
+You will find more details in the [Telegram-MiniApp-Tools Documentation](https://github.com/EVMlord/Telegram-MiniApp-Tools/tree/main/docs/md/README.md)
 
 ## Contributing
 
