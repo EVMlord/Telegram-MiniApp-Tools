@@ -6,6 +6,17 @@
 
 # index
 
+The library provides direct access to the Telegram WebApp and environment variables.
+
+## Example
+
+```typescript
+import telegram, { webApp } from "telegram-miniapp-tools";
+
+console.log(webApp.initData);
+console.log(telegram);
+```
+
 ## Variables
 
 ### default
