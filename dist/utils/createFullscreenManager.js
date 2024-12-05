@@ -1,33 +1,36 @@
-import { webApp } from "../index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createFullscreenManager = createFullscreenManager;
+var index_js_1 = require("../index.js");
 /**
  * Creates a fullscreen manager that handles fullscreen state
  * and provides methods to request and exit fullscreen mode.
  *
  * @returns {FullscreenManager | null} The fullscreen manager object or null if Telegram WebApp is not available.
  */
-export function createFullscreenManager() {
-    if (!webApp) {
+function createFullscreenManager() {
+    if (!index_js_1.webApp) {
         console.warn("Telegram WebApp is not available.");
         return null;
     }
     // State variables
-    let isFullscreen = webApp.isFullscreen;
-    let error = null;
+    var isFullscreen = index_js_1.webApp.isFullscreen;
+    var error = null;
     // Event handlers
-    const fullscreenChangeHandlers = new Set();
-    const errorHandlers = new Set();
+    var fullscreenChangeHandlers = new Set();
+    var errorHandlers = new Set();
     // Internal event listeners
     function handleFullscreenChanged() {
-        isFullscreen = webApp.isFullscreen;
-        fullscreenChangeHandlers.forEach((callback) => callback(isFullscreen));
+        isFullscreen = index_js_1.webApp.isFullscreen;
+        fullscreenChangeHandlers.forEach(function (callback) { return callback(isFullscreen); });
     }
     function handleFullscreenFailed(errorObj) {
         error = errorObj.error;
-        errorHandlers.forEach((callback) => callback(error));
+        errorHandlers.forEach(function (callback) { return callback(error); });
     }
     // Subscribe to events
-    webApp.onEvent("fullscreenChanged", handleFullscreenChanged);
-    webApp.onEvent("fullscreenFailed", handleFullscreenFailed);
+    index_js_1.webApp.onEvent("fullscreenChanged", handleFullscreenChanged);
+    index_js_1.webApp.onEvent("fullscreenFailed", handleFullscreenFailed);
     // Public methods
     function getIsFullscreen() {
         return isFullscreen;
@@ -38,23 +41,23 @@ export function createFullscreenManager() {
     function requestFullscreen() {
         error = null; // Reset error
         try {
-            webApp.requestFullscreen();
+            index_js_1.webApp.requestFullscreen();
         }
         catch (e) {
             console.error(e);
             error = e.message || "Unknown error";
-            errorHandlers.forEach((callback) => callback(error));
+            errorHandlers.forEach(function (callback) { return callback(error); });
         }
     }
     function exitFullscreen() {
         error = null; // Reset error
         try {
-            webApp.exitFullscreen();
+            index_js_1.webApp.exitFullscreen();
         }
         catch (e) {
             console.error(e);
             error = e.message || "Unknown error";
-            errorHandlers.forEach((callback) => callback(error));
+            errorHandlers.forEach(function (callback) { return callback(error); });
         }
     }
     function onFullscreenChange(callback) {
@@ -70,20 +73,20 @@ export function createFullscreenManager() {
         errorHandlers.delete(callback);
     }
     function destroy() {
-        webApp.offEvent("fullscreenChanged", handleFullscreenChanged);
-        webApp.offEvent("fullscreenFailed", handleFullscreenFailed);
+        index_js_1.webApp.offEvent("fullscreenChanged", handleFullscreenChanged);
+        index_js_1.webApp.offEvent("fullscreenFailed", handleFullscreenFailed);
         fullscreenChangeHandlers.clear();
         errorHandlers.clear();
     }
     return {
-        getIsFullscreen,
-        getError,
-        requestFullscreen,
-        exitFullscreen,
-        onFullscreenChange,
-        offFullscreenChange,
-        onError,
-        offError,
-        destroy,
+        getIsFullscreen: getIsFullscreen,
+        getError: getError,
+        requestFullscreen: requestFullscreen,
+        exitFullscreen: exitFullscreen,
+        onFullscreenChange: onFullscreenChange,
+        offFullscreenChange: offFullscreenChange,
+        onError: onError,
+        offError: offError,
+        destroy: destroy,
     };
 }

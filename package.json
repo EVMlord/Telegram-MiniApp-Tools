@@ -1,6 +1,6 @@
 {
   "name": "telegram-miniapp-tools",
-  "version": "0.2.1",
+  "version": "0.2.7",
   "description": "Tools for working with Telegram Miniapps",
   "author": "EVMlord <buidl@evmlord.dev>",
   "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
@@ -12,8 +12,9 @@
     "url": "https://github.com/EVMlord/Telegram-MiniApp-Tools/issues"
   },
   "license": "Apache-2.0",
-  "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "./dist/telegram-web-apps.js"
+  ],
   "scripts": {
     "docs:html": "typedoc --options typedoc.json",
     "docs:md": "typedoc --options typedoc-markdown.json",
@@ -23,7 +24,7 @@
     "clean": "rimraf dist",
     "prebuild": "yarn clean && yarn docs:all",
     "build": "tsc",
-    "sync": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
+    "sync": "node scripts/copy-files.mjs ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
     "postbuild": "yarn sync",
     "deno": "jsr publish"
   },
@@ -37,14 +38,15 @@
     "dist/**/*",
     "README.md"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/dts/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/dts/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.js",
-      "types": "./dist/dts/index.d.ts"
+      "types": "./dist/dts/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./types": {
       "types": "./dist/dts/types/index.d.ts"
@@ -52,7 +54,8 @@
     "./utils": {
       "import": "./dist/utils/index.js",
       "require": "./dist/utils/index.js",
-      "types": "./dist/dts/utils/index.d.ts"
+      "types": "./dist/dts/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
     }
   },
   "typesVersions": {
@@ -60,8 +63,14 @@
       "types": [
         "dist/dts/types/index.d.ts"
       ],
+      "types/*": [
+        "dist/dts/types/*"
+      ],
       "utils": [
         "dist/dts/utils/index.d.ts"
+      ],
+      "utils/*": [
+        "dist/dts/utils/*"
       ]
     }
   },

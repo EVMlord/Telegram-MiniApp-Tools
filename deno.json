@@ -1,10 +1,8 @@
 {
   "name": "@smartearnersteam/tapp-tools",
-  "version": "0.2.1",
+  "version": "0.2.7",
   "license": "Apache-2.0",
-  "imports": {
-    "react": "npm:react@^18.0.0"
-  },
+  "imports": {},
   "exports": {
     ".": "./src/index.ts",
     "./types": "./src/types/index.ts",

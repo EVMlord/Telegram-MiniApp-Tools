@@ -1,21 +1,24 @@
-import { webApp } from "./index.js";
-const app = webApp;
+"use strict";
+var _a, _b, _c, _d;
+Object.defineProperty(exports, "__esModule", { value: true });
+var index_js_1 = require("./index.js");
+var app = index_js_1.webApp;
 app.ready();
 if (!app.isExpanded) {
     app.expand(); // $ExpectType void
 }
-const mainButton = app.MainButton; // $ExpectType BottomButton
-mainButton.text = (app.initDataUnsafe.user?.first_name ?? "you") + " r 2 close";
-mainButton.onClick(() => {
+var mainButton = app.MainButton; // $ExpectType BottomButton
+mainButton.text = ((_b = (_a = app.initDataUnsafe.user) === null || _a === void 0 ? void 0 : _a.first_name) !== null && _b !== void 0 ? _b : "you") + " r 2 close";
+mainButton.onClick(function () {
     app.close();
 });
-const secondaryButton = app.SecondaryButton; // $ExpectType BottomButton
+var secondaryButton = app.SecondaryButton; // $ExpectType BottomButton
 secondaryButton.text =
-    (app.initDataUnsafe.user?.last_name ?? "you") + " r 2 expand";
-secondaryButton.onClick(() => {
+    ((_d = (_c = app.initDataUnsafe.user) === null || _c === void 0 ? void 0 : _c.last_name) !== null && _d !== void 0 ? _d : "you") + " r 2 expand";
+secondaryButton.onClick(function () {
     app.expand();
 });
-app.onEvent("viewportChanged", (e) => {
+app.onEvent("viewportChanged", function (e) {
     if (e.isStateStable)
         console.log("Done at", app.viewportHeight);
     else
@@ -24,53 +27,54 @@ app.onEvent("viewportChanged", (e) => {
 app.showPopup({
     message: "Hello",
     buttons: [{ type: "default", text: "Button text", id: "btn_id" }],
-}, (btn_id) => console.log(btn_id));
-app.onEvent("popupClosed", (e) => {
+}, function (btn_id) { return console.log(btn_id); });
+app.onEvent("popupClosed", function (e) {
     console.log(e.button_id);
 });
 app.switchInlineQuery("query", ["users"]);
 app.setHeaderColor("#ff0010");
 app.setHeaderColor("bg_color");
-app.CloudStorage.setItem("key", "value", (err, success) => {
+app.CloudStorage.setItem("key", "value", function (err, success) {
     if (err)
         console.error(err);
     if (success) {
         console.log("success");
     }
 });
-app.CloudStorage.getItem("key", (err, val) => {
+app.CloudStorage.getItem("key", function (err, val) {
     if (err)
         console.error(err);
     if (val) {
-        const test = val; // $ExpectType string
+        var test = val; // $ExpectType string
         console.log(test);
     }
 });
-app.CloudStorage.getItems(["key1", "key2"], (err, vals) => {
+app.CloudStorage.getItems(["key1", "key2"], function (err, vals) {
     if (err)
         console.error(err);
     if (vals) {
-        const test = vals; // $ExpectType Record<string, string>
+        var test = vals; // $ExpectType Record<string, string>
         console.log(test);
     }
 });
-app.CloudStorage.getKeys((err, keys) => {
+app.CloudStorage.getKeys(function (err, keys) {
     if (err)
         console.error(err);
     if (keys) {
-        const test = keys; // $ExpectType string[]
+        var test = keys; // $ExpectType string[]
         console.log(test);
     }
 });
-app.requestWriteAccess((success) => {
-    const test = success; // $ExpectType boolean
+app.requestWriteAccess(function (success) {
+    var test = success; // $ExpectType boolean
     console.log(test);
 });
-app.onEvent("writeAccessRequested", ({ status }) => {
+app.onEvent("writeAccessRequested", function (_a) {
+    var status = _a.status;
     console.log(status);
 });
 app.SettingsButton.show();
-app.requestContact((success, req) => {
+app.requestContact(function (success, req) {
     console.log(success);
     if (req.status === "sent") {
         // no error
@@ -82,7 +86,7 @@ app.requestContact((success, req) => {
         req.status; // $ExpectType "cancelled"
     }
 });
-app.onEvent("contactRequested", (req) => {
+app.onEvent("contactRequested", function (req) {
     if (req.status === "sent") {
         // no error
         req.response;
@@ -93,7 +97,7 @@ app.onEvent("contactRequested", (req) => {
         req.status; // $ExpectType "cancelled"
     }
 });
-app.BiometricManager.init(() => console.log("init"));
+app.BiometricManager.init(function () { return console.log("init"); });
 app.BiometricManager.openSettings();
 app.isVerticalSwipesEnabled; // $ExpectType boolean
 app.enableVerticalSwipes();
@@ -102,7 +106,7 @@ app.shareToStory("url", {
     text: "txt",
     widget_link: { name: "name", url: "url" },
 });
-app.openInvoice("url", (status) => {
-    const test = status; // $ExpectType "paid" | "cancelled" | "failed" | "pending"
+app.openInvoice("url", function (status) {
+    var test = status; // $ExpectType "paid" | "cancelled" | "failed" | "pending"
     console.log(test);
 });

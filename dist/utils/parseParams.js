@@ -1,14 +1,21 @@
-import { initData } from "../transformers/initData.js";
-import { camelToSnake, launchParams, snakeToCamel, } from "../transformers/serializeParams.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.transformThemeParams = transformThemeParams;
+exports.reverseTransformThemeParams = reverseTransformThemeParams;
+exports.parseInitData = parseInitData;
+exports.parseLaunchParams = parseLaunchParams;
+var initData_js_1 = require("../transformers/initData.js");
+var serializeParams_js_1 = require("../transformers/serializeParams.js");
 /**
  * Transforms Telegram theme parameters (ThemeParams) into ParsedThemeParams with camelCase keys.
  * @param telegramThemeParams - The theme parameters object from Telegram.
  * @returns The transformed theme parameters object with camelCase keys.
  */
-export function transformThemeParams(telegramThemeParams) {
-    const transformedParams = {};
-    Object.entries(telegramThemeParams).forEach(([key, value]) => {
-        const camelCaseKey = snakeToCamel(key);
+function transformThemeParams(telegramThemeParams) {
+    var transformedParams = {};
+    Object.entries(telegramThemeParams).forEach(function (_a) {
+        var key = _a[0], value = _a[1];
+        var camelCaseKey = (0, serializeParams_js_1.snakeToCamel)(key);
         transformedParams[camelCaseKey] = value;
     });
     return transformedParams;
@@ -18,10 +25,11 @@ export function transformThemeParams(telegramThemeParams) {
  * @param parsedThemeParams - The theme parameters object with camelCase keys.
  * @returns The transformed theme parameters object with snake_case keys.
  */
-export function reverseTransformThemeParams(parsedThemeParams) {
-    const transformedParams = {};
-    Object.entries(parsedThemeParams).forEach(([key, value]) => {
-        const snakeCaseKey = camelToSnake(key);
+function reverseTransformThemeParams(parsedThemeParams) {
+    var transformedParams = {};
+    Object.entries(parsedThemeParams).forEach(function (_a) {
+        var key = _a[0], value = _a[1];
+        var snakeCaseKey = (0, serializeParams_js_1.camelToSnake)(key);
         transformedParams[snakeCaseKey] = value;
     });
     return transformedParams;
@@ -65,9 +73,9 @@ export function reverseTransformThemeParams(parsedThemeParams) {
  * @param value - value to check.
  * @throws {} Parsing errors.
  */
-export function parseInitData(value) {
+function parseInitData(value) {
     // console.log({ parseInitDataValue: value });
-    return initData()(value);
+    return (0, initData_js_1.initData)()(value);
 }
 /**
  * Parses a string value into LaunchParams.
@@ -95,6 +103,6 @@ export function parseInitData(value) {
  * Parses value as launch parameters.
  * @param value - value to parse.
  */
-export function parseLaunchParams(value) {
-    return launchParams()(value);
+function parseLaunchParams(value) {
+    return (0, serializeParams_js_1.launchParams)()(value);
 }

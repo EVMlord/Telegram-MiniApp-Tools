@@ -1,13 +1,16 @@
-import { retrieveFromUrl } from "./retrieveFromUrl.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.retrieveFromPerformance = retrieveFromPerformance;
+var retrieveFromUrl_js_1 = require("./retrieveFromUrl.js");
 /**
  * @returns Launch parameters based on the first navigation entry.
  * @throws Error if function was unable to extract launch parameters from the navigation entry.
  */
-export function retrieveFromPerformance() {
+function retrieveFromPerformance() {
     // console.log("Attempting to retrieve params from navigation performance...");
-    const navigationEntry = performance.getEntriesByType("navigation")[0];
+    var navigationEntry = performance.getEntriesByType("navigation")[0];
     if (!navigationEntry) {
         throw new Error("Unable to get first navigation entry.");
     }
-    return retrieveFromUrl(navigationEntry.name);
+    return (0, retrieveFromUrl_js_1.retrieveFromUrl)(navigationEntry.name);
 }

@@ -1,3 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.compareVersions = compareVersions;
+exports.versionLessOrEqual = versionLessOrEqual;
 function parts(a) {
     return a.split(".").map(Number);
 }
@@ -9,15 +13,15 @@ function parts(a) {
  * - `0` the version "a" is equal to "b".
  * - `-1` the version "a" is lower than "b".
  */
-export function compareVersions(a, b) {
-    const aParts = parts(a);
-    const bParts = parts(b);
-    const len = Math.max(aParts.length, bParts.length);
+function compareVersions(a, b) {
+    var aParts = parts(a);
+    var bParts = parts(b);
+    var len = Math.max(aParts.length, bParts.length);
     // Iterate over each part of versions and compare them. In case, part is
     // missing, assume its value is equal to 0.
-    for (let i = 0; i < len; i += 1) {
-        const aVal = aParts[i] || 0;
-        const bVal = bParts[i] || 0;
+    for (var i = 0; i < len; i += 1) {
+        var aVal = aParts[i] || 0;
+        var bVal = bParts[i] || 0;
         if (aVal === bVal) {
             continue;
         }
@@ -30,6 +34,6 @@ export function compareVersions(a, b) {
  * @param a
  * @param b
  */
-export function versionLessOrEqual(a, b) {
+function versionLessOrEqual(a, b) {
     return compareVersions(a, b) <= 0;
 }

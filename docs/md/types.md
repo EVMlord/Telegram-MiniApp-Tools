@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.1**](README.md)
+[**Telegram MiniApp Tools v0.2.7**](README.md)
 
 ***
 
@@ -177,7 +177,7 @@ Web App in the Telegram interface.
 | `isActive` | `boolean` | Shows whether the button is active. Set to true by default. |
 | `isProgressVisible` | `boolean` | Readonly. Shows whether the button is displaying a loading indicator. |
 | `isVisible` | `boolean` | Shows whether the button is visible. Set to false by default. |
-| `position?` | `"left"` \| `"right"` \| `"top"` \| `"bottom"` | Position of the secondary button. Not defined for the main button. It applies only if both the main and secondary buttons are visible. Set to left by default. Supported values: - left, displayed to the left of the main button, - right, displayed to the right of the main button, - top, displayed above the main button, - bottom, displayed below the main button. |
+| `position?` | `"left"` \| `"top"` \| `"bottom"` \| `"right"` | Position of the secondary button. Not defined for the main button. It applies only if both the main and secondary buttons are visible. Set to left by default. Supported values: - left, displayed to the left of the main button, - right, displayed to the right of the main button, - top, displayed above the main button, - bottom, displayed below the main button. |
 | `text` | `string` | Current button text. Set to CONTINUE by default. |
 | `textColor` | `string` | Current button text color. Set to themeParams.button_text_color by default. |
 
@@ -556,7 +556,7 @@ these values:
 
 | Parameter | Type |
 | ------ | ------ |
-| `style` | \| `"light"` \| `"medium"` \| `"heavy"` \| `"rigid"` \| `"soft"` |
+| `style` | \| `"medium"` \| `"light"` \| `"heavy"` \| `"rigid"` \| `"soft"` |
 
 ###### Returns
 
@@ -661,7 +661,7 @@ type.
 | `has_shine_effect?` | `boolean` | enable shine effect |
 | `is_active?` | `boolean` | enable the button |
 | `is_visible?` | `boolean` | show the button |
-| `position?` | `"left"` \| `"right"` \| `"top"` \| `"bottom"` | position of the secondary button |
+| `position?` | `"left"` \| `"top"` \| `"bottom"` \| `"right"` | position of the secondary button |
 | `text?` | `string` | button text |
 | `text_color?` | [`Color`](types.md#color) | button text color |
 
@@ -2187,7 +2187,7 @@ following types: users, bots, groups, channels.
 | Parameter | Type |
 | ------ | ------ |
 | `query` | `string` |
-| `choose_chat_types`? | (`"users"` \| `"bots"` \| `"groups"` \| `"channels"`)[] |
+| `choose_chat_types`? | (`"groups"` \| `"users"` \| `"bots"` \| `"channels"`)[] |
 
 ###### Returns
 
@@ -2220,7 +2220,7 @@ This object represents a chat.
 | `id` | `number` | Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier. |
 | `photo_url?` | `string` | URL of the chat’s photo. The photo can be in .jpeg or .svg formats. Only returned for Web Apps launched from the attachment menu. |
 | `title` | `string` | Title of the chat |
-| `type` | `"group"` \| `"supergroup"` \| `"channel"` | Type of chat, can be either “group”, “supergroup” or “channel” |
+| `type` | `"channel"` \| `"group"` \| `"supergroup"` | Type of chat, can be either “group”, “supergroup” or “channel” |
 | `username?` | `string` | Username of the chat |
 
 ***

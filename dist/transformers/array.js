@@ -1,22 +1,25 @@
-import { throwUnexpectedValue } from "../errors/throwUnexpectedValue.js";
-import { createTransformerGen } from "./createTransformerGen.js";
-export function array(of, name) {
-    return createTransformerGen(name || "array", (v) => {
-        let a;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.array = array;
+var throwUnexpectedValue_js_1 = require("../errors/throwUnexpectedValue.js");
+var createTransformerGen_js_1 = require("./createTransformerGen.js");
+function array(of, name) {
+    return (0, createTransformerGen_js_1.createTransformerGen)(name || "array", function (v) {
+        var a;
         if (Array.isArray(v)) {
             a = v;
         }
         else if (typeof v === "string") {
             try {
-                const json = JSON.parse(v);
+                var json = JSON.parse(v);
                 if (Array.isArray(json)) {
                     a = json;
                 }
             }
-            catch { }
+            catch (_a) { }
         }
         if (!a) {
-            throwUnexpectedValue(v);
+            (0, throwUnexpectedValue_js_1.throwUnexpectedValue)(v);
         }
         return a.map(of);
     });

@@ -1,35 +1,38 @@
-import { ERR_PARSE } from "../errors/errors.js";
-import { TypedError } from "../errors/TypedError.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseBySchema = parseBySchema;
+var errors_js_1 = require("../errors/errors.js");
+var TypedError_js_1 = require("../errors/TypedError.js");
 /**
  * Parses external value by specified schema. Functions iterates over each schema field
  * and uses getField function to get its value from the external source.
  * @param schema - object schema.
  * @param getField - function which gets external value by its field name.
  */
-export function parseBySchema(schema, getField) {
-    const result = {};
-    for (const field in schema) {
-        const definition = schema[field];
+function parseBySchema(schema, getField) {
+    var result = {};
+    for (var field in schema) {
+        var definition = schema[field];
         if (!definition) {
             continue;
         }
-        let from;
-        let transform;
+        var from = void 0;
+        var transform = void 0;
         if (typeof definition === "function") {
             from = field;
             transform = definition;
         }
         else {
-            [from, transform] = definition;
+            from = definition[0], transform = definition[1];
         }
         try {
-            const parsedValue = transform(getField(from));
+            var parsedValue = transform(getField(from));
             if (parsedValue !== undefined) {
                 result[field] = parsedValue;
             }
         }
         catch (cause) {
-            throw new TypedError(ERR_PARSE, `Parser for "${field}" property failed${from === field ? "" : `. Source field: "${from}"`}`, cause);
+            throw new TypedError_js_1.TypedError(errors_js_1.ERR_PARSE, "Parser for \"".concat(field, "\" property failed").concat(from === field ? "" : ". Source field: \"".concat(from, "\"")), cause);
         }
     }
     return result;

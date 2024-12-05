@@ -1,21 +1,25 @@
-import { getStorageValue, setStorageValue } from "../storage/storage.js";
-import { serializeLaunchParams } from "../transformers/serializeParams.js";
-import { parseLaunchParams } from "../utils/parseParams.js";
-const STORAGE_KEY = "launchParams";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.retrieveFromStorage = retrieveFromStorage;
+exports.saveToStorage = saveToStorage;
+var storage_js_1 = require("../storage/storage.js");
+var serializeParams_js_1 = require("../transformers/serializeParams.js");
+var parseParams_js_1 = require("../utils/parseParams.js");
+var STORAGE_KEY = "launchParams";
 /**
  * @returns Launch parameters stored in the session storage.
  * @throws Error if function was unable to extract launch parameters from the window location hash.
  */
-export function retrieveFromStorage() {
+function retrieveFromStorage() {
     // console.log({
     //   retrieveFromStorage: parseLaunchParams(getStorageValue(STORAGE_KEY) || ""),
     // });
-    return parseLaunchParams(getStorageValue(STORAGE_KEY) || "");
+    return (0, parseParams_js_1.parseLaunchParams)((0, storage_js_1.getStorageValue)(STORAGE_KEY) || "");
 }
 /**
  * Saves specified launch parameters in the session storage.
  * @param value - launch params to save.
  */
-export function saveToStorage(value) {
-    setStorageValue("launchParams", serializeLaunchParams(value));
+function saveToStorage(value) {
+    (0, storage_js_1.setStorageValue)("launchParams", (0, serializeParams_js_1.serializeLaunchParams)(value));
 }

@@ -1,11 +1,14 @@
-import { webApp } from "../index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createCloudStorageManager = createCloudStorageManager;
+var index_js_1 = require("../index.js");
 /**
  * Creates a manager for Telegram WebApp's CloudStorage API.
  *
  * Provides simplified, promise-based methods for interacting with cloud storage.
  */
-export function createCloudStorageManager() {
-    const CloudStorageAPI = webApp.CloudStorage;
+function createCloudStorageManager() {
+    var CloudStorageAPI = index_js_1.webApp.CloudStorage;
     if (!CloudStorageAPI) {
         console.warn("CloudStorage is not available.");
         return null;
@@ -26,8 +29,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.setItem(key, value, callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.setItem(key, value, (error, success) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.setItem(key, value, function (error, success) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -55,8 +58,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.getItem(key, callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.getItem(key, (error, value) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.getItem(key, function (error, value) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -84,8 +87,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.getItems(keys, callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.getItems(keys, (error, values) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.getItems(keys, function (error, values) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -113,8 +116,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.removeItem(key, callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.removeItem(key, (error, success) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.removeItem(key, function (error, success) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -142,8 +145,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.removeItems(keys, callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.removeItems(keys, (error, success) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.removeItems(keys, function (error, success) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -170,8 +173,8 @@ export function createCloudStorageManager() {
             CloudStorageAPI.getKeys(callback);
         }
         else {
-            return new Promise((resolve, reject) => {
-                CloudStorageAPI.getKeys((error, keys) => {
+            return new Promise(function (resolve, reject) {
+                CloudStorageAPI.getKeys(function (error, keys) {
                     if (error) {
                         reject(new Error(error));
                     }
@@ -186,11 +189,11 @@ export function createCloudStorageManager() {
         }
     }
     return {
-        setItem,
-        getItem,
-        getItems,
-        removeItem,
-        removeItems,
-        getKeys,
+        setItem: setItem,
+        getItem: getItem,
+        getItems: getItems,
+        removeItem: removeItem,
+        removeItems: removeItems,
+        getKeys: getKeys,
     };
 }

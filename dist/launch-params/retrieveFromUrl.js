@@ -1,11 +1,14 @@
-import { normalizeUrlParams, parseLaunchParams, } from "../transformers/index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.retrieveFromUrl = retrieveFromUrl;
+var index_js_1 = require("../transformers/index.js");
 /**
  * @param urlString - URL to extract launch parameters from.
  * @returns Launch parameters from the specified URL.
  * @throws Error if function was unable to extract launch parameters from the passed URL.
  */
-export function retrieveFromUrl(urlString) {
-    return parseLaunchParams(normalizeUrlParams(urlString)
+function retrieveFromUrl(urlString) {
+    return (0, index_js_1.parseLaunchParams)((0, index_js_1.normalizeUrlParams)(urlString)
     // urlString
     //   // Replace everything before this first hashtag or question sign.
     //   .replace(/^[^?#]*[?#]/, "")

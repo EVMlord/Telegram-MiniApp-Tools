@@ -1,5 +1,9 @@
-let callbacks;
-export function runInBatchMode(signal, fn) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.runInBatchMode = runInBatchMode;
+exports.batch = batch;
+var callbacks;
+function runInBatchMode(signal, fn) {
     (callbacks && callbacks.set(signal, fn)) || fn();
 }
 /**
@@ -30,7 +34,7 @@ export function runInBatchMode(signal, fn) {
  * // be called only once. Removing the `batch` function usage will lead to calling the `subscriber`
  * // function four times.
  */
-export function batch(fn) {
+function batch(fn) {
     // There could be a case when a batch is called inside other batches.
     // In this case, we should just ignore the current call.
     if (callbacks) {
@@ -41,7 +45,7 @@ export function batch(fn) {
         fn();
     }
     finally {
-        callbacks.forEach((cb) => cb());
+        callbacks.forEach(function (cb) { return cb(); });
         callbacks = undefined;
         // TODO: What if something went wrong in fn or its callbacks?
     }

@@ -1,4 +1,7 @@
-import { webApp } from "../index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createBackButtonManager = void 0;
+var index_js_1 = require("../index.js");
 /**
  * Manages the Telegram WebApp BackButton functionality.
  * This manager ensures only one instance exists throughout the application.
@@ -34,33 +37,33 @@ import { webApp } from "../index.js";
  *
  * @returns {BackButtonManager | null} The BackButton manager object or null if BackButton is not available.
  */
-export const createBackButtonManager = (function () {
-    let instance = null;
+exports.createBackButtonManager = (function () {
+    var instance = null;
     /**
      * Creates the BackButton manager.
      * @returns {BackButtonManager | null}
      */
     function createManager() {
-        if (!webApp.BackButton) {
+        if (!index_js_1.webApp.BackButton) {
             console.warn("BackButton is not available.");
             return null;
         }
         // State to track the visibility of the back button
-        let isVisible = webApp.BackButton.isVisible;
+        var isVisible = index_js_1.webApp.BackButton.isVisible;
         // Handlers storage to manage multiple callbacks
-        const clickHandlers = new Set();
+        var clickHandlers = new Set();
         /**
          * Shows the BackButton.
          */
         function show() {
-            webApp.BackButton.show();
+            index_js_1.webApp.BackButton.show();
             isVisible = true;
         }
         /**
          * Hides the BackButton.
          */
         function hide() {
-            webApp.BackButton.hide();
+            index_js_1.webApp.BackButton.hide();
             isVisible = false;
         }
         /**
@@ -81,7 +84,7 @@ export const createBackButtonManager = (function () {
         function onClick(callback) {
             if (!clickHandlers.has(callback)) {
                 clickHandlers.add(callback);
-                webApp.BackButton.onClick(callback);
+                index_js_1.webApp.BackButton.onClick(callback);
             }
         }
         /**
@@ -91,15 +94,15 @@ export const createBackButtonManager = (function () {
         function offClick(callback) {
             if (clickHandlers.has(callback)) {
                 clickHandlers.delete(callback);
-                webApp.BackButton.offClick(callback);
+                index_js_1.webApp.BackButton.offClick(callback);
             }
         }
         /**
          * Removes all registered click event listeners.
          */
         function removeAllListeners() {
-            clickHandlers.forEach((callback) => {
-                webApp.BackButton.offClick(callback);
+            clickHandlers.forEach(function (callback) {
+                index_js_1.webApp.BackButton.offClick(callback);
             });
             clickHandlers.clear();
         }
@@ -111,13 +114,13 @@ export const createBackButtonManager = (function () {
             return isVisible;
         }
         return {
-            show,
-            hide,
-            toggle,
-            onClick,
-            offClick,
-            getVisibility,
-            removeAllListeners,
+            show: show,
+            hide: hide,
+            toggle: toggle,
+            onClick: onClick,
+            offClick: offClick,
+            getVisibility: getVisibility,
+            removeAllListeners: removeAllListeners,
         };
     }
     return function getInstance() {

@@ -1,23 +1,36 @@
-import { collectSignal } from "./computed.js";
-import { runInBatchMode } from "./batch.js";
+"use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.signal = signal;
+var computed_js_1 = require("./computed.js");
+var batch_js_1 = require("./batch.js");
 // #__NO_SIDE_EFFECTS__
-export function signal(initialValue, options) {
+function signal(initialValue, options) {
     options || (options = {});
-    const equals = options.equals || Object.is;
-    let listeners = [];
-    let value = initialValue;
-    const set = (v) => {
+    var equals = options.equals || Object.is;
+    var listeners = [];
+    var value = initialValue;
+    var set = function (v) {
         if (!equals(value, v)) {
-            const prev = value;
+            var prev_1 = value;
             value = v;
             // We are making a copy of listeners as long as they may mutate the listeners' array,
             // leading to an unexpected behavior.
             //
             // We want the setter to make sure that all listeners will be called in predefined
             // order within a single update frame.
-            runInBatchMode(s, () => {
-                [...listeners].forEach(([fn, once]) => {
-                    fn(v, prev);
+            (0, batch_js_1.runInBatchMode)(s, function () {
+                __spreadArray([], listeners, true).forEach(function (_a) {
+                    var fn = _a[0], once = _a[1];
+                    fn(v, prev_1);
                     // Remove "once" listeners.
                     if (once) {
                         unsub(fn, true);
@@ -27,7 +40,7 @@ export function signal(initialValue, options) {
         }
     };
     function formatSubOptions(onceOrOptions) {
-        const options = typeof onceOrOptions !== "object"
+        var options = typeof onceOrOptions !== "object"
             ? { once: onceOrOptions }
             : onceOrOptions;
         return {
@@ -35,9 +48,10 @@ export function signal(initialValue, options) {
             signal: options.signal || false,
         };
     }
-    const unsub = (fn, onceOrOptions) => {
-        const options = formatSubOptions(onceOrOptions);
-        const idx = listeners.findIndex(([listener, lOptions]) => {
+    var unsub = function (fn, onceOrOptions) {
+        var options = formatSubOptions(onceOrOptions);
+        var idx = listeners.findIndex(function (_a) {
+            var listener = _a[0], lOptions = _a[1];
             return (listener === fn &&
                 lOptions.once === options.once &&
                 lOptions.signal === options.signal);
@@ -46,24 +60,24 @@ export function signal(initialValue, options) {
             listeners.splice(idx, 1);
         }
     };
-    const s = Object.assign(function get() {
-        collectSignal(s);
+    var s = Object.assign(function get() {
+        (0, computed_js_1.collectSignal)(s);
         return value;
     }, {
-        destroy() {
+        destroy: function () {
             listeners = [];
         },
-        set,
-        reset() {
+        set: set,
+        reset: function () {
             set(initialValue);
         },
-        sub(fn, onceOrOptions) {
+        sub: function (fn, onceOrOptions) {
             listeners.push([fn, formatSubOptions(onceOrOptions)]);
-            return () => unsub(fn, onceOrOptions);
+            return function () { return unsub(fn, onceOrOptions); };
         },
-        unsub,
-        unsubAll() {
-            listeners = listeners.filter((l) => l[1].signal);
+        unsub: unsub,
+        unsubAll: function () {
+            listeners = listeners.filter(function (l) { return l[1].signal; });
         },
     });
     return s;

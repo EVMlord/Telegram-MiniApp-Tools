@@ -1,3 +1,4 @@
+"use strict";
 // WebView
 (function () {
     var eventHandlers = {};
@@ -3098,4 +3099,3 @@
     WebView.postEvent('web_app_request_safe_area');
     WebView.postEvent('web_app_request_content_safe_area');
 })();
-export {};

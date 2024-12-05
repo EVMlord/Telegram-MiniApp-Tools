@@ -1,12 +1,28 @@
-import { saveToStorage } from "../launch-params/storage.js";
-import { parseInitData, reverseTransformThemeParams, transformThemeParams, } from "../transformers/index.js";
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseMockInitData = parseMockInitData;
+exports.mockTelegramEnv = mockTelegramEnv;
+exports.parseMockInitDataAsLaunchParams = parseMockInitDataAsLaunchParams;
+var storage_js_1 = require("../launch-params/storage.js");
+var index_js_1 = require("../transformers/index.js");
 /**
  * Parses initDataRaw string into an object (initDataUnsafe).
  * @param initDataRaw The raw initData string from URLSearchParams
  */
-export function parseMockInitData(initDataRaw) {
-    const params = new URLSearchParams(initDataRaw);
-    const initDataUnsafe = {
+function parseMockInitData(initDataRaw) {
+    var params = new URLSearchParams(initDataRaw);
+    var initDataUnsafe = {
         user: JSON.parse(params.get("user") || "{}"),
         hash: params.get("hash") || "",
         signature: params.get("signature") || "defaultSignature",
@@ -21,15 +37,16 @@ export function parseMockInitData(initDataRaw) {
  * Mocks the Telegram Web App environment.
  * @param options Configuration for the mock environment.
  */
-export function mockTelegramEnv(options) {
+function mockTelegramEnv(options) {
+    var _a;
     // Ensure the global window.Telegram.WebApp is defined
     if (typeof window !== "object" || window === null) {
         throw new Error("Cannot mock Telegram environment: window is not accessible.");
     }
     // console.log({ options });
-    const webAppEventHandlers = {};
+    var webAppEventHandlers = {};
     // Default theme parameters
-    const defaultThemeParams = {
+    var defaultThemeParams = {
         accentTextColor: "#000000",
         bgColor: "#ffffff",
         buttonColor: "#0000ff",
@@ -45,28 +62,25 @@ export function mockTelegramEnv(options) {
         textColor: "#000000",
     };
     // Transform options.themeParams into ParsedThemeParams (camelCase)
-    const transformedThemeParams = options.themeParams
-        ? transformThemeParams(options.themeParams)
+    var transformedThemeParams = options.themeParams
+        ? (0, index_js_1.transformThemeParams)(options.themeParams)
         : {};
     // Combine defaultThemeParams and transformed options.themeParams
-    const combinedThemeParams = {
-        ...defaultThemeParams,
-        ...transformedThemeParams,
-    };
+    var combinedThemeParams = __assign(__assign({}, defaultThemeParams), transformedThemeParams);
     // Parse initData if not provided in options
-    let parsedInitData = options.initData;
-    let updatedInitDataRaw = options.initDataRaw || "";
+    var parsedInitData = options.initData;
+    var updatedInitDataRaw = options.initDataRaw || "";
     // Ensure the signature is added to initDataRaw if not already present
-    const initDataParams = new URLSearchParams(updatedInitDataRaw);
+    var initDataParams = new URLSearchParams(updatedInitDataRaw);
     if (!initDataParams.has("signature")) {
-        const signature = parsedInitData?.signature || "unsigned"; // Use existing signature or default to "unsigned"
+        var signature = (parsedInitData === null || parsedInitData === void 0 ? void 0 : parsedInitData.signature) || "unsigned"; // Use existing signature or default to "unsigned"
         initDataParams.append("signature", signature);
         updatedInitDataRaw = initDataParams.toString(); // Update initDataRaw with the signature
     }
     // Parse initData using updated initDataRaw
     if (!parsedInitData) {
         if (updatedInitDataRaw) {
-            parsedInitData = parseInitData(updatedInitDataRaw);
+            parsedInitData = (0, index_js_1.parseInitData)(updatedInitDataRaw);
         }
         else {
             // If neither initData nor initDataRaw is provided, initialize an empty object
@@ -79,7 +93,7 @@ export function mockTelegramEnv(options) {
     }
     // console.log({ parsedInitData });
     // Create the mock LaunchParams object
-    const launchParams = {
+    var launchParams = {
         botInline: options.botInline || false,
         initData: parsedInitData,
         initDataRaw: updatedInitDataRaw,
@@ -91,9 +105,9 @@ export function mockTelegramEnv(options) {
     };
     // console.log({ launchParams });
     // Save the LaunchParams to storage
-    saveToStorage(launchParams);
+    (0, storage_js_1.saveToStorage)(launchParams);
     // Mock the WebApp object
-    const webApp = {
+    var webApp = {
         initData: launchParams.initDataRaw || "",
         initDataUnsafe: options.initDataRaw
             ? parseMockInitData(options.initDataRaw)
@@ -116,50 +130,50 @@ export function mockTelegramEnv(options) {
         HapticFeedback: {},
         CloudStorage: {},
         BiometricManager: {},
-        isVersionAtLeast: (version) => {
-            const [major1, minor1 = "0"] = webApp.version.split(".").map(Number);
-            const [major2, minor2 = "0"] = version.split(".").map(Number);
+        isVersionAtLeast: function (version) {
+            var _a = webApp.version.split(".").map(Number), major1 = _a[0], _b = _a[1], minor1 = _b === void 0 ? "0" : _b;
+            var _c = version.split(".").map(Number), major2 = _c[0], _d = _c[1], minor2 = _d === void 0 ? "0" : _d;
             return major1 > major2 || (major1 === major2 && minor1 >= minor2);
         },
-        setHeaderColor: () => { },
-        setBackgroundColor: () => { },
-        setBottomBarColor: () => { },
-        enableClosingConfirmation: () => { },
-        disableClosingConfirmation: () => { },
-        onEvent: (eventType, eventHandler) => {
+        setHeaderColor: function () { },
+        setBackgroundColor: function () { },
+        setBottomBarColor: function () { },
+        enableClosingConfirmation: function () { },
+        disableClosingConfirmation: function () { },
+        onEvent: function (eventType, eventHandler) {
             webAppEventHandlers[eventType] = eventHandler;
         },
-        offEvent: (eventType, eventHandler) => {
+        offEvent: function (eventType, eventHandler) {
             if (webAppEventHandlers[eventType] === eventHandler) {
                 delete webAppEventHandlers[eventType];
             }
         },
-        sendData: () => { },
-        switchInlineQuery: () => { },
-        openLink: () => { },
-        openTelegramLink: () => { },
-        openInvoice: () => { },
-        showPopup: () => { },
-        showAlert: () => { },
-        showConfirm: () => { },
-        showScanQrPopup: () => { },
-        closeScanQrPopup: () => { },
-        shareToStory: () => { },
-        readTextFromClipboard: () => { },
-        requestWriteAccess: () => { },
-        requestContact: () => { },
-        ready: () => { },
-        expand: () => { },
-        close: () => { },
+        sendData: function () { },
+        switchInlineQuery: function () { },
+        openLink: function () { },
+        openTelegramLink: function () { },
+        openInvoice: function () { },
+        showPopup: function () { },
+        showAlert: function () { },
+        showConfirm: function () { },
+        showScanQrPopup: function () { },
+        closeScanQrPopup: function () { },
+        shareToStory: function () { },
+        readTextFromClipboard: function () { },
+        requestWriteAccess: function () { },
+        requestContact: function () { },
+        ready: function () { },
+        expand: function () { },
+        close: function () { },
         isVerticalSwipesEnabled: true,
-        enableVerticalSwipes: () => { },
-        disableVerticalSwipes: () => { },
-        requestFullscreen: () => { },
-        exitFullscreen: () => { },
-        lockOrientation: () => { },
-        unlockOrientation: () => { },
-        addToHomeScreen: () => { },
-        checkHomeScreenStatus: () => { },
+        enableVerticalSwipes: function () { },
+        disableVerticalSwipes: function () { },
+        requestFullscreen: function () { },
+        exitFullscreen: function () { },
+        lockOrientation: function () { },
+        unlockOrientation: function () { },
+        addToHomeScreen: function () { },
+        checkHomeScreenStatus: function () { },
         isFullscreen: false,
     };
     /**
@@ -170,14 +184,11 @@ export function mockTelegramEnv(options) {
      * @param data - Data for the event
      */
     function imitatePostEvent(themeParams, data) {
-        const { eventType, eventData } = JSON.parse(data);
+        var _a = JSON.parse(data), eventType = _a.eventType, eventData = _a.eventData;
         switch (eventType) {
             case "themeChanged":
                 // Update theme parameters, reverse-transform to ThemeParams (snake_case)
-                webApp.themeParams = {
-                    ...webApp.themeParams,
-                    ...reverseTransformThemeParams(themeParams),
-                };
+                webApp.themeParams = __assign(__assign({}, webApp.themeParams), (0, index_js_1.reverseTransformThemeParams)(themeParams));
                 if (webAppEventHandlers[eventType]) {
                     webAppEventHandlers[eventType]();
                 }
@@ -190,12 +201,12 @@ export function mockTelegramEnv(options) {
         }
     }
     // Define TelegramWebviewProxy to handle postEvent
-    const proxyPostEvent = window.TelegramWebviewProxy?.postEvent;
+    var proxyPostEvent = (_a = window.TelegramWebviewProxy) === null || _a === void 0 ? void 0 : _a.postEvent;
     window.TelegramWebviewProxy = {
-        postEvent(eventType, eventData) {
-            imitatePostEvent(transformThemeParams(webApp.themeParams), // Transform to ParsedThemeParams (camelCase)
-            JSON.stringify({ eventType, eventData }));
-            proxyPostEvent?.(eventType, eventData);
+        postEvent: function (eventType, eventData) {
+            imitatePostEvent((0, index_js_1.transformThemeParams)(webApp.themeParams), // Transform to ParsedThemeParams (camelCase)
+            JSON.stringify({ eventType: eventType, eventData: eventData }));
+            proxyPostEvent === null || proxyPostEvent === void 0 ? void 0 : proxyPostEvent(eventType, eventData);
         },
     };
     // Apply any custom WebApp overrides from options
@@ -211,16 +222,16 @@ export function mockTelegramEnv(options) {
  * @param initDataRaw - The raw initData string from the URL query parameters.
  * @returns An object of type LaunchParams.
  */
-export function parseMockInitDataAsLaunchParams(initDataRaw) {
-    const params = new URLSearchParams(initDataRaw);
+function parseMockInitDataAsLaunchParams(initDataRaw) {
+    var params = new URLSearchParams(initDataRaw);
     // Parse the `user` field, which is a JSON string
-    const userJson = params.get("user");
+    var userJson = params.get("user");
     if (!userJson) {
         throw new Error("Missing user field in initDataRaw.");
     }
-    const user = JSON.parse(userJson);
+    var user = JSON.parse(userJson);
     // Extract other fields
-    const initData = {
+    var initData = {
         user: {
             id: user.id,
             firstName: user.first_name,
@@ -236,8 +247,8 @@ export function parseMockInitDataAsLaunchParams(initDataRaw) {
     };
     return {
         botInline: params.get("bot_inline") === "true",
-        initData,
-        initDataRaw,
+        initData: initData,
+        initDataRaw: initDataRaw,
         platform: params.get("platform") || "unknown", // Adjust platform type if necessary
         showSettings: params.get("show_settings") === "true",
         startParam: params.get("start_param") || "",
