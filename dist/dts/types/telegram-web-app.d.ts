@@ -10,9 +10,19 @@ export type Platform = "android" | "android_x" | "ios" | "macos" | "tdesktop" | 
 export type Version = string;
 export type HomeScreenStatus = "unsupported" | "unknown" | "added" | "missed";
 export type FullscreenError = "UNSUPPORTED" | "ALREADY_FULLSCREEN" | string;
+/**
+ * The Telegram global object available on the `window`.
+ *
+ * Provides access to Telegram Web App features and methods.
+ */
 export interface Telegram {
     WebApp: WebApp;
 }
+/**
+ * The Telegram Web App interface
+ *
+ * Provides methods and properties specific to the Web App interface.
+ */
 export interface WebApp {
     /**
      * A string with raw data transferred to the Web App, convenient for

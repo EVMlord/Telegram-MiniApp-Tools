@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.0**](README.md)
+[**Telegram MiniApp Tools v0.2.1**](README.md)
 
 ***
 
@@ -860,6 +860,10 @@ This object describes a widget link to be included in the story.
 
 ### Telegram
 
+The Telegram global object available on the `window`.
+
+Provides access to Telegram Web App features and methods.
+
 #### Properties
 
 | Property | Type |
@@ -922,6 +926,10 @@ Describes Telegram Mini Apps [User](https://docs.telegram-mini-apps.com/platform
 ***
 
 ### WebApp
+
+The Telegram Web App interface
+
+Provides methods and properties specific to the Web App interface.
 
 #### Properties
 

@@ -24,7 +24,7 @@ For Deno users, the package is available as `@smartearnersteam/tapp-tools` and c
 
 ```typescript
 import {
-  init,
+  parseInitData,
   createAddIconToHomeScreen,
 } from "https://jsr.io/@smartearnersteam/tapp-tools";
 ```
@@ -46,26 +46,11 @@ More details in [/docs/md/utils.md](https://github.com/EVMlord/Telegram-MiniApp-
 
 #### Initialization
 
-Calling `init()`Loads the Telegram Web App script [https://telegram.org/js/telegram-web-app.js?56] into the document synchronously, ensures the script is only loaded once and is placed before other scripts.
-
 ```typescript
-import { init } from "telegram-miniapp-tools/utils";
+import { webApp } from "telegram-miniapp-tools";
 
-init();
-```
-
-For Deno:
-
-```typescript
-import { init } from "https://jsr.io/@smartearnersteam/tapp-tools";
-
-init();
-```
-
-Alternatively, you can simply add the Telegram Web App script https://telegram.org/js/telegram-web-app.js?56 into the document head of your pages directly.
-
-```html
-<script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+webApp.showAlert("Hello world!");
+console.log(webApp.isVersionAtLeast("7.10"));
 ```
 
 #### Adding an Icon to the Home Screen

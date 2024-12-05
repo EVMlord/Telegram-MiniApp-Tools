@@ -1,3 +1,17 @@
+/**
+ * The library provides direct access to the Telegram WebApp and environment variables.
+ *
+ * @example
+ * ```typescript
+ * import telegram, { webApp } from "telegram-miniapp-tools";
+ *
+ * console.log(webApp.initData);
+ * console.log(telegram);
+ * ```
+ *
+ * @module
+ */
+import "./telegram-web-app.js";
 // Assert that Telegram and WebApp exist and throw an error otherwise
 if (typeof window !== "object" || window === null) {
     throw new Error("Telegram Web App is not running in a browser environment, window is not accessible!");
@@ -22,5 +36,6 @@ const telegram = window.Telegram;
  * @see https://core.telegram.org/bots/webapps
  */
 const webApp = telegram.WebApp;
+console.log("Telegram WebApp initialized");
 // Export WebApp and Telegram variables
 export { webApp, telegram as default };

@@ -1,6 +1,6 @@
 {
   "name": "telegram-miniapp-tools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tools for working with Telegram Miniapps",
   "author": "EVMlord <buidl@evmlord.dev>",
   "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
@@ -21,7 +21,7 @@
     "docs:all": "yarn docs:html && yarn docs:md && yarn docs:json",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf dist",
-    "prebuild": "yarn docs:all && yarn clean",
+    "prebuild": "yarn clean && yarn docs:all",
     "build": "tsc",
     "sync": "node scripts/copy-files.js ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
     "postbuild": "yarn sync",

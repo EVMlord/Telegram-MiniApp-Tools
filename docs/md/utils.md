@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.0**](README.md)
+[**Telegram MiniApp Tools v0.2.1**](README.md)
 
 ***
 
@@ -127,27 +127,6 @@ and provides methods to request and exit fullscreen mode.
 [`FullscreenManager`](types.md#fullscreenmanager) \| `null`
 
 The fullscreen manager object or null if Telegram WebApp is not available.
-
-***
-
-### init()
-
-```ts
-function init(): Promise<void>
-```
-
-Loads the Telegram Web App script [https://telegram.org/js/telegram-web-app.js?56] into
-the document and returns a Promise that resolves when the script has loaded.
-
-Ensures the script is only loaded once and is placed before other scripts.
-
-#### Returns
-
-`Promise`\<`void`\>
-
-#### See
-
-https://core.telegram.org/bots/webapps#initializing-mini-apps
 
 ***
 

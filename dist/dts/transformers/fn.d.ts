@@ -1,1 +1,2 @@
-export declare const fn: import("./types.js").TransformerGen<(...args: unknown[]) => unknown>;
+import type { TransformerGen } from "./index.js";
+export declare const fn: TransformerGen<(...args: unknown[]) => unknown>;
