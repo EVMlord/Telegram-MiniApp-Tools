@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.8**](README.md)
+[**Telegram MiniApp Tools v0.2.9**](README.md)
 
 ***
 
@@ -373,7 +373,7 @@ Each bot can store up to 1024 items per user in the cloud storage.
 ##### getItem()
 
 ```ts
-getItem(key, callback?): CloudStorage
+getItem(key, callback?): void
 ```
 
 A method that receives a value from the cloud storage using the specified
@@ -388,12 +388,12 @@ key.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
 
 ##### getItems()
 
 ```ts
-getItems(keys, callback?): CloudStorage
+getItems(keys, callback?): void
 ```
 
 A method that receives values from the cloud storage using the specified
@@ -408,12 +408,12 @@ keys.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
 
 ##### getKeys()
 
 ```ts
-getKeys(callback?): CloudStorage
+getKeys(callback?): void
 ```
 
 A method that receives the list of all keys stored in the cloud storage.
@@ -426,12 +426,12 @@ A method that receives the list of all keys stored in the cloud storage.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
 
 ##### removeItem()
 
 ```ts
-removeItem(key, callback?): CloudStorage
+removeItem(key, callback?): void
 ```
 
 A method that removes a value from the cloud storage using the specified
@@ -446,12 +446,12 @@ key.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
 
 ##### removeItems()
 
 ```ts
-removeItems(keys, callback?): CloudStorage
+removeItems(keys, callback?): void
 ```
 
 A method that removes values from the cloud storage using the specified
@@ -466,7 +466,7 @@ keys.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
 
 ##### setItem()
 
@@ -474,7 +474,7 @@ keys.
 setItem(
    key, 
    value, 
-   callback?): CloudStorage
+   callback?): void
 ```
 
 A method that stores a value in the cloud storage using the specified
@@ -490,7 +490,15 @@ key.
 
 ###### Returns
 
-[`CloudStorage`](types.md#cloudstorage)
+`void`
+
+***
+
+### CloudStorageItems
+
+#### Indexable
+
+ \[`key`: `string`\]: `string`
 
 ***
 
@@ -953,6 +961,8 @@ Provides methods and properties specific to the Web App interface.
 | `isFullscreen` | `boolean` | **Bot API 8.0+** True, if the Mini App is currently being displayed in fullscreen mode. |
 | `isVerticalSwipesEnabled` | `boolean` | `True`, if vertical swipes to close or minimize the Mini App are enabled. `False`, if vertical swipes to close or minimize the Mini App are disabled. In any case, the user will still be able to minimize and close the Mini App by swiping the Mini App's header. |
 | `MainButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the main button, which is displayed at the bottom of the Web App in the Telegram interface. |
+| `offEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that deletes a previously set event handler. |
+| `onEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that sets the app event handler. Check the list of available events. |
 | `platform` | `string` | The name of the platform of the user's Telegram app. |
 | `SecondaryButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface. |
 | `SettingsButton` | [`SettingsButton`](types.md#settingsbutton) | An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface. |
@@ -1136,712 +1146,6 @@ lockOrientation(): void
 to its current mode (either portrait or landscape). Once locked,
 the orientation remains fixed, regardless of device rotation.
 This is useful if a stable orientation is needed during specific interactions.
-
-###### Returns
-
-`void`
-
-##### offEvent()
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-A method that deletes a previously set event handler.
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"themeChanged"` |
-| `eventHandler` | [`ThemeChangedCallback`](types.md#themechangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"mainButtonClicked"` |
-| `eventHandler` | [`MainButtonClickedCallback`](types.md#mainbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"backButtonClicked"` |
-| `eventHandler` | [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"settingsButtonClicked"` |
-| `eventHandler` | [`SettingsButtonClickedCallback`](types.md#settingsbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"popupClosed"` |
-| `eventHandler` | [`PopupClosedCallback`](types.md#popupclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"viewportChanged"` |
-| `eventHandler` | [`ViewportChangedCallback`](types.md#viewportchangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"invoiceClosed"` |
-| `eventHandler` | [`InvoiceClosedCallback`](types.md#invoiceclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"qrTextReceived"` |
-| `eventHandler` | [`QrTextReceivedCallback`](types.md#qrtextreceivedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"scanQrPopupClosed"` |
-| `eventHandler` | [`ScanQrPopupClosedCallback`](types.md#scanqrpopupclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"clipboardTextReceived"` |
-| `eventHandler` | [`ClipboardTextReceivedCallback`](types.md#clipboardtextreceivedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"writeAccessRequested"` |
-| `eventHandler` | [`WriteAccessRequestedCallback`](types.md#writeaccessrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"contactRequested"` |
-| `eventHandler` | [`ContactRequestedCallback`](types.md#contactrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricManagerUpdated"` |
-| `eventHandler` | [`BiometricManagerUpdatedCallback`](types.md#biometricmanagerupdatedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricAuthRequested"` |
-| `eventHandler` | [`BiometricAuthRequestedCallback`](types.md#biometricauthrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricTokenUpdated"` |
-| `eventHandler` | [`BiometricTokenUpdatedCallback`](types.md#biometrictokenupdatedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"homeScreenChecked"` |
-| `eventHandler` | [`HomeScreenCheckedCallback`](types.md#homescreencheckedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"homeScreenAdded"` |
-| `eventHandler` | [`HomeScreenAddedCallback`](types.md#homescreenaddedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"fullscreenChanged"` |
-| `eventHandler` | [`FullscreenChangedCallback`](types.md#fullscreenchangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"fullscreenFailed"` |
-| `eventHandler` | [`FullscreenFailedCallback`](types.md#fullscreenfailedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-offEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"customMethodInvoked"` |
-| `eventHandler` | [`CustomMethodInvokedCallback`](types.md#custommethodinvokedcallback) |
-
-###### Returns
-
-`void`
-
-##### onEvent()
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-A method that sets the app event handler. Check the list of available
-events.
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"themeChanged"` |
-| `eventHandler` | [`ThemeChangedCallback`](types.md#themechangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"mainButtonClicked"` |
-| `eventHandler` | [`MainButtonClickedCallback`](types.md#mainbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"secondaryButtonClicked"` |
-| `eventHandler` | [`SecondaryButtonClickedCallback`](types.md#secondarybuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"backButtonClicked"` |
-| `eventHandler` | [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"settingsButtonClicked"` |
-| `eventHandler` | [`SettingsButtonClickedCallback`](types.md#settingsbuttonclickedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"popupClosed"` |
-| `eventHandler` | [`PopupClosedCallback`](types.md#popupclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"viewportChanged"` |
-| `eventHandler` | [`ViewportChangedCallback`](types.md#viewportchangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"invoiceClosed"` |
-| `eventHandler` | [`InvoiceClosedCallback`](types.md#invoiceclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"qrTextReceived"` |
-| `eventHandler` | [`QrTextReceivedCallback`](types.md#qrtextreceivedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"scanQrPopupClosed"` |
-| `eventHandler` | [`ScanQrPopupClosedCallback`](types.md#scanqrpopupclosedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"clipboardTextReceived"` |
-| `eventHandler` | [`ClipboardTextReceivedCallback`](types.md#clipboardtextreceivedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"writeAccessRequested"` |
-| `eventHandler` | [`WriteAccessRequestedCallback`](types.md#writeaccessrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"contactRequested"` |
-| `eventHandler` | [`ContactRequestedCallback`](types.md#contactrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricManagerUpdated"` |
-| `eventHandler` | [`BiometricManagerUpdatedCallback`](types.md#biometricmanagerupdatedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricAuthRequested"` |
-| `eventHandler` | [`BiometricAuthRequestedCallback`](types.md#biometricauthrequestedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"biometricTokenUpdated"` |
-| `eventHandler` | [`BiometricTokenUpdatedCallback`](types.md#biometrictokenupdatedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"homeScreenChecked"` |
-| `eventHandler` | [`HomeScreenCheckedCallback`](types.md#homescreencheckedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"homeScreenAdded"` |
-| `eventHandler` | [`HomeScreenAddedCallback`](types.md#homescreenaddedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"fullscreenChanged"` |
-| `eventHandler` | [`FullscreenChangedCallback`](types.md#fullscreenchangedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"fullscreenFailed"` |
-| `eventHandler` | [`FullscreenFailedCallback`](types.md#fullscreenfailedcallback) |
-
-###### Returns
-
-`void`
-
-###### Call Signature
-
-```ts
-onEvent(eventType, eventHandler): void
-```
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `eventType` | `"customMethodInvoked"` |
-| `eventHandler` | [`CustomMethodInvokedCallback`](types.md#custommethodinvokedcallback) |
 
 ###### Returns
 
@@ -2470,7 +1774,7 @@ type ClipboardTextReceivedCallback: (eventData) => void;
 ### CloudStorageGetItemCallback()
 
 ```ts
-type CloudStorageGetItemCallback: (error, value) => void;
+type CloudStorageGetItemCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2478,18 +1782,18 @@ type CloudStorageGetItemCallback: (error, value) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `value` | `null` \| `string` |
+| `result`? | `string` |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
 ### CloudStorageGetItemsCallback()
 
 ```ts
-type CloudStorageGetItemsCallback: (error, values) => void;
+type CloudStorageGetItemsCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2497,18 +1801,18 @@ type CloudStorageGetItemsCallback: (error, values) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `values` | `null` \| `Record`\<`string`, `string`\> |
+| `result`? | [`CloudStorageItems`](types.md#cloudstorageitems) |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
 ### CloudStorageGetKeysCallback()
 
 ```ts
-type CloudStorageGetKeysCallback: (error, keys) => void;
+type CloudStorageGetKeysCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2516,18 +1820,18 @@ type CloudStorageGetKeysCallback: (error, keys) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `keys` | `null` \| `string`[] |
+| `result`? | `string`[] |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
 ### CloudStorageRemoveItemCallback()
 
 ```ts
-type CloudStorageRemoveItemCallback: (error, success) => void;
+type CloudStorageRemoveItemCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2535,18 +1839,18 @@ type CloudStorageRemoveItemCallback: (error, success) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `success` | `null` \| `true` |
+| `result`? | `boolean` |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
 ### CloudStorageRemoveItemsCallback()
 
 ```ts
-type CloudStorageRemoveItemsCallback: (error, success) => void;
+type CloudStorageRemoveItemsCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2554,18 +1858,18 @@ type CloudStorageRemoveItemsCallback: (error, success) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `success` | `null` \| `true` |
+| `result`? | `boolean` |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
 ### CloudStorageSetItemCallback()
 
 ```ts
-type CloudStorageSetItemCallback: (error, success) => void;
+type CloudStorageSetItemCallback: (error, result?) => unknown;
 ```
 
 #### Parameters
@@ -2573,11 +1877,11 @@ type CloudStorageSetItemCallback: (error, success) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `error` | `string` \| `null` |
-| `success` | `null` \| `true` |
+| `result`? | `boolean` |
 
 #### Returns
 
-`void`
+`unknown`
 
 ***
 
@@ -2624,6 +1928,169 @@ type CustomMethodInvokedCallback: (eventData) => void;
 #### Returns
 
 `void`
+
+***
+
+### EventNames
+
+```ts
+type EventNames: keyof EventParams;
+```
+
+***
+
+### EventParams
+
+```ts
+type EventParams: {
+  accelerometerChanged: void;
+  accelerometerFailed: {
+     error: "UNSUPPORTED";
+    };
+  accelerometerStarted: void;
+  accelerometerStopped: void;
+  activated: void;
+  backButtonClicked: void;
+  clipboardTextReceived: {
+     data: string;
+    };
+  contactRequested: RequestContactResponse;
+  contentSafeAreaChanged: void;
+  deactivated: void;
+  deviceOrientationChanged: void;
+  deviceOrientationFailed: {
+     error: "UNSUPPORTED";
+    };
+  deviceOrientationStarted: void;
+  deviceOrientationStopped: void;
+  emojiStatusAccessRequested: {
+     status: "allowed" | "cancelled";
+    };
+  emojiStatusFailed: {
+     error:   | "UNSUPPORTED"
+        | "SUGGESTED_EMOJI_INVALID"
+        | "DURATION_INVALID"
+        | "USER_DECLINED"
+        | "SERVER_ERROR"
+        | "UNKNOWN_ERROR";
+    };
+  emojiStatusSet: void;
+  fileDownloadRequested: {
+     status: "downloading" | "cancelled";
+    };
+  fullscreenChanged: void;
+  fullscreenFailed: {
+     error: FullscreenError;
+    };
+  gyroscopeChanged: void;
+  gyroscopeFailed: {
+     error: "UNSUPPORTED";
+    };
+  gyroscopeStarted: void;
+  gyroscopeStopped: void;
+  homeScreenAdded: void;
+  homeScreenChecked: {
+     status: HomeScreenStatus;
+    };
+  invoiceClosed: {
+     status: InvoiceStatus;
+     url: string;
+    };
+  locationManagerUpdated: void;
+  locationRequested: {
+     locationData: LocationData;
+    };
+  mainButtonClicked: void;
+  popupClosed: {
+     button_id: string | null;
+    };
+  qrTextReceived: {
+     data: string;
+    };
+  safeAreaChanged: void;
+  scanQrPopupClosed: void;
+  secondaryButtonClicked: void;
+  settingsButtonClicked: void;
+  shareMessageFailed: {
+     error:   | "UNSUPPORTED"
+        | "MESSAGE_EXPIRED"
+        | "MESSAGE_SEND_FAILED"
+        | "USER_DECLINED"
+        | "UNKNOWN_ERROR";
+    };
+  shareMessageSent: void;
+  themeChanged: void;
+  viewportChanged: {
+     isStateStable: boolean;
+    };
+  writeAccessRequested: {
+     status: "allowed" | "cancelled";
+    };
+};
+```
+
+#### Type declaration
+
+| Name | Type |
+| ------ | ------ |
+| `accelerometerChanged` | `void` |
+| `accelerometerFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `accelerometerFailed.error` | `"UNSUPPORTED"` |
+| `accelerometerStarted` | `void` |
+| `accelerometerStopped` | `void` |
+| `activated` | `void` |
+| `backButtonClicked` | `void` |
+| `clipboardTextReceived` | \{ `data`: `string`; \} |
+| `clipboardTextReceived.data` | `string` |
+| `contactRequested` | [`RequestContactResponse`](types.md#requestcontactresponse) |
+| `contentSafeAreaChanged` | `void` |
+| `deactivated` | `void` |
+| `deviceOrientationChanged` | `void` |
+| `deviceOrientationFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `deviceOrientationFailed.error` | `"UNSUPPORTED"` |
+| `deviceOrientationStarted` | `void` |
+| `deviceOrientationStopped` | `void` |
+| `emojiStatusAccessRequested` | \{ `status`: `"allowed"` \| `"cancelled"`; \} |
+| `emojiStatusAccessRequested.status` | `"allowed"` \| `"cancelled"` |
+| `emojiStatusFailed` | \{ `error`: \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"`; \} |
+| `emojiStatusFailed.error` | \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"` |
+| `emojiStatusSet` | `void` |
+| `fileDownloadRequested` | \{ `status`: `"downloading"` \| `"cancelled"`; \} |
+| `fileDownloadRequested.status` | `"downloading"` \| `"cancelled"` |
+| `fullscreenChanged` | `void` |
+| `fullscreenFailed` | \{ `error`: [`FullscreenError`](types.md#fullscreenerror); \} |
+| `fullscreenFailed.error` | [`FullscreenError`](types.md#fullscreenerror) |
+| `gyroscopeChanged` | `void` |
+| `gyroscopeFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `gyroscopeFailed.error` | `"UNSUPPORTED"` |
+| `gyroscopeStarted` | `void` |
+| `gyroscopeStopped` | `void` |
+| `homeScreenAdded` | `void` |
+| `homeScreenChecked` | \{ `status`: [`HomeScreenStatus`](types.md#homescreenstatus); \} |
+| `homeScreenChecked.status` | [`HomeScreenStatus`](types.md#homescreenstatus) |
+| `invoiceClosed` | \{ `status`: [`InvoiceStatus`](types.md#invoicestatus); `url`: `string`; \} |
+| `invoiceClosed.status` | [`InvoiceStatus`](types.md#invoicestatus) |
+| `invoiceClosed.url` | `string` |
+| `locationManagerUpdated` | `void` |
+| `locationRequested` | \{ `locationData`: [`LocationData`](types.md#locationdata); \} |
+| `locationRequested.locationData` | [`LocationData`](types.md#locationdata) |
+| `mainButtonClicked` | `void` |
+| `popupClosed` | \{ `button_id`: `string` \| `null`; \} |
+| `popupClosed.button_id` | `string` \| `null` |
+| `qrTextReceived` | \{ `data`: `string`; \} |
+| `qrTextReceived.data` | `string` |
+| `safeAreaChanged` | `void` |
+| `scanQrPopupClosed` | `void` |
+| `secondaryButtonClicked` | `void` |
+| `settingsButtonClicked` | `void` |
+| `shareMessageFailed` | \{ `error`: \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"`; \} |
+| `shareMessageFailed.error` | \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"` |
+| `shareMessageSent` | `void` |
+| `themeChanged` | `void` |
+| `viewportChanged` | \{ `isStateStable`: `boolean`; \} |
+| `viewportChanged.isStateStable` | `boolean` |
+| `writeAccessRequested` | \{ `status`: `"allowed"` \| `"cancelled"`; \} |
+| `writeAccessRequested.status` | `"allowed"` \| `"cancelled"` |
 
 ***
 
@@ -2735,6 +2202,38 @@ type InvoiceStatus:
   | "cancelled"
   | string;
 ```
+
+***
+
+### LocationData
+
+```ts
+type LocationData: {
+  altitude: number;
+  course: number;
+  course_accuracy: number;
+  horizontal_accuracy: number;
+  latitude: number;
+  longitude: number;
+  speed: number;
+  speed_accuracy: number;
+  vertical_accuracy: number;
+};
+```
+
+#### Type declaration
+
+| Name | Type |
+| ------ | ------ |
+| `altitude` | `number` |
+| `course` | `number` |
+| `course_accuracy` | `number` |
+| `horizontal_accuracy` | `number` |
+| `latitude` | `number` |
+| `longitude` | `number` |
+| `speed` | `number` |
+| `speed_accuracy` | `number` |
+| `vertical_accuracy` | `number` |
 
 ***
 

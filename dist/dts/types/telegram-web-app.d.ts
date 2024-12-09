@@ -178,48 +178,9 @@ export interface WebApp {
      * A method that sets the app event handler. Check the list of available
      * events.
      */
-    onEvent(eventType: "themeChanged", eventHandler: ThemeChangedCallback): void;
-    onEvent(eventType: "mainButtonClicked", eventHandler: MainButtonClickedCallback): void;
-    onEvent(eventType: "secondaryButtonClicked", eventHandler: SecondaryButtonClickedCallback): void;
-    onEvent(eventType: "backButtonClicked", eventHandler: BackButtonClickedCallback): void;
-    onEvent(eventType: "settingsButtonClicked", eventHandler: SettingsButtonClickedCallback): void;
-    onEvent(eventType: "popupClosed", eventHandler: PopupClosedCallback): void;
-    onEvent(eventType: "viewportChanged", eventHandler: ViewportChangedCallback): void;
-    onEvent(eventType: "invoiceClosed", eventHandler: InvoiceClosedCallback): void;
-    onEvent(eventType: "qrTextReceived", eventHandler: QrTextReceivedCallback): void;
-    onEvent(eventType: "scanQrPopupClosed", eventHandler: ScanQrPopupClosedCallback): void;
-    onEvent(eventType: "clipboardTextReceived", eventHandler: ClipboardTextReceivedCallback): void;
-    onEvent(eventType: "writeAccessRequested", eventHandler: WriteAccessRequestedCallback): void;
-    onEvent(eventType: "contactRequested", eventHandler: ContactRequestedCallback): void;
-    onEvent(eventType: "biometricManagerUpdated", eventHandler: BiometricManagerUpdatedCallback): void;
-    onEvent(eventType: "biometricAuthRequested", eventHandler: BiometricAuthRequestedCallback): void;
-    onEvent(eventType: "biometricTokenUpdated", eventHandler: BiometricTokenUpdatedCallback): void;
-    onEvent(eventType: "homeScreenChecked", eventHandler: HomeScreenCheckedCallback): void;
-    onEvent(eventType: "homeScreenAdded", eventHandler: HomeScreenAddedCallback): void;
-    onEvent(eventType: "fullscreenChanged", eventHandler: FullscreenChangedCallback): void;
-    onEvent(eventType: "fullscreenFailed", eventHandler: FullscreenFailedCallback): void;
-    onEvent(eventType: "customMethodInvoked", eventHandler: CustomMethodInvokedCallback): void;
+    onEvent: <T extends EventNames>(eventName: T, callback: EventParams[T] extends void ? () => unknown : (params: EventParams[T]) => unknown) => void;
     /** A method that deletes a previously set event handler. */
-    offEvent(eventType: "themeChanged", eventHandler: ThemeChangedCallback): void;
-    offEvent(eventType: "mainButtonClicked", eventHandler: MainButtonClickedCallback): void;
-    offEvent(eventType: "backButtonClicked", eventHandler: BackButtonClickedCallback): void;
-    offEvent(eventType: "settingsButtonClicked", eventHandler: SettingsButtonClickedCallback): void;
-    offEvent(eventType: "popupClosed", eventHandler: PopupClosedCallback): void;
-    offEvent(eventType: "viewportChanged", eventHandler: ViewportChangedCallback): void;
-    offEvent(eventType: "invoiceClosed", eventHandler: InvoiceClosedCallback): void;
-    offEvent(eventType: "qrTextReceived", eventHandler: QrTextReceivedCallback): void;
-    offEvent(eventType: "scanQrPopupClosed", eventHandler: ScanQrPopupClosedCallback): void;
-    offEvent(eventType: "clipboardTextReceived", eventHandler: ClipboardTextReceivedCallback): void;
-    offEvent(eventType: "writeAccessRequested", eventHandler: WriteAccessRequestedCallback): void;
-    offEvent(eventType: "contactRequested", eventHandler: ContactRequestedCallback): void;
-    offEvent(eventType: "biometricManagerUpdated", eventHandler: BiometricManagerUpdatedCallback): void;
-    offEvent(eventType: "biometricAuthRequested", eventHandler: BiometricAuthRequestedCallback): void;
-    offEvent(eventType: "biometricTokenUpdated", eventHandler: BiometricTokenUpdatedCallback): void;
-    offEvent(eventType: "homeScreenChecked", eventHandler: HomeScreenCheckedCallback): void;
-    offEvent(eventType: "homeScreenAdded", eventHandler: HomeScreenAddedCallback): void;
-    offEvent(eventType: "fullscreenChanged", eventHandler: FullscreenChangedCallback): void;
-    offEvent(eventType: "fullscreenFailed", eventHandler: FullscreenFailedCallback): void;
-    offEvent(eventType: "customMethodInvoked", eventHandler: CustomMethodInvokedCallback): void;
+    offEvent: <T extends EventNames>(eventName: T, callback: EventParams[T] extends void ? () => unknown : (params: EventParams[T]) => unknown) => void;
     /**
      * A method used to send data to the bot. When this method is called, a
      * service message is sent to the bot containing the data data of the length
@@ -487,6 +448,83 @@ export type CustomMethodInvokedCallback = (eventData: {
     req_id: string;
     result: Record<string, unknown>;
 }) => void;
+export type EventParams = {
+    invoiceClosed: {
+        url: string;
+        status: InvoiceStatus;
+    };
+    settingsButtonClicked: void;
+    backButtonClicked: void;
+    mainButtonClicked: void;
+    secondaryButtonClicked: void;
+    viewportChanged: {
+        isStateStable: boolean;
+    };
+    themeChanged: void;
+    popupClosed: {
+        button_id: string | null;
+    };
+    qrTextReceived: {
+        data: string;
+    };
+    clipboardTextReceived: {
+        data: string;
+    };
+    writeAccessRequested: {
+        status: "allowed" | "cancelled";
+    };
+    contactRequested: RequestContactResponse;
+    scanQrPopupClosed: void;
+    activated: void;
+    deactivated: void;
+    safeAreaChanged: void;
+    contentSafeAreaChanged: void;
+    fullscreenChanged: void;
+    fullscreenFailed: {
+        error: FullscreenError;
+    };
+    homeScreenAdded: void;
+    homeScreenChecked: {
+        status: HomeScreenStatus;
+    };
+    accelerometerStarted: void;
+    accelerometerStopped: void;
+    accelerometerChanged: void;
+    accelerometerFailed: {
+        error: "UNSUPPORTED";
+    };
+    deviceOrientationStarted: void;
+    deviceOrientationStopped: void;
+    deviceOrientationChanged: void;
+    deviceOrientationFailed: {
+        error: "UNSUPPORTED";
+    };
+    gyroscopeStarted: void;
+    gyroscopeStopped: void;
+    gyroscopeChanged: void;
+    gyroscopeFailed: {
+        error: "UNSUPPORTED";
+    };
+    locationManagerUpdated: void;
+    locationRequested: {
+        locationData: LocationData;
+    };
+    shareMessageSent: void;
+    shareMessageFailed: {
+        error: "UNSUPPORTED" | "MESSAGE_EXPIRED" | "MESSAGE_SEND_FAILED" | "USER_DECLINED" | "UNKNOWN_ERROR";
+    };
+    emojiStatusSet: void;
+    emojiStatusFailed: {
+        error: "UNSUPPORTED" | "SUGGESTED_EMOJI_INVALID" | "DURATION_INVALID" | "USER_DECLINED" | "SERVER_ERROR" | "UNKNOWN_ERROR";
+    };
+    emojiStatusAccessRequested: {
+        status: "allowed" | "cancelled";
+    };
+    fileDownloadRequested: {
+        status: "downloading" | "cancelled";
+    };
+};
+export type EventNames = keyof EventParams;
 /**
  * Web Apps can adjust the appearance of the interface to match the Telegram
  * user's app in real time. This object contains the user's current theme
@@ -823,7 +861,7 @@ export interface CloudStorage {
      * null and the second argument will be a boolean indicating whether the
      * value was stored.
      */
-    setItem(key: string, value: string, callback?: CloudStorageSetItemCallback): CloudStorage;
+    setItem(key: string, value: string, callback?: CloudStorageSetItemCallback): void;
     /**
      * A method that receives a value from the cloud storage using the specified
      * key.
@@ -835,7 +873,7 @@ export interface CloudStorage {
      * first argument will be null and the value will be passed as the second
      * argument.
      */
-    getItem(key: string, callback?: CloudStorageGetItemCallback): CloudStorage;
+    getItem(key: string, callback?: CloudStorageGetItemCallback): void;
     /**
      * A method that receives values from the cloud storage using the specified
      * keys.
@@ -847,7 +885,7 @@ export interface CloudStorage {
      * the first argument will be null and the values will be passed as the
      * second argument.
      */
-    getItems(keys: string[], callback?: CloudStorageGetItemsCallback): CloudStorage;
+    getItems(keys: string[], callback?: CloudStorageGetItemsCallback): void;
     /**
      * A method that removes a value from the cloud storage using the specified
      * key.
@@ -860,7 +898,7 @@ export interface CloudStorage {
      * null and the second argument will be a boolean indicating whether the
      * value was removed.
      */
-    removeItem(key: string, callback?: CloudStorageRemoveItemCallback): CloudStorage;
+    removeItem(key: string, callback?: CloudStorageRemoveItemCallback): void;
     /**
      * A method that removes values from the cloud storage using the specified
      * keys.
@@ -873,7 +911,7 @@ export interface CloudStorage {
      * null and the second argument will be a boolean indicating whether the
      * values were removed.
      */
-    removeItems(keys: string[], callback?: CloudStorageRemoveItemsCallback): CloudStorage;
+    removeItems(keys: string[], callback?: CloudStorageRemoveItemsCallback): void;
     /**
      * A method that receives the list of all keys stored in the cloud storage.
      *
@@ -882,14 +920,17 @@ export interface CloudStorage {
      * first argument will be null and the list of keys will be passed as the
      * second argument.
      */
-    getKeys(callback?: CloudStorageGetKeysCallback): CloudStorage;
+    getKeys(callback?: CloudStorageGetKeysCallback): void;
 }
-export type CloudStorageSetItemCallback = (error: string | null, success: null | true) => void;
-export type CloudStorageGetItemCallback = (error: string | null, value: null | string) => void;
-export type CloudStorageGetItemsCallback = (error: string | null, values: null | Record<string, string>) => void;
-export type CloudStorageRemoveItemCallback = (error: string | null, success: null | true) => void;
-export type CloudStorageRemoveItemsCallback = (error: string | null, success: null | true) => void;
-export type CloudStorageGetKeysCallback = (error: string | null, keys: null | string[]) => void;
+export interface CloudStorageItems {
+    [key: string]: string;
+}
+export type CloudStorageSetItemCallback = (error: string | null, result?: boolean) => unknown;
+export type CloudStorageGetItemCallback = (error: string | null, result?: string) => unknown;
+export type CloudStorageGetItemsCallback = (error: string | null, result?: CloudStorageItems) => unknown;
+export type CloudStorageRemoveItemCallback = (error: string | null, result?: boolean) => unknown;
+export type CloudStorageRemoveItemsCallback = (error: string | null, result?: boolean) => unknown;
+export type CloudStorageGetKeysCallback = (error: string | null, result?: string[]) => unknown;
 /**
  * This object controls biometrics on the device. Before the first use of this
  * object, it needs to be initialized using the init method.
@@ -1217,3 +1258,14 @@ export interface OpenLinkOptions {
  * Supported browser values for the `tryBrowser` option in `OpenLinkOptions`.
  */
 export type OpenLinkBrowser = "google-chrome" | "chrome" | "mozilla-firefox" | "firefox" | "microsoft-edge" | "edge" | "opera" | "opera-mini" | "brave" | "brave-browser" | "duckduckgo" | "duckduckgo-browser" | "samsung" | "samsung-browser" | "vivaldi" | "vivaldi-browser" | "kiwi" | "kiwi-browser" | "uc" | "uc-browser" | "tor" | "tor-browser";
+export type LocationData = {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    course: number;
+    speed: number;
+    horizontal_accuracy: number;
+    vertical_accuracy: number;
+    course_accuracy: number;
+    speed_accuracy: number;
+};

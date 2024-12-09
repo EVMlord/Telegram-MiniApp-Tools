@@ -30,12 +30,12 @@ function createCloudStorageManager() {
         }
         else {
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.setItem(key, value, function (error, success) {
+                CloudStorageAPI.setItem(key, value, function (error, result) {
                     if (error) {
                         reject(new Error(error));
                     }
-                    else if (success) {
-                        resolve(true);
+                    else if (result) {
+                        resolve(result);
                     }
                     else {
                         reject(new Error("Unknown error occurred while setting item."));
@@ -59,29 +59,19 @@ function createCloudStorageManager() {
             CloudStorageAPI.getItem(key, callback);
         }
         else {
-            // Return a promise and use the "customMethodInvoked" event to resolve the value.
+            // Return a promise.
             return new Promise(function (resolve, reject) {
-                // Define an event handler for customMethodInvoked
-                var handler = function (data) {
-                    // Check if the result contains our requested key
-                    if (data.result && typeof data.result[key] === "string") {
-                        // Retrieve the value
-                        var value = data.result[key];
-                        // Clean up the event listener
-                        index_js_1.webApp.offEvent("customMethodInvoked", handler);
-                        if (value !== null) {
-                            resolve(value);
-                        }
-                        else {
-                            reject(new Error("".concat(key, " not found.")));
-                        }
+                CloudStorageAPI.getItem(key, function (error, result) {
+                    if (error) {
+                        reject(new Error(error));
                     }
-                };
-                // Add the event listener before invoking getItem
-                index_js_1.webApp.onEvent("customMethodInvoked", handler);
-                // Trigger the CloudStorage getItem call without a callback.
-                // The actual value will be provided by the customMethodInvoked event.
-                CloudStorageAPI.getItem(key);
+                    else if (result) {
+                        resolve(result);
+                    }
+                    else {
+                        reject(new Error("".concat(key, " not found.")));
+                    }
+                });
             });
         }
     }
@@ -100,12 +90,12 @@ function createCloudStorageManager() {
         }
         else {
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.getItems(keys, function (error, values) {
+                CloudStorageAPI.getItems(keys, function (error, result) {
                     if (error) {
                         reject(new Error(error));
                     }
-                    else if (values) {
-                        resolve(values);
+                    else if (result) {
+                        resolve(result);
                     }
                     else {
                         resolve({});
@@ -129,12 +119,12 @@ function createCloudStorageManager() {
         }
         else {
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.removeItem(key, function (error, success) {
+                CloudStorageAPI.removeItem(key, function (error, result) {
                     if (error) {
                         reject(new Error(error));
                     }
-                    else if (success) {
-                        resolve(true);
+                    else if (result) {
+                        resolve(result);
                     }
                     else {
                         reject(new Error("Unknown error occurred while removing item."));
@@ -158,12 +148,12 @@ function createCloudStorageManager() {
         }
         else {
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.removeItems(keys, function (error, success) {
+                CloudStorageAPI.removeItems(keys, function (error, result) {
                     if (error) {
                         reject(new Error(error));
                     }
-                    else if (success) {
-                        resolve(true);
+                    else if (result) {
+                        resolve(result);
                     }
                     else {
                         reject(new Error("Unknown error occurred while removing items."));
@@ -186,12 +176,12 @@ function createCloudStorageManager() {
         }
         else {
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.getKeys(function (error, keys) {
+                CloudStorageAPI.getKeys(function (error, result) {
                     if (error) {
                         reject(new Error(error));
                     }
-                    else if (keys) {
-                        resolve(keys);
+                    else if (result) {
+                        resolve(result);
                     }
                     else {
                         resolve([]);
