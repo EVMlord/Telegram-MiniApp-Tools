@@ -198,6 +198,7 @@ export interface WebApp {
     onEvent(eventType: "homeScreenAdded", eventHandler: HomeScreenAddedCallback): void;
     onEvent(eventType: "fullscreenChanged", eventHandler: FullscreenChangedCallback): void;
     onEvent(eventType: "fullscreenFailed", eventHandler: FullscreenFailedCallback): void;
+    onEvent(eventType: "customMethodInvoked", eventHandler: CustomMethodInvokedCallback): void;
     /** A method that deletes a previously set event handler. */
     offEvent(eventType: "themeChanged", eventHandler: ThemeChangedCallback): void;
     offEvent(eventType: "mainButtonClicked", eventHandler: MainButtonClickedCallback): void;
@@ -218,6 +219,7 @@ export interface WebApp {
     offEvent(eventType: "homeScreenAdded", eventHandler: HomeScreenAddedCallback): void;
     offEvent(eventType: "fullscreenChanged", eventHandler: FullscreenChangedCallback): void;
     offEvent(eventType: "fullscreenFailed", eventHandler: FullscreenFailedCallback): void;
+    offEvent(eventType: "customMethodInvoked", eventHandler: CustomMethodInvokedCallback): void;
     /**
      * A method used to send data to the bot. When this method is called, a
      * service message is sent to the bot containing the data data of the length
@@ -480,6 +482,10 @@ export type HomeScreenAddedCallback = () => void;
 export type FullscreenChangedCallback = () => void;
 export type FullscreenFailedCallback = (eventData: {
     error: FullscreenError;
+}) => void;
+export type CustomMethodInvokedCallback = (eventData: {
+    req_id: string;
+    result: Record<string, unknown>;
 }) => void;
 /**
  * Web Apps can adjust the appearance of the interface to match the Telegram
@@ -798,6 +804,10 @@ export interface HapticFeedback {
      */
     selectionChanged(): void;
 }
+/**
+ * This object controls the cloud storage.
+ * Each bot can store up to 1024 items per user in the cloud storage.
+ */
 export interface CloudStorage {
     /**
      * A method that stores a value in the cloud storage using the specified

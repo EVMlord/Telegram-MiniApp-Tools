@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.7**](README.md)
+[**Telegram MiniApp Tools v0.2.8**](README.md)
 
 ***
 
@@ -364,6 +364,9 @@ Describes Telegram Mini Apps [Chat](https://docs.telegram-mini-apps.com/platform
 ***
 
 ### CloudStorage
+
+This object controls the cloud storage.
+Each bot can store up to 1024 items per user in the cloud storage.
 
 #### Methods
 
@@ -1465,6 +1468,23 @@ offEvent(eventType, eventHandler): void
 
 `void`
 
+###### Call Signature
+
+```ts
+offEvent(eventType, eventHandler): void
+```
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventType` | `"customMethodInvoked"` |
+| `eventHandler` | [`CustomMethodInvokedCallback`](types.md#custommethodinvokedcallback) |
+
+###### Returns
+
+`void`
+
 ##### onEvent()
 
 ###### Call Signature
@@ -1805,6 +1825,23 @@ onEvent(eventType, eventHandler): void
 | ------ | ------ |
 | `eventType` | `"fullscreenFailed"` |
 | `eventHandler` | [`FullscreenFailedCallback`](types.md#fullscreenfailedcallback) |
+
+###### Returns
+
+`void`
+
+###### Call Signature
+
+```ts
+onEvent(eventType, eventHandler): void
+```
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventType` | `"customMethodInvoked"` |
+| `eventHandler` | [`CustomMethodInvokedCallback`](types.md#custommethodinvokedcallback) |
 
 ###### Returns
 
@@ -2563,6 +2600,26 @@ type ContactRequestedCallback: (eventData) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `eventData` | [`RequestContactResponse`](types.md#requestcontactresponse) |
+
+#### Returns
+
+`void`
+
+***
+
+### CustomMethodInvokedCallback()
+
+```ts
+type CustomMethodInvokedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `req_id`: `string`; `result`: `Record`\<`string`, `unknown`\>; \} |
+| `eventData.req_id` | `string` |
+| `eventData.result` | `Record`\<`string`, `unknown`\> |
 
 #### Returns
 

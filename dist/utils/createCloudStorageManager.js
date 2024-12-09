@@ -55,21 +55,33 @@ function createCloudStorageManager() {
      */
     function getItem(key, callback) {
         if (callback) {
+            // If a callback is provided, use the original callback-based approach.
             CloudStorageAPI.getItem(key, callback);
         }
         else {
+            // Return a promise and use the "customMethodInvoked" event to resolve the value.
             return new Promise(function (resolve, reject) {
-                CloudStorageAPI.getItem(key, function (error, value) {
-                    if (error) {
-                        reject(new Error(error));
+                // Define an event handler for customMethodInvoked
+                var handler = function (data) {
+                    // Check if the result contains our requested key
+                    if (data.result && typeof data.result[key] === "string") {
+                        // Retrieve the value
+                        var value = data.result[key];
+                        // Clean up the event listener
+                        index_js_1.webApp.offEvent("customMethodInvoked", handler);
+                        if (value !== null) {
+                            resolve(value);
+                        }
+                        else {
+                            reject(new Error("".concat(key, " not found.")));
+                        }
                     }
-                    else if (value !== null) {
-                        resolve(value);
-                    }
-                    else {
-                        reject(new Error("Item not found."));
-                    }
-                });
+                };
+                // Add the event listener before invoking getItem
+                index_js_1.webApp.onEvent("customMethodInvoked", handler);
+                // Trigger the CloudStorage getItem call without a callback.
+                // The actual value will be provided by the customMethodInvoked event.
+                CloudStorageAPI.getItem(key);
             });
         }
     }
