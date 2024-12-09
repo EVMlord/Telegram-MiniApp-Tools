@@ -1,8 +1,8 @@
-**Telegram MiniApp Tools v0.2.9**
+**Telegram MiniApp Tools v0.2.10**
 
 ***
 
-# Telegram MiniApp Tools v0.2.9
+# Telegram MiniApp Tools v0.2.10
 
 ## Modules
 

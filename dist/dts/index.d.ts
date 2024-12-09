@@ -11,7 +11,6 @@
  *
  * @module
  */
-import "./telegram-web-app.js";
 import { Telegram, WebApp } from "./types/index.js";
 /**
  * Represents the Telegram global object available on the `window`.

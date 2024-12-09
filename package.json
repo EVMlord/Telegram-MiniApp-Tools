@@ -1,6 +1,6 @@
 {
   "name": "telegram-miniapp-tools",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Tools for working with Telegram Miniapps",
   "author": "EVMlord <buidl@evmlord.dev>",
   "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
@@ -12,9 +12,6 @@
     "url": "https://github.com/EVMlord/Telegram-MiniApp-Tools/issues"
   },
   "license": "Apache-2.0",
-  "sideEffects": [
-    "./dist/telegram-web-apps.js"
-  ],
   "scripts": {
     "docs:html": "typedoc --options typedoc.json",
     "docs:md": "typedoc --options typedoc-markdown.json",

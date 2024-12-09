@@ -14,7 +14,6 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = exports.webApp = void 0;
-require("./telegram-web-app.js");
 // Assert that Telegram and WebApp exist and throw an error otherwise
 if (typeof window !== "object" || window === null) {
     throw new Error("Telegram Web App is not running in a browser environment, window is not accessible!");
