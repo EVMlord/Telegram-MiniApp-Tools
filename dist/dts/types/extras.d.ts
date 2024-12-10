@@ -1,4 +1,4 @@
-import type { BackButtonClickedCallback, CloudStorageGetItemCallback, CloudStorageGetItemsCallback, CloudStorageGetKeysCallback, CloudStorageRemoveItemCallback, CloudStorageRemoveItemsCallback, CloudStorageSetItemCallback, FullscreenError } from "./index.js";
+import type { BackButtonClickedCallback, CloudStorageGetItemCallback, CloudStorageGetItemsCallback, CloudStorageGetKeysCallback, CloudStorageItems, CloudStorageRemoveItemCallback, CloudStorageRemoveItemsCallback, CloudStorageSetItemCallback, FullscreenError } from "./index.js";
 /**
  * The custom `BackButton` manager interface.
  */
@@ -49,7 +49,7 @@ export interface CloudStorageManager {
      * @param callback - Optional callback to handle the result of the operation.
      * @returns A promise that resolves to `true` when the value is successfully stored, or `void` if a callback is provided.
      */
-    setItem: (key: string, value: string, callback?: CloudStorageSetItemCallback) => Promise<true> | void;
+    setItem: (key: string, value: string, callback?: CloudStorageSetItemCallback) => Promise<boolean> | void;
     /**
      * Retrieves a value from the cloud storage by key.
      *
@@ -65,7 +65,7 @@ export interface CloudStorageManager {
      * @param callback - Optional callback to handle the result of the operation.
      * @returns A promise that resolves to an object containing key-value pairs, or `void` if a callback is provided.
      */
-    getItems: (keys: string[], callback?: CloudStorageGetItemsCallback) => Promise<Record<string, string>> | void;
+    getItems: (keys: string[], callback?: CloudStorageGetItemsCallback) => Promise<CloudStorageItems> | void;
     /**
      * Removes a value from the cloud storage by key.
      *
@@ -73,7 +73,7 @@ export interface CloudStorageManager {
      * @param callback - Optional callback to handle the result of the operation.
      * @returns A promise that resolves to `true` when the value is successfully removed, or `void` if a callback is provided.
      */
-    removeItem: (key: string, callback?: CloudStorageRemoveItemCallback) => Promise<true> | void;
+    removeItem: (key: string, callback?: CloudStorageRemoveItemCallback) => Promise<boolean> | void;
     /**
      * Removes multiple values from the cloud storage by their keys.
      *
@@ -81,7 +81,7 @@ export interface CloudStorageManager {
      * @param callback - Optional callback to handle the result of the operation.
      * @returns A promise that resolves to `true` when the values are successfully removed, or `void` if a callback is provided.
      */
-    removeItems: (keys: string[], callback?: CloudStorageRemoveItemsCallback) => Promise<true> | void;
+    removeItems: (keys: string[], callback?: CloudStorageRemoveItemsCallback) => Promise<boolean> | void;
     /**
      * Retrieves all keys stored in the cloud storage.
      *
@@ -89,6 +89,10 @@ export interface CloudStorageManager {
      * @returns A promise that resolves to an array of strings representing the keys in the cloud storage, or `void` if a callback is provided.
      */
     getKeys: (callback?: CloudStorageGetKeysCallback) => Promise<string[]> | void;
+    /**
+     * Used to cleanup all listeners
+     */
+    destroy(): void;
 }
 /**
  * Manages the fullscreen state and provides methods to control it.

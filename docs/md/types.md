@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.0**](README.md)
 
 ***
 
@@ -513,11 +513,25 @@ both callback-based and Promise-based patterns.
 | Property | Type | Description |
 | ------ | ------ | ------ |
 | `getItem` | (`key`: `string`, `callback`?: [`CloudStorageGetItemCallback`](types.md#cloudstoragegetitemcallback)) => `void` \| `Promise`\<`string`\> | Retrieves a value from the cloud storage by key. |
-| `getItems` | (`keys`: `string`[], `callback`?: [`CloudStorageGetItemsCallback`](types.md#cloudstoragegetitemscallback)) => `void` \| `Promise`\<`Record`\<`string`, `string`\>\> | Retrieves multiple values from the cloud storage by their keys. |
+| `getItems` | (`keys`: `string`[], `callback`?: [`CloudStorageGetItemsCallback`](types.md#cloudstoragegetitemscallback)) => `void` \| `Promise`\<[`CloudStorageItems`](types.md#cloudstorageitems)\> | Retrieves multiple values from the cloud storage by their keys. |
 | `getKeys` | (`callback`?: [`CloudStorageGetKeysCallback`](types.md#cloudstoragegetkeyscallback)) => `void` \| `Promise`\<`string`[]\> | Retrieves all keys stored in the cloud storage. |
-| `removeItem` | (`key`: `string`, `callback`?: [`CloudStorageRemoveItemCallback`](types.md#cloudstorageremoveitemcallback)) => `void` \| `Promise`\<`true`\> | Removes a value from the cloud storage by key. |
-| `removeItems` | (`keys`: `string`[], `callback`?: [`CloudStorageRemoveItemsCallback`](types.md#cloudstorageremoveitemscallback)) => `void` \| `Promise`\<`true`\> | Removes multiple values from the cloud storage by their keys. |
-| `setItem` | (`key`: `string`, `value`: `string`, `callback`?: [`CloudStorageSetItemCallback`](types.md#cloudstoragesetitemcallback)) => `void` \| `Promise`\<`true`\> | Stores a value in the cloud storage with the specified key. |
+| `removeItem` | (`key`: `string`, `callback`?: [`CloudStorageRemoveItemCallback`](types.md#cloudstorageremoveitemcallback)) => `void` \| `Promise`\<`boolean`\> | Removes a value from the cloud storage by key. |
+| `removeItems` | (`keys`: `string`[], `callback`?: [`CloudStorageRemoveItemsCallback`](types.md#cloudstorageremoveitemscallback)) => `void` \| `Promise`\<`boolean`\> | Removes multiple values from the cloud storage by their keys. |
+| `setItem` | (`key`: `string`, `value`: `string`, `callback`?: [`CloudStorageSetItemCallback`](types.md#cloudstoragesetitemcallback)) => `void` \| `Promise`\<`boolean`\> | Stores a value in the cloud storage with the specified key. |
+
+#### Methods
+
+##### destroy()
+
+```ts
+destroy(): void
+```
+
+Used to cleanup all listeners
+
+###### Returns
+
+`void`
 
 ***
 
@@ -1956,6 +1970,10 @@ type EventParams: {
     };
   contactRequested: RequestContactResponse;
   contentSafeAreaChanged: void;
+  customMethodInvoked: {
+     req_id: string;
+     result: Record<string, unknown>;
+    };
   deactivated: void;
   deviceOrientationChanged: void;
   deviceOrientationFailed: {
@@ -2044,6 +2062,9 @@ type EventParams: {
 | `clipboardTextReceived.data` | `string` |
 | `contactRequested` | [`RequestContactResponse`](types.md#requestcontactresponse) |
 | `contentSafeAreaChanged` | `void` |
+| `customMethodInvoked` | \{ `req_id`: `string`; `result`: `Record`\<`string`, `unknown`\>; \} |
+| `customMethodInvoked.req_id` | `string` |
+| `customMethodInvoked.result` | `Record`\<`string`, `unknown`\> |
 | `deactivated` | `void` |
 | `deviceOrientationChanged` | `void` |
 | `deviceOrientationFailed` | \{ `error`: `"UNSUPPORTED"`; \} |

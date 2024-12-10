@@ -523,6 +523,10 @@ export type EventParams = {
     fileDownloadRequested: {
         status: "downloading" | "cancelled";
     };
+    customMethodInvoked: {
+        req_id: string;
+        result: Record<string, unknown>;
+    };
 };
 export type EventNames = keyof EventParams;
 /**

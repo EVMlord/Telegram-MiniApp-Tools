@@ -1,6 +1,6 @@
 {
   "name": "@smartearnersteam/tapp-tools",
-  "version": "0.2.10",
+  "version": "0.2.10-beta.0",
   "license": "Apache-2.0",
   "imports": {},
   "exports": {
