@@ -400,6 +400,16 @@ export interface WebApp {
      * **Bot API 8.0+** True, if the Mini App is currently being displayed in fullscreen mode.
      */
     isFullscreen: boolean;
+    /**
+     * **Bot API 8.0+** An object representing the device's safe area insets,
+     * accounting for system UI elements like notches or navigation bars.
+     */
+    safeAreaInset: SafeAreaInset;
+    /**
+     * **Bot API 8.0+** An object representing the safe area for displaying content within the app,
+     * free from overlapping Telegram UI elements.
+     */
+    contentSafeAreaInset: ContentSafeAreaInset;
 }
 export type ThemeChangedCallback = () => void;
 export type ViewportChangedCallback = (eventData: {
@@ -1273,3 +1283,57 @@ export type LocationData = {
     course_accuracy: number;
     speed_accuracy: number;
 };
+/**
+ * This object represents the system-defined safe area insets,
+ * providing padding values to ensure content remains within visible boundaries,
+ * avoiding overlap with system UI elements like notches or navigation bars.
+ */
+export interface SafeAreaInset {
+    /**
+     * The top inset in pixels, representing the space to avoid at the top of the screen.
+     * Also available as the CSS variable `var(--tg-safe-area-inset-top)`.
+     */
+    top: number;
+    /**
+     * The bottom inset in pixels, representing the space to avoid at the bottom of the screen.
+     * Also available as the CSS variable var(--tg-safe-area-inset-bottom).
+     */
+    bottom: number;
+    /**
+     * The left inset in pixels, representing the space to avoid on the left side of the screen.
+     * Also available as the CSS variable var(--tg-safe-area-inset-left).
+     */
+    left: number;
+    /**
+     * The right inset in pixels, representing the space to avoid on the right side of the screen.
+     * Also available as the CSS variable var(--tg-safe-area-inset-right).
+     */
+    right: number;
+}
+/**
+ * This object represents the content-defined safe area insets,
+ * providing padding values to ensure content remains within visible boundaries,
+ * avoiding overlap with Telegram UI elements.
+ */
+export interface ContentSafeAreaInset {
+    /**
+     * The top inset in pixels, representing the space to avoid at the top of the content area.
+     * Also available as the CSS variable var(--tg-content-safe-area-inset-top).
+     */
+    top: number;
+    /**
+     * The bottom inset in pixels, representing the space to avoid at the bottom of the content area.
+     * Also available as the CSS variable var(--tg-content-safe-area-inset-bottom).
+     */
+    bottom: number;
+    /**
+     * The left inset in pixels, representing the space to avoid on the left side of the content area.
+     * Also available as the CSS variable var(--tg-content-safe-area-inset-left).
+     */
+    left: number;
+    /**
+     * The right inset in pixels, representing the space to avoid on the right side of the content area.
+     * Also available as the CSS variable var(--tg-content-safe-area-inset-right).
+     */
+    right: number;
+}

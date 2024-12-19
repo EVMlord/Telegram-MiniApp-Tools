@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.0**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.1**](README.md)
 
 ***
 
@@ -535,6 +535,23 @@ Used to cleanup all listeners
 
 ***
 
+### ContentSafeAreaInset
+
+This object represents the content-defined safe area insets,
+providing padding values to ensure content remains within visible boundaries,
+avoiding overlap with Telegram UI elements.
+
+#### Properties
+
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| `bottom` | `number` | The bottom inset in pixels, representing the space to avoid at the bottom of the content area. Also available as the CSS variable var(--tg-content-safe-area-inset-bottom). |
+| `left` | `number` | The left inset in pixels, representing the space to avoid on the left side of the content area. Also available as the CSS variable var(--tg-content-safe-area-inset-left). |
+| `right` | `number` | The right inset in pixels, representing the space to avoid on the right side of the content area. Also available as the CSS variable var(--tg-content-safe-area-inset-right). |
+| `top` | `number` | The top inset in pixels, representing the space to avoid at the top of the content area. Also available as the CSS variable var(--tg-content-safe-area-inset-top). |
+
+***
+
 ### FullscreenManager
 
 Manages the fullscreen state and provides methods to control it.
@@ -764,6 +781,23 @@ approved by the user.
 
 ***
 
+### SafeAreaInset
+
+This object represents the system-defined safe area insets,
+providing padding values to ensure content remains within visible boundaries,
+avoiding overlap with system UI elements like notches or navigation bars.
+
+#### Properties
+
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| `bottom` | `number` | The bottom inset in pixels, representing the space to avoid at the bottom of the screen. Also available as the CSS variable var(--tg-safe-area-inset-bottom). |
+| `left` | `number` | The left inset in pixels, representing the space to avoid on the left side of the screen. Also available as the CSS variable var(--tg-safe-area-inset-left). |
+| `right` | `number` | The right inset in pixels, representing the space to avoid on the right side of the screen. Also available as the CSS variable var(--tg-safe-area-inset-right). |
+| `top` | `number` | The top inset in pixels, representing the space to avoid at the top of the screen. Also available as the CSS variable `var(--tg-safe-area-inset-top)`. |
+
+***
+
 ### ScanQrPopupParams
 
 This object describes the native popup for scanning QR codes.
@@ -966,6 +1000,7 @@ Provides methods and properties specific to the Web App interface.
 | `bottomBarColor` | `string` | Current bottom bar color in the #RRGGBB format. |
 | `CloudStorage` | [`CloudStorage`](types.md#cloudstorage) | An object for controlling cloud storage. |
 | `colorScheme` | `"light"` \| `"dark"` | The color scheme currently used in the Telegram app. Either “light” or “dark”. Also available as the CSS variable var(--tg-color-scheme). |
+| `contentSafeAreaInset` | [`ContentSafeAreaInset`](types.md#contentsafeareainset) | **Bot API 8.0+** An object representing the safe area for displaying content within the app, free from overlapping Telegram UI elements. |
 | `HapticFeedback` | [`HapticFeedback`](types.md#hapticfeedback) | An object for controlling haptic feedback. |
 | `headerColor` | `string` | Current header color in the #RRGGBB format. |
 | `initData` | `string` | A string with raw data transferred to the Web App, convenient for validating data. WARNING: Validate data from this field before using it on the bot's server. |
@@ -978,6 +1013,7 @@ Provides methods and properties specific to the Web App interface.
 | `offEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that deletes a previously set event handler. |
 | `onEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that sets the app event handler. Check the list of available events. |
 | `platform` | `string` | The name of the platform of the user's Telegram app. |
+| `safeAreaInset` | [`SafeAreaInset`](types.md#safeareainset) | **Bot API 8.0+** An object representing the device's safe area insets, accounting for system UI elements like notches or navigation bars. |
 | `SecondaryButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface. |
 | `SettingsButton` | [`SettingsButton`](types.md#settingsbutton) | An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface. |
 | `themeParams` | [`ThemeParams`](types.md#themeparams) | An object containing the current theme settings used in the Telegram app. |

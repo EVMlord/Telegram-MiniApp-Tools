@@ -175,6 +175,8 @@ function mockTelegramEnv(options) {
         addToHomeScreen: function () { },
         checkHomeScreenStatus: function () { },
         isFullscreen: false,
+        safeAreaInset: {},
+        contentSafeAreaInset: {},
     };
     /**
      * A mock function to imitate the postEvent behavior.
