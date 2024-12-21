@@ -177,6 +177,10 @@ function mockTelegramEnv(options) {
         isFullscreen: false,
         safeAreaInset: {},
         contentSafeAreaInset: {},
+        shareMessage: function () { },
+        setEmojiStatus: function () { },
+        requestEmojiStatusAccess: function () { },
+        downloadFile: function () { },
     };
     /**
      * A mock function to imitate the postEvent behavior.

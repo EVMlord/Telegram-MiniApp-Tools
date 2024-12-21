@@ -410,6 +410,61 @@ export interface WebApp {
      * free from overlapping Telegram UI elements.
      */
     contentSafeAreaInset: ContentSafeAreaInset;
+    /**
+     * **Bot API 8.0+** A method that opens a dialog allowing the user
+     * to share a message provided by the bot. If an optional callback
+     * parameter is provided, the callback function will be called with
+     * a boolean as the first argument, indicating whether the message
+     * was successfully sent. The message id passed to this method must
+     * belong to a `PreparedInlineMessage` previously obtained via the
+     * Bot API method `savePreparedInlineMessage`.
+     *
+     * @param msgId
+     * @param callback - Optional callback function, called with a boolean indicating if the message was sent.
+     */
+    shareMessage: (msgId: string, callback?: (isSent: boolean) => unknown) => void;
+    /**
+     * **Bot API 8.0+** A method that opens a dialog allowing the user
+     * to set the specified custom emoji as their status. An optional
+     * params argument of type `EmojiStatusParams` specifies additional settings,
+     * such as duration. If an optional callback parameter is provided,
+     * the callback function will be called with a boolean as the first argument,
+     * indicating whether the status was set.
+     *
+     * Note: this method opens a native dialog and cannot be used to set the emoji
+     * status without manual user interaction. For fully programmatic changes,
+     * you should instead use the Bot API method `setUserEmojiStatus` after
+     * obtaining authorization to do so via the Mini App method requestEmojiStatusAccess.
+     *
+     * @param customEmojiId - The ID of the custom emoji to set as status.
+     * @param params - Optional settings for the status, such as duration.
+     * @param callback - Optional callback function, called with a boolean indicating if the status was set.
+     */
+    setEmojiStatus(customEmojiId: string, params?: EmojiStatusParams, callback?: (isSet: boolean) => unknown): void;
+    /**
+     * **Bot API 8.0+** A method that shows a native popup requesting permission
+     * for the bot to manage user's emoji status.
+     *
+     * If an optional callback parameter is passed, the callback function
+     * will be called when the popup is closed and the first argument will
+     * be a boolean indicating whether the user granted this access.
+     *
+     * @param callback - Optional callback function, called with a boolean indicating
+     *                   if access was granted.
+     */
+    requestEmojiStatusAccess(callback?: (isGranted: boolean) => unknown): void;
+    /**
+     * **Bot API 8.0+** A method that displays a native popup prompting the user to download a
+     * file specified by the params argument of type DownloadFileParams.
+     *
+     * If an optional callback parameter is provided, the callback function
+     * will be called when the popup is closed, with the first argument as a
+     * boolean indicating whether the user accepted the download request.
+     *
+     * @param params
+     * @param callback
+     */
+    downloadFile(params: DownloadFileParams, callback?: (isAccepted: boolean) => unknown): void;
 }
 export type ThemeChangedCallback = () => void;
 export type ViewportChangedCallback = (eventData: {
@@ -458,6 +513,25 @@ export type CustomMethodInvokedCallback = (eventData: {
     req_id: string;
     result: Record<string, unknown>;
 }) => void;
+export type EmojiStatusParams = {
+    /**
+     * Duration in seconds for how long the emoji status should last.
+     */
+    duration?: number;
+};
+/**
+ * This object describes the parameters for the file download request.
+
+ * Note: To ensure consistent file download behavior across platforms,
+ * it is recommended to include the HTTP header `Content-Disposition: attachment; filename="<file_name>"`
+ * in the server response. This header helps prompt the download action
+ * and suggests a file name for the downloaded file, especially on web platforms
+ * where forced downloads cannot always be guaranteed.
+ */
+export type DownloadFileParams = {
+    url: string;
+    file_name: string;
+};
 export type EventParams = {
     invoiceClosed: {
         url: string;

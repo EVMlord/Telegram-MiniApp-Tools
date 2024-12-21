@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.1**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.2**](README.md)
 
 ***
 
@@ -1016,6 +1016,7 @@ Provides methods and properties specific to the Web App interface.
 | `safeAreaInset` | [`SafeAreaInset`](types.md#safeareainset) | **Bot API 8.0+** An object representing the device's safe area insets, accounting for system UI elements like notches or navigation bars. |
 | `SecondaryButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface. |
 | `SettingsButton` | [`SettingsButton`](types.md#settingsbutton) | An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface. |
+| `shareMessage` | (`msgId`: `string`, `callback`?: (`isSent`) => `unknown`) => `void` | **Bot API 8.0+** A method that opens a dialog allowing the user to share a message provided by the bot. If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the message was successfully sent. The message id passed to this method must belong to a `PreparedInlineMessage` previously obtained via the Bot API method `savePreparedInlineMessage`. |
 | `themeParams` | [`ThemeParams`](types.md#themeparams) | An object containing the current theme settings used in the Telegram app. |
 | `version` | `string` | The version of the Bot API available in the user's Telegram app. |
 | `viewportHeight` | `number` | The current height of the visible area of the Web App. Also available in CSS as the variable var(--tg-viewport-height). The application can display just the top part of the Web App, with its lower part remaining outside the screen area. From this position, the user can “pull” the Web App to its maximum height, while the bot can do the same by calling the expand() method. As the position of the Web App changes, the current height value of the visible area will be updated in real time. Please note that the refresh rate of this value is not sufficient to smoothly follow the lower border of the window. It should not be used to pin interface elements to the bottom of the visible area. It's more appropriate to use the value of the viewportStableHeight field for this purpose. |
@@ -1109,6 +1110,30 @@ disableVerticalSwipes(): void
 minimize the Mini App. This method is useful if your Mini App uses swipe
 gestures that may conflict with the gestures for minimizing and closing
 the app.
+
+###### Returns
+
+`void`
+
+##### downloadFile()
+
+```ts
+downloadFile(params, callback?): void
+```
+
+**Bot API 8.0+** A method that displays a native popup prompting the user to download a
+file specified by the params argument of type DownloadFileParams.
+
+If an optional callback parameter is provided, the callback function
+will be called when the popup is closed, with the first argument as a
+boolean indicating whether the user accepted the download request.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `params` | [`DownloadFileParams`](types.md#downloadfileparams) |  |
+| `callback`? | (`isAccepted`) => `unknown` |  |
 
 ###### Returns
 
@@ -1328,6 +1353,29 @@ number.
 
 `void`
 
+##### requestEmojiStatusAccess()
+
+```ts
+requestEmojiStatusAccess(callback?): void
+```
+
+**Bot API 8.0+** A method that shows a native popup requesting permission
+for the bot to manage user's emoji status.
+
+If an optional callback parameter is passed, the callback function
+will be called when the popup is closed and the first argument will
+be a boolean indicating whether the user granted this access.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback`? | (`isGranted`) => `unknown` | Optional callback function, called with a boolean indicating if access was granted. |
+
+###### Returns
+
+`void`
+
 ##### requestFullscreen()
 
 ```ts
@@ -1419,6 +1467,39 @@ You can also use the keywords bg_color, secondary_bg_color and bottom_bar_bg_col
 | Parameter | Type |
 | ------ | ------ |
 | `color` | `string` & \{\} \| `"bg_color"` \| `"secondary_bg_color"` |
+
+###### Returns
+
+`void`
+
+##### setEmojiStatus()
+
+```ts
+setEmojiStatus(
+   customEmojiId, 
+   params?, 
+   callback?): void
+```
+
+**Bot API 8.0+** A method that opens a dialog allowing the user
+to set the specified custom emoji as their status. An optional
+params argument of type `EmojiStatusParams` specifies additional settings,
+such as duration. If an optional callback parameter is provided,
+the callback function will be called with a boolean as the first argument,
+indicating whether the status was set.
+
+Note: this method opens a native dialog and cannot be used to set the emoji
+status without manual user interaction. For fully programmatic changes,
+you should instead use the Bot API method `setUserEmojiStatus` after
+obtaining authorization to do so via the Mini App method requestEmojiStatusAccess.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `customEmojiId` | `string` | The ID of the custom emoji to set as status. |
+| `params`? | [`EmojiStatusParams`](types.md#emojistatusparams) | Optional settings for the status, such as duration. |
+| `callback`? | (`isSet`) => `unknown` | Optional callback function, called with a boolean indicating if the status was set. |
 
 ###### Returns
 
@@ -1978,6 +2059,48 @@ type CustomMethodInvokedCallback: (eventData) => void;
 #### Returns
 
 `void`
+
+***
+
+### DownloadFileParams
+
+```ts
+type DownloadFileParams: {
+  file_name: string;
+  url: string;
+};
+```
+
+This object describes the parameters for the file download request.
+
+Note: To ensure consistent file download behavior across platforms, 
+it is recommended to include the HTTP header `Content-Disposition: attachment; filename="<file_name>"` 
+in the server response. This header helps prompt the download action 
+and suggests a file name for the downloaded file, especially on web platforms 
+where forced downloads cannot always be guaranteed.
+
+#### Type declaration
+
+| Name | Type |
+| ------ | ------ |
+| `file_name` | `string` |
+| `url` | `string` |
+
+***
+
+### EmojiStatusParams
+
+```ts
+type EmojiStatusParams: {
+  duration: number;
+};
+```
+
+#### Type declaration
+
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| `duration`? | `number` | Duration in seconds for how long the emoji status should last. |
 
 ***
 
