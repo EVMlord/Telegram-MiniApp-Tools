@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createFullscreenManager = exports.createCloudStorageManager = exports.createBackButtonManager = exports.retrieveLaunchParams = exports.mockTelegramEnv = exports.parseInitData = exports.createAddIconToHomeScreen = void 0;
+exports.createFullscreenManager = exports.CloudStorageUtility = exports.createCloudStorageManager = exports.createBackButtonManager = exports.retrieveLaunchParams = exports.mockTelegramEnv = exports.parseInitData = exports.createAddIconToHomeScreen = void 0;
 /**
  * The `utils` module offers helper functions and utilities to streamline
  * application development within the Telegram MiniApp ecosystem. These
@@ -26,5 +26,7 @@ var createBackButtonManager_js_1 = require("./createBackButtonManager.js");
 Object.defineProperty(exports, "createBackButtonManager", { enumerable: true, get: function () { return createBackButtonManager_js_1.createBackButtonManager; } });
 var createCloudStorageManager_js_1 = require("./createCloudStorageManager.js");
 Object.defineProperty(exports, "createCloudStorageManager", { enumerable: true, get: function () { return createCloudStorageManager_js_1.createCloudStorageManager; } });
+var CloudStorageUtility_js_1 = require("./CloudStorageUtility.js");
+Object.defineProperty(exports, "CloudStorageUtility", { enumerable: true, get: function () { return CloudStorageUtility_js_1.CloudStorageUtility; } });
 var createFullscreenManager_js_1 = require("./createFullscreenManager.js");
 Object.defineProperty(exports, "createFullscreenManager", { enumerable: true, get: function () { return createFullscreenManager_js_1.createFullscreenManager; } });

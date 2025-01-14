@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.3**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.5**](README.md)
 
 ***
 
@@ -518,20 +518,6 @@ both callback-based and Promise-based patterns.
 | `removeItem` | (`key`: `string`, `callback`?: [`CloudStorageRemoveItemCallback`](types.md#cloudstorageremoveitemcallback)) => `void` \| `Promise`\<`boolean`\> | Removes a value from the cloud storage by key. |
 | `removeItems` | (`keys`: `string`[], `callback`?: [`CloudStorageRemoveItemsCallback`](types.md#cloudstorageremoveitemscallback)) => `void` \| `Promise`\<`boolean`\> | Removes multiple values from the cloud storage by their keys. |
 | `setItem` | (`key`: `string`, `value`: `string`, `callback`?: [`CloudStorageSetItemCallback`](types.md#cloudstoragesetitemcallback)) => `void` \| `Promise`\<`boolean`\> | Stores a value in the cloud storage with the specified key. |
-
-#### Methods
-
-##### destroy()
-
-```ts
-destroy(): void
-```
-
-Used to cleanup all listeners
-
-###### Returns
-
-`void`
 
 ***
 

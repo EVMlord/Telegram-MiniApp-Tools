@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCloudStorageManager = createCloudStorageManager;
-var cloudStorageListeners_js_1 = require("../events/cloudStorageListeners.js");
 var index_js_1 = require("../index.js");
 /**
  * Creates a manager for Telegram WebApp's CloudStorage API.
@@ -14,16 +13,6 @@ function createCloudStorageManager() {
         console.warn("CloudStorage is not available.");
         return null;
     }
-    // Attach the listeners
-    var cleanupListeners = (0, cloudStorageListeners_js_1.attachCloudStorageListeners)(function (eventName, detail) {
-        console.log("".concat(eventName, " recieved!"));
-        if (detail.err) {
-            console.error("Error:", detail.err);
-        }
-        else {
-            console.log("Successfully: ".concat(detail.res));
-        }
-    });
     // Convert callback-based methods to Promise-based methods
     /**
      * Stores a value in the cloud storage with the specified key.
@@ -201,9 +190,6 @@ function createCloudStorageManager() {
             });
         }
     }
-    function destroy() {
-        cleanupListeners();
-    }
     return {
         setItem: setItem,
         getItem: getItem,
@@ -211,6 +197,5 @@ function createCloudStorageManager() {
         removeItem: removeItem,
         removeItems: removeItems,
         getKeys: getKeys,
-        destroy: destroy,
     };
 }

@@ -89,10 +89,6 @@ export interface CloudStorageManager {
      * @returns A promise that resolves to an array of strings representing the keys in the cloud storage, or `void` if a callback is provided.
      */
     getKeys: (callback?: CloudStorageGetKeysCallback) => Promise<string[]> | void;
-    /**
-     * Used to cleanup all listeners
-     */
-    destroy(): void;
 }
 /**
  * Manages the fullscreen state and provides methods to control it.

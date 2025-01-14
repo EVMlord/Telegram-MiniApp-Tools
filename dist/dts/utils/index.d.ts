@@ -16,4 +16,5 @@ export { mockTelegramEnv } from "./mockTelegramEnv.js";
 export { retrieveLaunchParams } from "./retrieveLaunchParams.js";
 export { createBackButtonManager } from "./createBackButtonManager.js";
 export { createCloudStorageManager } from "./createCloudStorageManager.js";
+export { CloudStorageUtility } from "./CloudStorageUtility.js";
 export { createFullscreenManager } from "./createFullscreenManager.js";

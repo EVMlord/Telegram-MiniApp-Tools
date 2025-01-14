@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.3**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.5**](README.md)
 
 ***
 

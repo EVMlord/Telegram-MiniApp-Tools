@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.3**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.5**](README.md)
 
 ***
 
@@ -14,6 +14,173 @@ include initialization routines, parameter parsing, and environment mocking.
 - Initialization helpers for the Telegram MiniApp lifecycle.
 - Parameter retrieval and parsing for the Web App.
 - Telegram-specific utilities for features like cloud storage and back buttons.
+
+## Classes
+
+### CloudStorageUtility
+
+#### Constructors
+
+##### new CloudStorageUtility()
+
+```ts
+new CloudStorageUtility(): CloudStorageUtility
+```
+
+###### Returns
+
+[`CloudStorageUtility`](utils.md#cloudstorageutility)
+
+#### Methods
+
+##### clearAll()
+
+```ts
+clearAll(): Promise<boolean>
+```
+
+Clears all keys and values in the cloud storage.
+
+###### Returns
+
+`Promise`\<`boolean`\>
+
+A promise that resolves when all items are cleared.
+
+##### getItem()
+
+```ts
+getItem(key, callback?): void | Promise<string>
+```
+
+Retrieves a value from the cloud storage by key.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `key` | `string` | The key of the value to retrieve. |
+| `callback`? | [`CloudStorageGetItemCallback`](types.md#cloudstoragegetitemcallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<`string`\>
+
+##### getItems()
+
+```ts
+getItems(keys, callback?): void | Promise<CloudStorageItems>
+```
+
+Retrieves multiple values from the cloud storage by their keys.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `keys` | `string`[] | An array of keys to retrieve values for. |
+| `callback`? | [`CloudStorageGetItemsCallback`](types.md#cloudstoragegetitemscallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<[`CloudStorageItems`](types.md#cloudstorageitems)\>
+
+##### getKeys()
+
+```ts
+getKeys(callback?): void | Promise<string[]>
+```
+
+Retrieves all keys stored in the cloud storage.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback`? | [`CloudStorageGetKeysCallback`](types.md#cloudstoragegetkeyscallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<`string`[]\>
+
+##### hasKey()
+
+```ts
+hasKey(key): Promise<boolean>
+```
+
+Checks if a specific key exists in the cloud storage.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `key` | `string` | The key to check. |
+
+###### Returns
+
+`Promise`\<`boolean`\>
+
+##### removeItem()
+
+```ts
+removeItem(key, callback?): void | Promise<boolean>
+```
+
+Removes a value from the cloud storage by key.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `key` | `string` | The key of the value to remove. |
+| `callback`? | [`CloudStorageRemoveItemCallback`](types.md#cloudstorageremoveitemcallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<`boolean`\>
+
+##### removeItems()
+
+```ts
+removeItems(keys, callback?): void | Promise<boolean>
+```
+
+Removes multiple values from the cloud storage by their keys.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `keys` | `string`[] | An array of keys to remove. |
+| `callback`? | [`CloudStorageRemoveItemsCallback`](types.md#cloudstorageremoveitemscallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<`boolean`\>
+
+##### setItem()
+
+```ts
+setItem(
+   key, 
+   value, 
+callback?): void | Promise<boolean>
+```
+
+Stores a value in the cloud storage with the specified key.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `key` | `string` | The key to store the value under (1-128 characters, A-Z, a-z, 0-9, _, -). |
+| `value` | `string` | The value to store (0-4096 characters). |
+| `callback`? | [`CloudStorageSetItemCallback`](types.md#cloudstoragesetitemcallback) | Optional callback. |
+
+###### Returns
+
+`void` \| `Promise`\<`boolean`\>
 
 ## Functions
 
