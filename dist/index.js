@@ -14,20 +14,18 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = exports.webApp = void 0;
-var defineEventHandlers_js_1 = require("./events/defineEventHandlers.js");
 // Assert that Telegram and WebApp exist and throw an error otherwise
 if (typeof window !== "object" || window === null) {
     throw new Error("Telegram Web App is not running in a browser environment, window is not accessible!");
 }
 else {
-    console.log("Init: Version 0.2.7");
+    console.log("Init: Version 0.2.10-beta.3");
 }
 // if (typeof window.Telegram !== "object" || window.Telegram === null) {
 //   throw new Error(
 //     "Telegram Web App script has not run, see https://core.telegram.org/bots/webapps#initializing-web-apps"
 //   );
 // }
-(0, defineEventHandlers_js_1.defineEventHandlers)();
 // Since we've verified, we can confidently assert these are defined
 /**
  * Represents the Telegram global object available on the `window`.
