@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.5**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.6**](README.md)
 
 ***
 
@@ -27,71 +27,11 @@ the Web App in the Telegram interface.
 
 | Property | Type | Description |
 | ------ | ------ | ------ |
+| `hide` | () => [`BackButton`](types.md#backbutton) | A method to hide the button. |
 | `isVisible` | `boolean` | Shows whether the button is visible. Set to false by default. |
-
-#### Methods
-
-##### hide()
-
-```ts
-hide(): void
-```
-
-A method to hide the button.
-
-###### Returns
-
-`void`
-
-##### offClick()
-
-```ts
-offClick(callback): BackButton
-```
-
-A method that removes the button press event handler. An alias for
- Telegram.WebApp.offEvent('backButtonClicked', callback)
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `callback` | () => `void` |
-
-###### Returns
-
-[`BackButton`](types.md#backbutton)
-
-##### onClick()
-
-```ts
-onClick(callback): BackButton
-```
-
-A method that sets the button press event handler. An alias for
-Telegram.WebApp.onEvent('backButtonClicked', callback)
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `callback` | () => `void` |
-
-###### Returns
-
-[`BackButton`](types.md#backbutton)
-
-##### show()
-
-```ts
-show(): void
-```
-
-A method to make the button active and visible.
-
-###### Returns
-
-`void`
+| `offClick` | (`callback`: `VoidFunction`) => [`BackButton`](types.md#backbutton) | A method that removes the button press event handler. An alias for Telegram.WebApp.offEvent('backButtonClicked', callback) |
+| `onClick` | (`callback`: `VoidFunction`) => [`BackButton`](types.md#backbutton) | A method that sets the button press event handler. An alias for Telegram.WebApp.onEvent('backButtonClicked', callback) |
+| `show` | () => [`BackButton`](types.md#backbutton) | A method to make the button active and visible. |
 
 ***
 
@@ -996,11 +936,14 @@ Provides methods and properties specific to the Web App interface.
 | `isFullscreen` | `boolean` | **Bot API 8.0+** True, if the Mini App is currently being displayed in fullscreen mode. |
 | `isVerticalSwipesEnabled` | `boolean` | `True`, if vertical swipes to close or minimize the Mini App are enabled. `False`, if vertical swipes to close or minimize the Mini App are disabled. In any case, the user will still be able to minimize and close the Mini App by swiping the Mini App's header. |
 | `MainButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the main button, which is displayed at the bottom of the Web App in the Telegram interface. |
-| `offEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that deletes a previously set event handler. |
-| `onEvent` | \<`T`\>(`eventName`: `T`, `callback`: [`EventParams`](types.md#eventparams)\[`T`\] *extends* `void` ? () => `unknown` : (`params`) => `unknown`) => `void` | A method that sets the app event handler. Check the list of available events. |
+| `offEvent` | \<`T`\>(`eventName`: `T`, `callback`: (`params`) => `unknown`) => `void` | A method that deletes a previously set event handler. |
+| `onEvent` | \<`T`\>(`eventName`: `T`, `callback`: (`params`) => `unknown`) => `void` | A method that sets the app event handler. Check the list of available events. |
+| `openInvoice` | (`url`: `string`, `callback`?: (`status`) => `unknown`) => `void` | A method that opens an invoice using the link url. The Web App will receive the event invoiceClosed when the invoice is closed. If an optional callback parameter was passed, the callback function will be called and the invoice status will be passed as the first argument. |
 | `platform` | `string` | The name of the platform of the user's Telegram app. |
+| `requestContact` | (`callback`?: (`success`, `response`) => `unknown`) => `void` | A method that shows a native popup prompting the user for their phone number. |
 | `safeAreaInset` | [`SafeAreaInset`](types.md#safeareainset) | **Bot API 8.0+** An object representing the device's safe area insets, accounting for system UI elements like notches or navigation bars. |
 | `SecondaryButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface. |
+| `sendData` | (`data`: `unknown`) => `void` | A method used to send data to the bot. When this method is called, a service message is sent to the bot containing the data data of the length up to 4096 bytes, and the Web App is closed. See the field web_app_data in the class Message. This method is only available for Web Apps launched via a Keyboard button. |
 | `SettingsButton` | [`SettingsButton`](types.md#settingsbutton) | An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface. |
 | `shareMessage` | (`msgId`: `string`, `callback`?: (`isSent`) => `unknown`) => `void` | **Bot API 8.0+** A method that opens a dialog allowing the user to share a message provided by the bot. If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the message was successfully sent. The message id passed to this method must belong to a `PreparedInlineMessage` previously obtained via the Bot API method `savePreparedInlineMessage`. |
 | `themeParams` | [`ThemeParams`](types.md#themeparams) | An object containing the current theme settings used in the Telegram app. |
@@ -1212,28 +1155,6 @@ This is useful if a stable orientation is needed during specific interactions.
 
 `void`
 
-##### openInvoice()
-
-```ts
-openInvoice(url, callback): void
-```
-
-A method that opens an invoice using the link url. The Web App will
- receive the event invoiceClosed when the invoice is closed. If an
- optional callback parameter was passed, the callback function will be
- called and the invoice status will be passed as the first argument.
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `url` | `string` |
-| `callback` | (`status`) => `void` |
-
-###### Returns
-
-`void`
-
 ##### openLink()
 
 ```ts
@@ -1320,25 +1241,6 @@ page is fully loaded.
 
 `void`
 
-##### requestContact()
-
-```ts
-requestContact(callback?): void
-```
-
-A method that shows a native popup prompting the user for their phone
-number.
-
-###### Parameters
-
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `callback`? | (`success`, `response`) => `void` | If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user shared its phone number. The second argument, contingent upon success, will be an object detailing the shared contact information or a cancellation response. |
-
-###### Returns
-
-`void`
-
 ##### requestEmojiStatusAccess()
 
 ```ts
@@ -1391,30 +1293,6 @@ send messages to the user.
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
 | `callback`? | (`success`) => `void` | If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user granted this access. |
-
-###### Returns
-
-`void`
-
-##### sendData()
-
-```ts
-sendData(data): void
-```
-
-A method used to send data to the bot. When this method is called, a
-service message is sent to the bot containing the data data of the length
-up to 4096 bytes, and the Web App is closed. See the field web_app_data
-in the class Message.
-
-This method is only available for Web Apps launched via a Keyboard
-button.
-
-###### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `data` | `string` |
 
 ###### Returns
 

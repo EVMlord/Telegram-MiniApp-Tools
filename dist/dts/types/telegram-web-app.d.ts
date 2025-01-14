@@ -178,9 +178,9 @@ export interface WebApp {
      * A method that sets the app event handler. Check the list of available
      * events.
      */
-    onEvent: <T extends EventNames>(eventName: T, callback: EventParams[T] extends void ? () => unknown : (params: EventParams[T]) => unknown) => void;
+    onEvent: <T extends EventNames>(eventName: T, callback: (params: EventParams[T]) => unknown) => void;
     /** A method that deletes a previously set event handler. */
-    offEvent: <T extends EventNames>(eventName: T, callback: EventParams[T] extends void ? () => unknown : (params: EventParams[T]) => unknown) => void;
+    offEvent: <T extends EventNames>(eventName: T, callback: (params: EventParams[T]) => unknown) => void;
     /**
      * A method used to send data to the bot. When this method is called, a
      * service message is sent to the bot containing the data data of the length
@@ -190,7 +190,7 @@ export interface WebApp {
      * This method is only available for Web Apps launched via a Keyboard
      * button.
      */
-    sendData(data: string): void;
+    sendData: (data: unknown) => void;
     /**
      * A method that inserts the bot's username and the specified inline query
      * in the current chat's input field. Query may be empty, in which case only
@@ -239,7 +239,7 @@ export interface WebApp {
      *  optional callback parameter was passed, the callback function will be
      *  called and the invoice status will be passed as the first argument.
      */
-    openInvoice(url: string, callback: (status: InvoiceStatus) => void): void;
+    openInvoice: (url: string, callback?: (status: InvoiceStatus) => unknown) => void;
     /**
      * A method that shows a native popup described by the params argument of
      * the type PopupParams. The Web App will receive the event popupClosed when
@@ -315,7 +315,7 @@ export interface WebApp {
      * number. The second argument, contingent upon success, will be an object
      * detailing the shared contact information or a cancellation response.
      */
-    requestContact(callback?: (success: boolean, response: RequestContactResponse) => void): void;
+    requestContact: (callback?: (success: boolean, response: RequestContactResponse) => unknown) => void;
     /**
      * A method that informs the Telegram app that the Web App is ready to be
      * displayed. It is recommended to call this method as early as possible, as
@@ -761,20 +761,20 @@ export interface BackButton {
      * A method that sets the button press event handler. An alias for
      * Telegram.WebApp.onEvent('backButtonClicked', callback)
      */
-    onClick(callback: () => void): BackButton;
+    onClick: (callback: VoidFunction) => BackButton;
     /**
      *  A method that removes the button press event handler. An alias for
      *  Telegram.WebApp.offEvent('backButtonClicked', callback)
      */
-    offClick(callback: () => void): BackButton;
+    offClick: (callback: VoidFunction) => BackButton;
     /**
      * A method to make the button active and visible.
      */
-    show(): void;
+    show: () => BackButton;
     /**
      * A method to hide the button.
      */
-    hide(): void;
+    hide: () => BackButton;
 }
 /**
  * This object controls the main button, which is displayed at the bottom of the

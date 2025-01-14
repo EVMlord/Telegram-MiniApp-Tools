@@ -1,8 +1,8 @@
-**Telegram MiniApp Tools v0.2.10-beta.5**
+**Telegram MiniApp Tools v0.2.10-beta.6**
 
 ***
 
-# Telegram MiniApp Tools v0.2.10-beta.5
+# Telegram MiniApp Tools v0.2.10-beta.6
 
 ## Modules
 
