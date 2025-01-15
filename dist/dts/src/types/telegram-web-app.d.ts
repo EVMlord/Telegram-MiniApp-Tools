@@ -178,9 +178,9 @@ export interface WebApp {
      * A method that sets the app event handler. Check the list of available
      * events.
      */
-    onEvent: <T extends EventNames>(eventName: T, callback: (params: EventParams[T]) => unknown) => void;
+    onEvent<T extends EventNames>(eventType: T, eventHandler: EventParams[T]): void;
     /** A method that deletes a previously set event handler. */
-    offEvent: <T extends EventNames>(eventName: T, callback: (params: EventParams[T]) => unknown) => void;
+    offEvent<T extends EventNames>(eventType: T, eventHandler: EventParams[T]): void;
     /**
      * A method used to send data to the bot. When this method is called, a
      * service message is sent to the bot containing the data data of the length
@@ -190,7 +190,7 @@ export interface WebApp {
      * This method is only available for Web Apps launched via a Keyboard
      * button.
      */
-    sendData: (data: unknown) => void;
+    sendData(data: unknown): void;
     /**
      * A method that inserts the bot's username and the specified inline query
      * in the current chat's input field. Query may be empty, in which case only
@@ -239,7 +239,7 @@ export interface WebApp {
      *  optional callback parameter was passed, the callback function will be
      *  called and the invoice status will be passed as the first argument.
      */
-    openInvoice: (url: string, callback?: (status: InvoiceStatus) => unknown) => void;
+    openInvoice(url: string, callback?: (status: InvoiceStatus) => unknown): void;
     /**
      * A method that shows a native popup described by the params argument of
      * the type PopupParams. The Web App will receive the event popupClosed when
@@ -304,7 +304,7 @@ export interface WebApp {
      * argument will be a boolean indicating whether the user granted this
      * access.
      */
-    requestWriteAccess(callback?: (success: boolean) => void): void;
+    requestWriteAccess(callback?: (success: boolean) => unknown): void;
     /**
      * A method that shows a native popup prompting the user for their phone
      * number.
@@ -315,7 +315,7 @@ export interface WebApp {
      * number. The second argument, contingent upon success, will be an object
      * detailing the shared contact information or a cancellation response.
      */
-    requestContact: (callback?: (success: boolean, response: RequestContactResponse) => unknown) => void;
+    requestContact(callback?: (success: boolean, response: RequestContactResponse) => unknown): void;
     /**
      * A method that informs the Telegram app that the Web App is ready to be
      * displayed. It is recommended to call this method as early as possible, as
@@ -422,7 +422,7 @@ export interface WebApp {
      * @param msgId
      * @param callback - Optional callback function, called with a boolean indicating if the message was sent.
      */
-    shareMessage: (msgId: string, callback?: (isSent: boolean) => unknown) => void;
+    shareMessage(msgId: string, callback?: (isSent: boolean) => unknown): void;
     /**
      * **Bot API 8.0+** A method that opens a dialog allowing the user
      * to set the specified custom emoji as their status. An optional
@@ -519,6 +519,46 @@ export type EmojiStatusParams = {
      */
     duration?: number;
 };
+export type ActivatedCallback = () => void;
+export type DeactivatedCallback = () => void;
+export type SafeAreaChangedCallback = () => void;
+export type ContentSafeAreaChangedCallback = () => void;
+export type AccelerometerStartedCallback = () => void;
+export type AccelerometerStoppedCallback = () => void;
+export type AccelerometerChangedCallback = () => void;
+export type AccelerometerFailedCallback = (eventData: {
+    error: "UNSUPPORTED";
+}) => void;
+export type DeviceOrientationStartedCallback = () => void;
+export type DeviceOrientationStoppedCallback = () => void;
+export type DeviceOrientationChangedCallback = () => void;
+export type DeviceOrientationFailedCallback = (eventData: {
+    error: "UNSUPPORTED";
+}) => void;
+export type GyroscopeStartedCallback = () => void;
+export type GyroscopeStoppedCallback = () => void;
+export type GyroscopeChangedCallback = () => void;
+export type GyroscopeFailedCallback = (eventData: {
+    error: "UNSUPPORTED";
+}) => void;
+export type LocationManagerUpdatedCallback = () => void;
+export type LocationRequestedCallback = (eventData: {
+    locationData: LocationData;
+}) => void;
+export type ShareMessageSentCallback = () => void;
+export type ShareMessageFailedCallback = (eventData: {
+    error: "UNSUPPORTED" | "MESSAGE_EXPIRED" | "MESSAGE_SEND_FAILED" | "USER_DECLINED" | "UNKNOWN_ERROR";
+}) => void;
+export type EmojiStatusSetCallback = () => void;
+export type EmojiStatusFailedCallback = (eventData: {
+    error: "UNSUPPORTED" | "SUGGESTED_EMOJI_INVALID" | "DURATION_INVALID" | "USER_DECLINED" | "SERVER_ERROR" | "UNKNOWN_ERROR";
+}) => void;
+export type EmojiStatusAccessRequestedCallback = (eventData: {
+    status: "allowed" | "cancelled";
+}) => void;
+export type FileDownloadRequestedCallback = (eventData: {
+    status: "downloading" | "cancelled";
+}) => void;
 /**
  * This object describes the parameters for the file download request.
 
@@ -533,84 +573,48 @@ export type DownloadFileParams = {
     file_name: string;
 };
 export type EventParams = {
-    invoiceClosed: {
-        url: string;
-        status: InvoiceStatus;
-    };
-    settingsButtonClicked: void;
-    backButtonClicked: void;
-    mainButtonClicked: void;
-    secondaryButtonClicked: void;
-    viewportChanged: {
-        isStateStable: boolean;
-    };
-    themeChanged: void;
-    popupClosed: {
-        button_id: string | null;
-    };
-    qrTextReceived: {
-        data: string;
-    };
-    clipboardTextReceived: {
-        data: string;
-    };
-    writeAccessRequested: {
-        status: "allowed" | "cancelled";
-    };
-    contactRequested: RequestContactResponse;
-    scanQrPopupClosed: void;
-    activated: void;
-    deactivated: void;
-    safeAreaChanged: void;
-    contentSafeAreaChanged: void;
-    fullscreenChanged: void;
-    fullscreenFailed: {
-        error: FullscreenError;
-    };
-    homeScreenAdded: void;
-    homeScreenChecked: {
-        status: HomeScreenStatus;
-    };
-    accelerometerStarted: void;
-    accelerometerStopped: void;
-    accelerometerChanged: void;
-    accelerometerFailed: {
-        error: "UNSUPPORTED";
-    };
-    deviceOrientationStarted: void;
-    deviceOrientationStopped: void;
-    deviceOrientationChanged: void;
-    deviceOrientationFailed: {
-        error: "UNSUPPORTED";
-    };
-    gyroscopeStarted: void;
-    gyroscopeStopped: void;
-    gyroscopeChanged: void;
-    gyroscopeFailed: {
-        error: "UNSUPPORTED";
-    };
-    locationManagerUpdated: void;
-    locationRequested: {
-        locationData: LocationData;
-    };
-    shareMessageSent: void;
-    shareMessageFailed: {
-        error: "UNSUPPORTED" | "MESSAGE_EXPIRED" | "MESSAGE_SEND_FAILED" | "USER_DECLINED" | "UNKNOWN_ERROR";
-    };
-    emojiStatusSet: void;
-    emojiStatusFailed: {
-        error: "UNSUPPORTED" | "SUGGESTED_EMOJI_INVALID" | "DURATION_INVALID" | "USER_DECLINED" | "SERVER_ERROR" | "UNKNOWN_ERROR";
-    };
-    emojiStatusAccessRequested: {
-        status: "allowed" | "cancelled";
-    };
-    fileDownloadRequested: {
-        status: "downloading" | "cancelled";
-    };
-    customMethodInvoked: {
-        req_id: string;
-        result: Record<string, unknown>;
-    };
+    invoiceClosed: InvoiceClosedCallback;
+    settingsButtonClicked: SettingsButtonClickedCallback;
+    backButtonClicked: BackButtonClickedCallback;
+    mainButtonClicked: MainButtonClickedCallback;
+    secondaryButtonClicked: SecondaryButtonClickedCallback;
+    viewportChanged: ViewportChangedCallback;
+    themeChanged: ThemeChangedCallback;
+    popupClosed: PopupClosedCallback;
+    qrTextReceived: QrTextReceivedCallback;
+    clipboardTextReceived: ClipboardTextReceivedCallback;
+    writeAccessRequested: WriteAccessRequestedCallback;
+    contactRequested: ContactRequestedCallback;
+    scanQrPopupClosed: ScanQrPopupClosedCallback;
+    activated: ActivatedCallback;
+    deactivated: DeactivatedCallback;
+    safeAreaChanged: SafeAreaChangedCallback;
+    contentSafeAreaChanged: ContentSafeAreaChangedCallback;
+    fullscreenChanged: FullscreenChangedCallback;
+    fullscreenFailed: FullscreenFailedCallback;
+    homeScreenAdded: HomeScreenAddedCallback;
+    homeScreenChecked: HomeScreenCheckedCallback;
+    accelerometerStarted: AccelerometerStartedCallback;
+    accelerometerStopped: AccelerometerStoppedCallback;
+    accelerometerChanged: AccelerometerChangedCallback;
+    accelerometerFailed: AccelerometerFailedCallback;
+    deviceOrientationStarted: DeviceOrientationStartedCallback;
+    deviceOrientationStopped: DeviceOrientationStoppedCallback;
+    deviceOrientationChanged: DeviceOrientationChangedCallback;
+    deviceOrientationFailed: DeviceOrientationFailedCallback;
+    gyroscopeStarted: GyroscopeStartedCallback;
+    gyroscopeStopped: GyroscopeStoppedCallback;
+    gyroscopeChanged: GyroscopeChangedCallback;
+    gyroscopeFailed: GyroscopeFailedCallback;
+    locationManagerUpdated: LocationManagerUpdatedCallback;
+    locationRequested: LocationRequestedCallback;
+    shareMessageSent: ShareMessageSentCallback;
+    shareMessageFailed: ShareMessageFailedCallback;
+    emojiStatusSet: EmojiStatusSetCallback;
+    emojiStatusFailed: EmojiStatusFailedCallback;
+    emojiStatusAccessRequested: EmojiStatusAccessRequestedCallback;
+    fileDownloadRequested: FileDownloadRequestedCallback;
+    customMethodInvoked: CustomMethodInvokedCallback;
 };
 export type EventNames = keyof EventParams;
 /**
@@ -761,20 +765,20 @@ export interface BackButton {
      * A method that sets the button press event handler. An alias for
      * Telegram.WebApp.onEvent('backButtonClicked', callback)
      */
-    onClick: (callback: VoidFunction) => BackButton;
+    onClick(callback: VoidFunction): BackButton;
     /**
      *  A method that removes the button press event handler. An alias for
      *  Telegram.WebApp.offEvent('backButtonClicked', callback)
      */
-    offClick: (callback: VoidFunction) => BackButton;
+    offClick(callback: VoidFunction): BackButton;
     /**
      * A method to make the button active and visible.
      */
-    show: () => BackButton;
+    show(): BackButton;
     /**
      * A method to hide the button.
      */
-    hide: () => BackButton;
+    hide(): BackButton;
 }
 /**
  * This object controls the main button, which is displayed at the bottom of the
@@ -1063,7 +1067,7 @@ export interface BiometricManager {
      * was passed, the callback function will be called when the object is
      * initialized.
      */
-    init: (callback?: () => void) => BiometricManager;
+    init(callback?: () => void): BiometricManager;
     /**
      * A method that requests permission to use biometrics according to the
      * params argument of type BiometricRequestAccessParams. If an optional
@@ -1071,7 +1075,7 @@ export interface BiometricManager {
      * the first argument will be a boolean indicating whether the user granted
      * access.
      */
-    requestAccess: (params: BiometricRequestAccessParams, callback?: BiometricRequestAccessCallback) => BiometricManager;
+    requestAccess(params: BiometricRequestAccessParams, callback?: BiometricRequestAccessCallback): BiometricManager;
     /**
      * A method that authenticates the user using biometrics according to the
      * params argument of type BiometricAuthenticateParams. If an optional
@@ -1081,7 +1085,7 @@ export interface BiometricManager {
      *
      * If so, the second argument will be a biometric token.
      */
-    authenticate: (params: BiometricAuthenticateParams, callback?: BiometricAuthenticateCallback) => BiometricManager;
+    authenticate(params: BiometricAuthenticateParams, callback?: BiometricAuthenticateCallback): BiometricManager;
     /**
      * A method that updates the biometric token in secure storage on the
      * device. To remove the token, pass an empty string. If an optional
@@ -1089,7 +1093,7 @@ export interface BiometricManager {
      * the first argument will be a boolean indicating whether the token was
      * updated.
      */
-    updateBiometricToken: (token: string, callback?: BiometricUpdateBiometricTokenCallback) => BiometricManager;
+    updateBiometricToken(token: string, callback?: BiometricUpdateBiometricTokenCallback): BiometricManager;
     /**
      * A method that opens the biometric access settings for bots. Useful when
      * you need to request biometrics access to users who haven't granted it
@@ -1099,7 +1103,7 @@ export interface BiometricManager {
      * with the Mini App interface (e.g. a click inside the Mini App or on the
      * main button)
      */
-    openSettings: () => BiometricManager;
+    openSettings(): BiometricManager;
 }
 export type BiometricRequestAccessCallback = (isAccessGranted: boolean) => void;
 export type BiometricAuthenticateCallback = (isAuthenticated: boolean, biometricToken?: string) => void;
@@ -1261,6 +1265,16 @@ export interface ScanQrPopupParams {
      */
     text?: string;
 }
+export type Contact = {
+    /** User's first name. */
+    first_name: string;
+    /** Optional. User's last name. */
+    last_name?: string;
+    /** User's phone number. */
+    phone_number: string;
+    /** Unique identifier of the user. */
+    user_id: number;
+};
 /**
  * This object describes contact information shared when requestContact was
  * approved by the user.
@@ -1270,6 +1284,8 @@ export interface RequestContactResponseSent {
     status: "sent";
     /** A status message or result as a string. */
     response: string;
+    /** Hash to verify data authenticity. */
+    hash: string;
     /** Contains sensitive information shared upon user consent. WARNING: Data
      * from this field should not be trusted. You should only use data from
      * `response` on the bot's server and only after it has been validated. */
@@ -1277,18 +1293,7 @@ export interface RequestContactResponseSent {
         /** Authorization date for sharing contact information. */
         auth_date: string;
         /** Object holding user's contact details. */
-        contact: {
-            /** User's first name. */
-            first_name: string;
-            /** Optional. User's last name. */
-            last_name?: string;
-            /** User's phone number. */
-            phone_number: string;
-            /** Unique identifier of the user. */
-            user_id: number;
-        };
-        /** Hash to verify data authenticity. */
-        hash: string;
+        contact: Contact;
     };
 }
 /**

@@ -12,14 +12,18 @@
  *
  * @module
  */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = exports.webApp = void 0;
+var package_json_1 = __importDefault(require("../package.json"));
 // Assert that Telegram and WebApp exist and throw an error otherwise
 if (typeof window !== "object" || window === null) {
     throw new Error("Telegram Web App is not running in a browser environment, window is not accessible!");
 }
 else {
-    console.log("Init: Version 0.2.10-beta.3");
+    console.log("Init: Version ".concat(package_json_1.default.version));
 }
 // if (typeof window.Telegram !== "object" || window.Telegram === null) {
 //   throw new Error(

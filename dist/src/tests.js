@@ -12,14 +12,25 @@ mainButton.text = ((_b = (_a = app.initDataUnsafe.user) === null || _a === void 
 mainButton.onClick(function () {
     app.close();
 });
+// mainButton.onClick(() => {
+//   return () => {
+//     app.close();
+//   };
+// });
 var secondaryButton = app.SecondaryButton; // $ExpectType BottomButton
 secondaryButton.text =
     ((_d = (_c = app.initDataUnsafe.user) === null || _c === void 0 ? void 0 : _c.last_name) !== null && _d !== void 0 ? _d : "you") + " r 2 expand";
 secondaryButton.onClick(function () {
     app.expand();
 });
-app.onEvent("viewportChanged", function (e) {
-    if (e.isStateStable)
+// secondaryButton.onClick(() => {
+//   return () => {
+//     app.expand();
+//   };
+// });
+app.onEvent("viewportChanged", function (_a) {
+    var isStateStable = _a.isStateStable;
+    if (isStateStable)
         console.log("Done at", app.viewportHeight);
     else
         console.log("Changing, currently at ", app.viewportHeight);

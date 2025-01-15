@@ -1,4 +1,4 @@
-[**Telegram MiniApp Tools v0.2.10-beta.6**](README.md)
+[**Telegram MiniApp Tools v0.2.10-beta.8**](README.md)
 
 ***
 
@@ -27,11 +27,71 @@ the Web App in the Telegram interface.
 
 | Property | Type | Description |
 | ------ | ------ | ------ |
-| `hide` | () => [`BackButton`](types.md#backbutton) | A method to hide the button. |
 | `isVisible` | `boolean` | Shows whether the button is visible. Set to false by default. |
-| `offClick` | (`callback`: `VoidFunction`) => [`BackButton`](types.md#backbutton) | A method that removes the button press event handler. An alias for Telegram.WebApp.offEvent('backButtonClicked', callback) |
-| `onClick` | (`callback`: `VoidFunction`) => [`BackButton`](types.md#backbutton) | A method that sets the button press event handler. An alias for Telegram.WebApp.onEvent('backButtonClicked', callback) |
-| `show` | () => [`BackButton`](types.md#backbutton) | A method to make the button active and visible. |
+
+#### Methods
+
+##### hide()
+
+```ts
+hide(): BackButton
+```
+
+A method to hide the button.
+
+###### Returns
+
+[`BackButton`](types.md#backbutton)
+
+##### offClick()
+
+```ts
+offClick(callback): BackButton
+```
+
+A method that removes the button press event handler. An alias for
+ Telegram.WebApp.offEvent('backButtonClicked', callback)
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `callback` | `VoidFunction` |
+
+###### Returns
+
+[`BackButton`](types.md#backbutton)
+
+##### onClick()
+
+```ts
+onClick(callback): BackButton
+```
+
+A method that sets the button press event handler. An alias for
+Telegram.WebApp.onEvent('backButtonClicked', callback)
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `callback` | `VoidFunction` |
+
+###### Returns
+
+[`BackButton`](types.md#backbutton)
+
+##### show()
+
+```ts
+show(): BackButton
+```
+
+A method to make the button active and visible.
+
+###### Returns
+
+[`BackButton`](types.md#backbutton)
 
 ***
 
@@ -75,18 +135,125 @@ object, it needs to be initialized using the init method.
 
 | Property | Type | Description |
 | ------ | ------ | ------ |
-| `authenticate` | (`params`: [`BiometricAuthenticateParams`](types.md#biometricauthenticateparams), `callback`?: [`BiometricAuthenticateCallback`](types.md#biometricauthenticatecallback)) => [`BiometricManager`](types.md#biometricmanager) | A method that authenticates the user using biometrics according to the params argument of type BiometricAuthenticateParams. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user authenticated successfully. If so, the second argument will be a biometric token. |
 | `biometricType` | `string` | The type of biometrics currently available on the device. Can be one of these values: - finger, fingerprint-based biometrics, - face, face-based biometrics, - unknown, biometrics of an unknown type. |
 | `deviceId` | `string` | A unique device identifier that can be used to match the token to the device. |
-| `init` | (`callback`?: () => `void`) => [`BiometricManager`](types.md#biometricmanager) | A method that initializes the BiometricManager object. It should be called before the object's first use. If an optional callback parameter was passed, the callback function will be called when the object is initialized. |
 | `isAccessGranted` | `boolean` | Shows whether permission to use biometrics has been granted. |
 | `isAccessRequested` | `boolean` | Shows whether permission to use biometrics has been requested. |
 | `isBiometricAvailable` | `boolean` | Shows whether biometrics is available on the current device. |
 | `isBiometricTokenSaved` | `boolean` | Shows whether the token is saved in secure storage on the device. |
 | `isInited` | `boolean` | Shows whether biometrics object is initialized. |
-| `openSettings` | () => [`BiometricManager`](types.md#biometricmanager) | A method that opens the biometric access settings for bots. Useful when you need to request biometrics access to users who haven't granted it yet. Note that this method can be called only in response to user interaction with the Mini App interface (e.g. a click inside the Mini App or on the main button) |
-| `requestAccess` | (`params`: [`BiometricRequestAccessParams`](types.md#biometricrequestaccessparams), `callback`?: [`BiometricRequestAccessCallback`](types.md#biometricrequestaccesscallback)) => [`BiometricManager`](types.md#biometricmanager) | A method that requests permission to use biometrics according to the params argument of type BiometricRequestAccessParams. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user granted access. |
-| `updateBiometricToken` | (`token`: `string`, `callback`?: [`BiometricUpdateBiometricTokenCallback`](types.md#biometricupdatebiometrictokencallback)) => [`BiometricManager`](types.md#biometricmanager) | A method that updates the biometric token in secure storage on the device. To remove the token, pass an empty string. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the token was updated. |
+
+#### Methods
+
+##### authenticate()
+
+```ts
+authenticate(params, callback?): BiometricManager
+```
+
+A method that authenticates the user using biometrics according to the
+params argument of type BiometricAuthenticateParams. If an optional
+callback parameter was passed, the callback function will be called and
+the first argument will be a boolean indicating whether the user
+authenticated successfully.
+
+If so, the second argument will be a biometric token.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `params` | [`BiometricAuthenticateParams`](types.md#biometricauthenticateparams) |
+| `callback`? | [`BiometricAuthenticateCallback`](types.md#biometricauthenticatecallback) |
+
+###### Returns
+
+[`BiometricManager`](types.md#biometricmanager)
+
+##### init()
+
+```ts
+init(callback?): BiometricManager
+```
+
+A method that initializes the BiometricManager object. It should be
+called before the object's first use. If an optional callback parameter
+was passed, the callback function will be called when the object is
+initialized.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `callback`? | () => `void` |
+
+###### Returns
+
+[`BiometricManager`](types.md#biometricmanager)
+
+##### openSettings()
+
+```ts
+openSettings(): BiometricManager
+```
+
+A method that opens the biometric access settings for bots. Useful when
+you need to request biometrics access to users who haven't granted it
+yet.
+
+Note that this method can be called only in response to user interaction
+with the Mini App interface (e.g. a click inside the Mini App or on the
+main button)
+
+###### Returns
+
+[`BiometricManager`](types.md#biometricmanager)
+
+##### requestAccess()
+
+```ts
+requestAccess(params, callback?): BiometricManager
+```
+
+A method that requests permission to use biometrics according to the
+params argument of type BiometricRequestAccessParams. If an optional
+callback parameter was passed, the callback function will be called and
+the first argument will be a boolean indicating whether the user granted
+access.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `params` | [`BiometricRequestAccessParams`](types.md#biometricrequestaccessparams) |
+| `callback`? | [`BiometricRequestAccessCallback`](types.md#biometricrequestaccesscallback) |
+
+###### Returns
+
+[`BiometricManager`](types.md#biometricmanager)
+
+##### updateBiometricToken()
+
+```ts
+updateBiometricToken(token, callback?): BiometricManager
+```
+
+A method that updates the biometric token in secure storage on the
+device. To remove the token, pass an empty string. If an optional
+callback parameter was passed, the callback function will be called and
+the first argument will be a boolean indicating whether the token was
+updated.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `token` | `string` |
+| `callback`? | [`BiometricUpdateBiometricTokenCallback`](types.md#biometricupdatebiometrictokencallback) |
+
+###### Returns
+
+[`BiometricManager`](types.md#biometricmanager)
 
 ***
 
@@ -694,15 +861,11 @@ approved by the user.
 
 | Property | Type | Description |
 | ------ | ------ | ------ |
+| `hash` | `string` | Hash to verify data authenticity. |
 | `response` | `string` | A status message or result as a string. |
-| `responseUnsafe` | \{ `auth_date`: `string`; `contact`: \{ `first_name`: `string`; `last_name`: `string`; `phone_number`: `string`; `user_id`: `number`; \}; `hash`: `string`; \} | Contains sensitive information shared upon user consent. WARNING: Data from this field should not be trusted. You should only use data from `response` on the bot's server and only after it has been validated. |
+| `responseUnsafe` | \{ `auth_date`: `string`; `contact`: [`Contact`](types.md#contact); \} | Contains sensitive information shared upon user consent. WARNING: Data from this field should not be trusted. You should only use data from `response` on the bot's server and only after it has been validated. |
 | `responseUnsafe.auth_date` | `string` | Authorization date for sharing contact information. |
-| `responseUnsafe.contact` | \{ `first_name`: `string`; `last_name`: `string`; `phone_number`: `string`; `user_id`: `number`; \} | Object holding user's contact details. |
-| `responseUnsafe.contact.first_name` | `string` | User's first name. |
-| `responseUnsafe.contact.last_name?` | `string` | Optional. User's last name. |
-| `responseUnsafe.contact.phone_number` | `string` | User's phone number. |
-| `responseUnsafe.contact.user_id` | `number` | Unique identifier of the user. |
-| `responseUnsafe.hash` | `string` | Hash to verify data authenticity. |
+| `responseUnsafe.contact` | [`Contact`](types.md#contact) | Object holding user's contact details. |
 | `status` | `"sent"` | Status 'sent' indicates that contact information has been shared. |
 
 ***
@@ -936,16 +1099,10 @@ Provides methods and properties specific to the Web App interface.
 | `isFullscreen` | `boolean` | **Bot API 8.0+** True, if the Mini App is currently being displayed in fullscreen mode. |
 | `isVerticalSwipesEnabled` | `boolean` | `True`, if vertical swipes to close or minimize the Mini App are enabled. `False`, if vertical swipes to close or minimize the Mini App are disabled. In any case, the user will still be able to minimize and close the Mini App by swiping the Mini App's header. |
 | `MainButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the main button, which is displayed at the bottom of the Web App in the Telegram interface. |
-| `offEvent` | \<`T`\>(`eventName`: `T`, `callback`: (`params`) => `unknown`) => `void` | A method that deletes a previously set event handler. |
-| `onEvent` | \<`T`\>(`eventName`: `T`, `callback`: (`params`) => `unknown`) => `void` | A method that sets the app event handler. Check the list of available events. |
-| `openInvoice` | (`url`: `string`, `callback`?: (`status`) => `unknown`) => `void` | A method that opens an invoice using the link url. The Web App will receive the event invoiceClosed when the invoice is closed. If an optional callback parameter was passed, the callback function will be called and the invoice status will be passed as the first argument. |
 | `platform` | `string` | The name of the platform of the user's Telegram app. |
-| `requestContact` | (`callback`?: (`success`, `response`) => `unknown`) => `void` | A method that shows a native popup prompting the user for their phone number. |
 | `safeAreaInset` | [`SafeAreaInset`](types.md#safeareainset) | **Bot API 8.0+** An object representing the device's safe area insets, accounting for system UI elements like notches or navigation bars. |
 | `SecondaryButton` | [`BottomButton`](types.md#bottombutton) | An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface. |
-| `sendData` | (`data`: `unknown`) => `void` | A method used to send data to the bot. When this method is called, a service message is sent to the bot containing the data data of the length up to 4096 bytes, and the Web App is closed. See the field web_app_data in the class Message. This method is only available for Web Apps launched via a Keyboard button. |
 | `SettingsButton` | [`SettingsButton`](types.md#settingsbutton) | An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface. |
-| `shareMessage` | (`msgId`: `string`, `callback`?: (`isSent`) => `unknown`) => `void` | **Bot API 8.0+** A method that opens a dialog allowing the user to share a message provided by the bot. If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the message was successfully sent. The message id passed to this method must belong to a `PreparedInlineMessage` previously obtained via the Bot API method `savePreparedInlineMessage`. |
 | `themeParams` | [`ThemeParams`](types.md#themeparams) | An object containing the current theme settings used in the Telegram app. |
 | `version` | `string` | The version of the Bot API available in the user's Telegram app. |
 | `viewportHeight` | `number` | The current height of the visible area of the Web App. Also available in CSS as the variable var(--tg-viewport-height). The application can display just the top part of the Web App, with its lower part remaining outside the screen area. From this position, the user can “pull” the Web App to its maximum height, while the bot can do the same by calling the expand() method. As the position of the Web App changes, the current height value of the visible area will be updated in real time. Please note that the refresh rate of this value is not sufficient to smoothly follow the lower border of the window. It should not be used to pin interface elements to the bottom of the visible area. It's more appropriate to use the value of the viewportStableHeight field for this purpose. |
@@ -1155,6 +1312,79 @@ This is useful if a stable orientation is needed during specific interactions.
 
 `void`
 
+##### offEvent()
+
+```ts
+offEvent<T>(eventType, eventHandler): void
+```
+
+A method that deletes a previously set event handler.
+
+###### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* keyof [`EventParams`](types.md#eventparams) |
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventType` | `T` |
+| `eventHandler` | [`EventParams`](types.md#eventparams)\[`T`\] |
+
+###### Returns
+
+`void`
+
+##### onEvent()
+
+```ts
+onEvent<T>(eventType, eventHandler): void
+```
+
+A method that sets the app event handler. Check the list of available
+events.
+
+###### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* keyof [`EventParams`](types.md#eventparams) |
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventType` | `T` |
+| `eventHandler` | [`EventParams`](types.md#eventparams)\[`T`\] |
+
+###### Returns
+
+`void`
+
+##### openInvoice()
+
+```ts
+openInvoice(url, callback?): void
+```
+
+A method that opens an invoice using the link url. The Web App will
+ receive the event invoiceClosed when the invoice is closed. If an
+ optional callback parameter was passed, the callback function will be
+ called and the invoice status will be passed as the first argument.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `url` | `string` |
+| `callback`? | (`status`) => `unknown` |
+
+###### Returns
+
+`void`
+
 ##### openLink()
 
 ```ts
@@ -1241,6 +1471,25 @@ page is fully loaded.
 
 `void`
 
+##### requestContact()
+
+```ts
+requestContact(callback?): void
+```
+
+A method that shows a native popup prompting the user for their phone
+number.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `callback`? | (`success`, `response`) => `unknown` | If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user shared its phone number. The second argument, contingent upon success, will be an object detailing the shared contact information or a cancellation response. |
+
+###### Returns
+
+`void`
+
 ##### requestEmojiStatusAccess()
 
 ```ts
@@ -1292,7 +1541,31 @@ send messages to the user.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `callback`? | (`success`) => `void` | If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user granted this access. |
+| `callback`? | (`success`) => `unknown` | If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user granted this access. |
+
+###### Returns
+
+`void`
+
+##### sendData()
+
+```ts
+sendData(data): void
+```
+
+A method used to send data to the bot. When this method is called, a
+service message is sent to the bot containing the data data of the length
+up to 4096 bytes, and the Web App is closed. See the field web_app_data
+in the class Message.
+
+This method is only available for Web Apps launched via a Keyboard
+button.
+
+###### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `data` | `unknown` |
 
 ###### Returns
 
@@ -1383,6 +1656,31 @@ also use keywords bg_color and secondary_bg_color.
 | Parameter | Type |
 | ------ | ------ |
 | `color` | `string` & \{\} \| `"bg_color"` \| `"secondary_bg_color"` |
+
+###### Returns
+
+`void`
+
+##### shareMessage()
+
+```ts
+shareMessage(msgId, callback?): void
+```
+
+**Bot API 8.0+** A method that opens a dialog allowing the user
+to share a message provided by the bot. If an optional callback
+parameter is provided, the callback function will be called with
+a boolean as the first argument, indicating whether the message
+was successfully sent. The message id passed to this method must
+belong to a `PreparedInlineMessage` previously obtained via the
+Bot API method `savePreparedInlineMessage`.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `msgId` | `string` |  |
+| `callback`? | (`isSent`) => `unknown` | Optional callback function, called with a boolean indicating if the message was sent. |
 
 ###### Returns
 
@@ -1604,6 +1902,73 @@ This object contains the data of the Web App user.
 | `username?` | `string` | Username of the user or bot. |
 
 ## Type Aliases
+
+### AccelerometerChangedCallback()
+
+```ts
+type AccelerometerChangedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### AccelerometerFailedCallback()
+
+```ts
+type AccelerometerFailedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `eventData.error` | `"UNSUPPORTED"` |
+
+#### Returns
+
+`void`
+
+***
+
+### AccelerometerStartedCallback()
+
+```ts
+type AccelerometerStartedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### AccelerometerStoppedCallback()
+
+```ts
+type AccelerometerStoppedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### ActivatedCallback()
+
+```ts
+type ActivatedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
 
 ### BackButtonClickedCallback()
 
@@ -1888,6 +2253,28 @@ type Color: string | false;
 
 ***
 
+### Contact
+
+```ts
+type Contact: {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  user_id: number;
+};
+```
+
+#### Type declaration
+
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| `first_name` | `string` | User's first name. |
+| `last_name`? | `string` | Optional. User's last name. |
+| `phone_number` | `string` | User's phone number. |
+| `user_id` | `number` | Unique identifier of the user. |
+
+***
+
 ### ContactRequestedCallback()
 
 ```ts
@@ -1899,6 +2286,18 @@ type ContactRequestedCallback: (eventData) => void;
 | Parameter | Type |
 | ------ | ------ |
 | `eventData` | [`RequestContactResponse`](types.md#requestcontactresponse) |
+
+#### Returns
+
+`void`
+
+***
+
+### ContentSafeAreaChangedCallback()
+
+```ts
+type ContentSafeAreaChangedCallback: () => void;
+```
 
 #### Returns
 
@@ -1919,6 +2318,73 @@ type CustomMethodInvokedCallback: (eventData) => void;
 | `eventData` | \{ `req_id`: `string`; `result`: `Record`\<`string`, `unknown`\>; \} |
 | `eventData.req_id` | `string` |
 | `eventData.result` | `Record`\<`string`, `unknown`\> |
+
+#### Returns
+
+`void`
+
+***
+
+### DeactivatedCallback()
+
+```ts
+type DeactivatedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### DeviceOrientationChangedCallback()
+
+```ts
+type DeviceOrientationChangedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### DeviceOrientationFailedCallback()
+
+```ts
+type DeviceOrientationFailedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `eventData.error` | `"UNSUPPORTED"` |
+
+#### Returns
+
+`void`
+
+***
+
+### DeviceOrientationStartedCallback()
+
+```ts
+type DeviceOrientationStartedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### DeviceOrientationStoppedCallback()
+
+```ts
+type DeviceOrientationStoppedCallback: () => void;
+```
 
 #### Returns
 
@@ -1952,6 +2418,44 @@ where forced downloads cannot always be guaranteed.
 
 ***
 
+### EmojiStatusAccessRequestedCallback()
+
+```ts
+type EmojiStatusAccessRequestedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `status`: `"allowed"` \| `"cancelled"`; \} |
+| `eventData.status` | `"allowed"` \| `"cancelled"` |
+
+#### Returns
+
+`void`
+
+***
+
+### EmojiStatusFailedCallback()
+
+```ts
+type EmojiStatusFailedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `error`: \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"`; \} |
+| `eventData.error` | \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"` |
+
+#### Returns
+
+`void`
+
+***
+
 ### EmojiStatusParams
 
 ```ts
@@ -1968,6 +2472,18 @@ type EmojiStatusParams: {
 
 ***
 
+### EmojiStatusSetCallback()
+
+```ts
+type EmojiStatusSetCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
 ### EventNames
 
 ```ts
@@ -1980,93 +2496,48 @@ type EventNames: keyof EventParams;
 
 ```ts
 type EventParams: {
-  accelerometerChanged: void;
-  accelerometerFailed: {
-     error: "UNSUPPORTED";
-    };
-  accelerometerStarted: void;
-  accelerometerStopped: void;
-  activated: void;
-  backButtonClicked: void;
-  clipboardTextReceived: {
-     data: string;
-    };
-  contactRequested: RequestContactResponse;
-  contentSafeAreaChanged: void;
-  customMethodInvoked: {
-     req_id: string;
-     result: Record<string, unknown>;
-    };
-  deactivated: void;
-  deviceOrientationChanged: void;
-  deviceOrientationFailed: {
-     error: "UNSUPPORTED";
-    };
-  deviceOrientationStarted: void;
-  deviceOrientationStopped: void;
-  emojiStatusAccessRequested: {
-     status: "allowed" | "cancelled";
-    };
-  emojiStatusFailed: {
-     error:   | "UNSUPPORTED"
-        | "SUGGESTED_EMOJI_INVALID"
-        | "DURATION_INVALID"
-        | "USER_DECLINED"
-        | "SERVER_ERROR"
-        | "UNKNOWN_ERROR";
-    };
-  emojiStatusSet: void;
-  fileDownloadRequested: {
-     status: "downloading" | "cancelled";
-    };
-  fullscreenChanged: void;
-  fullscreenFailed: {
-     error: FullscreenError;
-    };
-  gyroscopeChanged: void;
-  gyroscopeFailed: {
-     error: "UNSUPPORTED";
-    };
-  gyroscopeStarted: void;
-  gyroscopeStopped: void;
-  homeScreenAdded: void;
-  homeScreenChecked: {
-     status: HomeScreenStatus;
-    };
-  invoiceClosed: {
-     status: InvoiceStatus;
-     url: string;
-    };
-  locationManagerUpdated: void;
-  locationRequested: {
-     locationData: LocationData;
-    };
-  mainButtonClicked: void;
-  popupClosed: {
-     button_id: string | null;
-    };
-  qrTextReceived: {
-     data: string;
-    };
-  safeAreaChanged: void;
-  scanQrPopupClosed: void;
-  secondaryButtonClicked: void;
-  settingsButtonClicked: void;
-  shareMessageFailed: {
-     error:   | "UNSUPPORTED"
-        | "MESSAGE_EXPIRED"
-        | "MESSAGE_SEND_FAILED"
-        | "USER_DECLINED"
-        | "UNKNOWN_ERROR";
-    };
-  shareMessageSent: void;
-  themeChanged: void;
-  viewportChanged: {
-     isStateStable: boolean;
-    };
-  writeAccessRequested: {
-     status: "allowed" | "cancelled";
-    };
+  accelerometerChanged: AccelerometerChangedCallback;
+  accelerometerFailed: AccelerometerFailedCallback;
+  accelerometerStarted: AccelerometerStartedCallback;
+  accelerometerStopped: AccelerometerStoppedCallback;
+  activated: ActivatedCallback;
+  backButtonClicked: BackButtonClickedCallback;
+  clipboardTextReceived: ClipboardTextReceivedCallback;
+  contactRequested: ContactRequestedCallback;
+  contentSafeAreaChanged: ContentSafeAreaChangedCallback;
+  customMethodInvoked: CustomMethodInvokedCallback;
+  deactivated: DeactivatedCallback;
+  deviceOrientationChanged: DeviceOrientationChangedCallback;
+  deviceOrientationFailed: DeviceOrientationFailedCallback;
+  deviceOrientationStarted: DeviceOrientationStartedCallback;
+  deviceOrientationStopped: DeviceOrientationStoppedCallback;
+  emojiStatusAccessRequested: EmojiStatusAccessRequestedCallback;
+  emojiStatusFailed: EmojiStatusFailedCallback;
+  emojiStatusSet: EmojiStatusSetCallback;
+  fileDownloadRequested: FileDownloadRequestedCallback;
+  fullscreenChanged: FullscreenChangedCallback;
+  fullscreenFailed: FullscreenFailedCallback;
+  gyroscopeChanged: GyroscopeChangedCallback;
+  gyroscopeFailed: GyroscopeFailedCallback;
+  gyroscopeStarted: GyroscopeStartedCallback;
+  gyroscopeStopped: GyroscopeStoppedCallback;
+  homeScreenAdded: HomeScreenAddedCallback;
+  homeScreenChecked: HomeScreenCheckedCallback;
+  invoiceClosed: InvoiceClosedCallback;
+  locationManagerUpdated: LocationManagerUpdatedCallback;
+  locationRequested: LocationRequestedCallback;
+  mainButtonClicked: MainButtonClickedCallback;
+  popupClosed: PopupClosedCallback;
+  qrTextReceived: QrTextReceivedCallback;
+  safeAreaChanged: SafeAreaChangedCallback;
+  scanQrPopupClosed: ScanQrPopupClosedCallback;
+  secondaryButtonClicked: SecondaryButtonClickedCallback;
+  settingsButtonClicked: SettingsButtonClickedCallback;
+  shareMessageFailed: ShareMessageFailedCallback;
+  shareMessageSent: ShareMessageSentCallback;
+  themeChanged: ThemeChangedCallback;
+  viewportChanged: ViewportChangedCallback;
+  writeAccessRequested: WriteAccessRequestedCallback;
 };
 ```
 
@@ -2074,67 +2545,67 @@ type EventParams: {
 
 | Name | Type |
 | ------ | ------ |
-| `accelerometerChanged` | `void` |
-| `accelerometerFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
-| `accelerometerFailed.error` | `"UNSUPPORTED"` |
-| `accelerometerStarted` | `void` |
-| `accelerometerStopped` | `void` |
-| `activated` | `void` |
-| `backButtonClicked` | `void` |
-| `clipboardTextReceived` | \{ `data`: `string`; \} |
-| `clipboardTextReceived.data` | `string` |
-| `contactRequested` | [`RequestContactResponse`](types.md#requestcontactresponse) |
-| `contentSafeAreaChanged` | `void` |
-| `customMethodInvoked` | \{ `req_id`: `string`; `result`: `Record`\<`string`, `unknown`\>; \} |
-| `customMethodInvoked.req_id` | `string` |
-| `customMethodInvoked.result` | `Record`\<`string`, `unknown`\> |
-| `deactivated` | `void` |
-| `deviceOrientationChanged` | `void` |
-| `deviceOrientationFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
-| `deviceOrientationFailed.error` | `"UNSUPPORTED"` |
-| `deviceOrientationStarted` | `void` |
-| `deviceOrientationStopped` | `void` |
-| `emojiStatusAccessRequested` | \{ `status`: `"allowed"` \| `"cancelled"`; \} |
-| `emojiStatusAccessRequested.status` | `"allowed"` \| `"cancelled"` |
-| `emojiStatusFailed` | \{ `error`: \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"`; \} |
-| `emojiStatusFailed.error` | \| `"UNSUPPORTED"` \| `"SUGGESTED_EMOJI_INVALID"` \| `"DURATION_INVALID"` \| `"USER_DECLINED"` \| `"SERVER_ERROR"` \| `"UNKNOWN_ERROR"` |
-| `emojiStatusSet` | `void` |
-| `fileDownloadRequested` | \{ `status`: `"downloading"` \| `"cancelled"`; \} |
-| `fileDownloadRequested.status` | `"downloading"` \| `"cancelled"` |
-| `fullscreenChanged` | `void` |
-| `fullscreenFailed` | \{ `error`: [`FullscreenError`](types.md#fullscreenerror); \} |
-| `fullscreenFailed.error` | [`FullscreenError`](types.md#fullscreenerror) |
-| `gyroscopeChanged` | `void` |
-| `gyroscopeFailed` | \{ `error`: `"UNSUPPORTED"`; \} |
-| `gyroscopeFailed.error` | `"UNSUPPORTED"` |
-| `gyroscopeStarted` | `void` |
-| `gyroscopeStopped` | `void` |
-| `homeScreenAdded` | `void` |
-| `homeScreenChecked` | \{ `status`: [`HomeScreenStatus`](types.md#homescreenstatus); \} |
-| `homeScreenChecked.status` | [`HomeScreenStatus`](types.md#homescreenstatus) |
-| `invoiceClosed` | \{ `status`: [`InvoiceStatus`](types.md#invoicestatus); `url`: `string`; \} |
-| `invoiceClosed.status` | [`InvoiceStatus`](types.md#invoicestatus) |
-| `invoiceClosed.url` | `string` |
-| `locationManagerUpdated` | `void` |
-| `locationRequested` | \{ `locationData`: [`LocationData`](types.md#locationdata); \} |
-| `locationRequested.locationData` | [`LocationData`](types.md#locationdata) |
-| `mainButtonClicked` | `void` |
-| `popupClosed` | \{ `button_id`: `string` \| `null`; \} |
-| `popupClosed.button_id` | `string` \| `null` |
-| `qrTextReceived` | \{ `data`: `string`; \} |
-| `qrTextReceived.data` | `string` |
-| `safeAreaChanged` | `void` |
-| `scanQrPopupClosed` | `void` |
-| `secondaryButtonClicked` | `void` |
-| `settingsButtonClicked` | `void` |
-| `shareMessageFailed` | \{ `error`: \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"`; \} |
-| `shareMessageFailed.error` | \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"` |
-| `shareMessageSent` | `void` |
-| `themeChanged` | `void` |
-| `viewportChanged` | \{ `isStateStable`: `boolean`; \} |
-| `viewportChanged.isStateStable` | `boolean` |
-| `writeAccessRequested` | \{ `status`: `"allowed"` \| `"cancelled"`; \} |
-| `writeAccessRequested.status` | `"allowed"` \| `"cancelled"` |
+| `accelerometerChanged` | [`AccelerometerChangedCallback`](types.md#accelerometerchangedcallback) |
+| `accelerometerFailed` | [`AccelerometerFailedCallback`](types.md#accelerometerfailedcallback) |
+| `accelerometerStarted` | [`AccelerometerStartedCallback`](types.md#accelerometerstartedcallback) |
+| `accelerometerStopped` | [`AccelerometerStoppedCallback`](types.md#accelerometerstoppedcallback) |
+| `activated` | [`ActivatedCallback`](types.md#activatedcallback) |
+| `backButtonClicked` | [`BackButtonClickedCallback`](types.md#backbuttonclickedcallback) |
+| `clipboardTextReceived` | [`ClipboardTextReceivedCallback`](types.md#clipboardtextreceivedcallback) |
+| `contactRequested` | [`ContactRequestedCallback`](types.md#contactrequestedcallback) |
+| `contentSafeAreaChanged` | [`ContentSafeAreaChangedCallback`](types.md#contentsafeareachangedcallback) |
+| `customMethodInvoked` | [`CustomMethodInvokedCallback`](types.md#custommethodinvokedcallback) |
+| `deactivated` | [`DeactivatedCallback`](types.md#deactivatedcallback) |
+| `deviceOrientationChanged` | [`DeviceOrientationChangedCallback`](types.md#deviceorientationchangedcallback) |
+| `deviceOrientationFailed` | [`DeviceOrientationFailedCallback`](types.md#deviceorientationfailedcallback) |
+| `deviceOrientationStarted` | [`DeviceOrientationStartedCallback`](types.md#deviceorientationstartedcallback) |
+| `deviceOrientationStopped` | [`DeviceOrientationStoppedCallback`](types.md#deviceorientationstoppedcallback) |
+| `emojiStatusAccessRequested` | [`EmojiStatusAccessRequestedCallback`](types.md#emojistatusaccessrequestedcallback) |
+| `emojiStatusFailed` | [`EmojiStatusFailedCallback`](types.md#emojistatusfailedcallback) |
+| `emojiStatusSet` | [`EmojiStatusSetCallback`](types.md#emojistatussetcallback) |
+| `fileDownloadRequested` | [`FileDownloadRequestedCallback`](types.md#filedownloadrequestedcallback) |
+| `fullscreenChanged` | [`FullscreenChangedCallback`](types.md#fullscreenchangedcallback) |
+| `fullscreenFailed` | [`FullscreenFailedCallback`](types.md#fullscreenfailedcallback) |
+| `gyroscopeChanged` | [`GyroscopeChangedCallback`](types.md#gyroscopechangedcallback) |
+| `gyroscopeFailed` | [`GyroscopeFailedCallback`](types.md#gyroscopefailedcallback) |
+| `gyroscopeStarted` | [`GyroscopeStartedCallback`](types.md#gyroscopestartedcallback) |
+| `gyroscopeStopped` | [`GyroscopeStoppedCallback`](types.md#gyroscopestoppedcallback) |
+| `homeScreenAdded` | [`HomeScreenAddedCallback`](types.md#homescreenaddedcallback) |
+| `homeScreenChecked` | [`HomeScreenCheckedCallback`](types.md#homescreencheckedcallback) |
+| `invoiceClosed` | [`InvoiceClosedCallback`](types.md#invoiceclosedcallback) |
+| `locationManagerUpdated` | [`LocationManagerUpdatedCallback`](types.md#locationmanagerupdatedcallback) |
+| `locationRequested` | [`LocationRequestedCallback`](types.md#locationrequestedcallback) |
+| `mainButtonClicked` | [`MainButtonClickedCallback`](types.md#mainbuttonclickedcallback) |
+| `popupClosed` | [`PopupClosedCallback`](types.md#popupclosedcallback) |
+| `qrTextReceived` | [`QrTextReceivedCallback`](types.md#qrtextreceivedcallback) |
+| `safeAreaChanged` | [`SafeAreaChangedCallback`](types.md#safeareachangedcallback) |
+| `scanQrPopupClosed` | [`ScanQrPopupClosedCallback`](types.md#scanqrpopupclosedcallback) |
+| `secondaryButtonClicked` | [`SecondaryButtonClickedCallback`](types.md#secondarybuttonclickedcallback) |
+| `settingsButtonClicked` | [`SettingsButtonClickedCallback`](types.md#settingsbuttonclickedcallback) |
+| `shareMessageFailed` | [`ShareMessageFailedCallback`](types.md#sharemessagefailedcallback) |
+| `shareMessageSent` | [`ShareMessageSentCallback`](types.md#sharemessagesentcallback) |
+| `themeChanged` | [`ThemeChangedCallback`](types.md#themechangedcallback) |
+| `viewportChanged` | [`ViewportChangedCallback`](types.md#viewportchangedcallback) |
+| `writeAccessRequested` | [`WriteAccessRequestedCallback`](types.md#writeaccessrequestedcallback) |
+
+***
+
+### FileDownloadRequestedCallback()
+
+```ts
+type FileDownloadRequestedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `status`: `"downloading"` \| `"cancelled"`; \} |
+| `eventData.status` | `"downloading"` \| `"cancelled"` |
+
+#### Returns
+
+`void`
 
 ***
 
@@ -2170,6 +2641,61 @@ type FullscreenFailedCallback: (eventData) => void;
 | ------ | ------ |
 | `eventData` | \{ `error`: [`FullscreenError`](types.md#fullscreenerror); \} |
 | `eventData.error` | [`FullscreenError`](types.md#fullscreenerror) |
+
+#### Returns
+
+`void`
+
+***
+
+### GyroscopeChangedCallback()
+
+```ts
+type GyroscopeChangedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### GyroscopeFailedCallback()
+
+```ts
+type GyroscopeFailedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `error`: `"UNSUPPORTED"`; \} |
+| `eventData.error` | `"UNSUPPORTED"` |
+
+#### Returns
+
+`void`
+
+***
+
+### GyroscopeStartedCallback()
+
+```ts
+type GyroscopeStartedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### GyroscopeStoppedCallback()
+
+```ts
+type GyroscopeStoppedCallback: () => void;
+```
 
 #### Returns
 
@@ -2278,6 +2804,37 @@ type LocationData: {
 | `speed` | `number` |
 | `speed_accuracy` | `number` |
 | `vertical_accuracy` | `number` |
+
+***
+
+### LocationManagerUpdatedCallback()
+
+```ts
+type LocationManagerUpdatedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### LocationRequestedCallback()
+
+```ts
+type LocationRequestedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `locationData`: [`LocationData`](types.md#locationdata); \} |
+| `eventData.locationData` | [`LocationData`](types.md#locationdata) |
+
+#### Returns
+
+`void`
 
 ***
 
@@ -2443,6 +3000,18 @@ Color in format #RGB.
 
 ***
 
+### SafeAreaChangedCallback()
+
+```ts
+type SafeAreaChangedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
 ### ScanQrPopupClosedCallback()
 
 ```ts
@@ -2471,6 +3040,37 @@ type SecondaryButtonClickedCallback: () => void;
 
 ```ts
 type SettingsButtonClickedCallback: () => void;
+```
+
+#### Returns
+
+`void`
+
+***
+
+### ShareMessageFailedCallback()
+
+```ts
+type ShareMessageFailedCallback: (eventData) => void;
+```
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `eventData` | \{ `error`: \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"`; \} |
+| `eventData.error` | \| `"UNSUPPORTED"` \| `"MESSAGE_EXPIRED"` \| `"MESSAGE_SEND_FAILED"` \| `"USER_DECLINED"` \| `"UNKNOWN_ERROR"` |
+
+#### Returns
+
+`void`
+
+***
+
+### ShareMessageSentCallback()
+
+```ts
+type ShareMessageSentCallback: () => void;
 ```
 
 #### Returns

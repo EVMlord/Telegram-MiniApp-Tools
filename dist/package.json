@@ -1,0 +1,94 @@
+{
+    "name": "telegram-miniapp-tools",
+    "version": "0.2.10-beta.8",
+    "description": "Tools for working with Telegram Miniapps",
+    "author": "EVMlord <buidl@evmlord.dev>",
+    "homepage": "https://github.com/EVMlord/Telegram-MiniApp-Tools#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/EVMlord/Telegram-MiniApp-Tools.git"
+    },
+    "bugs": {
+        "url": "https://github.com/EVMlord/Telegram-MiniApp-Tools/issues"
+    },
+    "license": "Apache-2.0",
+    "scripts": {
+        "docs:html": "typedoc --options typedoc.json",
+        "docs:md": "typedoc --options typedoc-markdown.json",
+        "docs:json": "typedoc --json typedoc-output.json --options typedoc-markdown.json",
+        "docs:all": "yarn docs:html && yarn docs:md && yarn docs:json",
+        "typecheck": "tsc --noEmit",
+        "clean": "rimraf dist",
+        "prebuild": "yarn clean && yarn docs:all",
+        "build": "tsc",
+        "sync": "node scripts/copy-files.mjs ../README.md ../deno.json ../package.json ../dist/ ../docs/ ../../Public-Miniapp-Tools/ --replace",
+        "postbuild": "yarn sync",
+        "deno": "jsr publish"
+    },
+    "devDependencies": {
+        "rimraf": "^6.0.1",
+        "typedoc": "^0.27.1",
+        "typedoc-plugin-markdown": "^4.3.0",
+        "typescript": "^5.7.2"
+    },
+    "files": [
+        "dist/**/*",
+        "README.md"
+    ],
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/dts/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.js",
+            "types": "./dist/dts/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./types": {
+            "types": "./dist/dts/types/index.d.ts"
+        },
+        "./utils": {
+            "import": "./dist/utils/index.js",
+            "require": "./dist/utils/index.js",
+            "types": "./dist/dts/utils/index.d.ts",
+            "default": "./dist/utils/index.js"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "types": [
+                "dist/dts/types/index.d.ts"
+            ],
+            "types/*": [
+                "dist/dts/types/*"
+            ],
+            "utils": [
+                "dist/dts/utils/index.d.ts"
+            ],
+            "utils/*": [
+                "dist/dts/utils/*"
+            ]
+        }
+    },
+    "keywords": [
+        "telegram",
+        "miniapp",
+        "telegram-mini-apps",
+        "miniapps",
+        "miniapp-tools",
+        "telegram-tools",
+        "telegram-bots",
+        "bot-tools",
+        "telegram-api",
+        "sdk",
+        "telegram-sdk",
+        "tapps",
+        "typescript"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {},
+    "peerDependencies": {}
+}
